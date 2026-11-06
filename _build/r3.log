@@ -1,0 +1,231 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+(./tese.tex
+LaTeX2e <2024-11-01> patch level 2
+L3 programming layer <2025-01-18>
+(/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2024/06/29 v1.4n Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/bk12.clo)) (/usr/share/texlive/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty (/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def) (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgf/pgf.revision.tex))) (/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty (/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty) (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty (/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty) (/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg) (/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def)))
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeyslibraryfiltered.code.tex)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg) (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-pdftex.def (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-common-pdf.def))) (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.tex)) (/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty (/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg) (/usr/share/texlive/texmf-dist/tex/latex/graphics/mathcolor.ltx)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigonometric.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.random.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.comparison.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerarithmetics.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfint.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformations.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathprocessing.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransparency.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepatterns.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorerdf.code.tex))) (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex) (/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18.sty)) (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgffor.sty (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex)) (/usr/share/texlive/texmf-dist/tex/latex/pgf/math/pgfmath.sty (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarytopaths.code.tex))) (./algorithm2e.sty (/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty) (/usr/share/texlive/texmf-dist/tex/latex/tools/xspace.sty)
+********************************************************
+Package `algorithm2e' Release 3.9 -- october 04 2005 --
+- algorithm2e-announce@lirmm.fr mailing list for announcement about releases
+- algorithm2e-discussion@lirmm.fr mailing list for discussion about package
+subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
+- Author: Christophe Fiorio (fiorio@lirmm.fr)
+********************************************************
+) (./subfloat.sty Package `subfloat', Version 1.03 of 1999/10/08.) (/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty (/usr/share/texlive/texmf-dist/tex/generic/babel/txtbabel.def) (/usr/share/texlive/texmf-dist/tex/generic/babel-portuges/brazilian.ldf)) (/usr/share/texlive/texmf-dist/tex/generic/babel/locale/pt/babel-brazilian.tex) (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty) (/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty) (/usr/share/texlive/texmf-dist/tex/latex/base/latexsym.sty) (./breakcites.sty) (/usr/share/texlive/texmf-dist/tex/latex/setspace/setspace.sty) (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty)) (/usr/share/texlive/texmf-dist/tex/latex/colortbl/colortbl.sty (/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty)) (./acronym.sty (./suffix.sty)) (/usr/share/texlive/texmf-dist/tex/latex/tools/varioref.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/indentfirst.sty) (/usr/share/texlive/texmf-dist/tex/latex/subfig/subfig.sty (/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty (/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty))) (./titlesec.sty) (./multirow.sty) (/usr/share/texlive/texmf-dist/tex/latex/fancybox/fancybox.sty
+Style option: `fancybox' v1.4 <2010/05/15> (tvz)
+) (/usr/share/texlive/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty) (/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty (/usr/share/texlive/texmf-dist/tex/generic/iftex/ifvtex.sty (/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty))) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty (/usr/share/texlive/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty) (/usr/share/texlive/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty) (/usr/share/texlive/texmf-dist/tex/generic/pdfescape/pdfescape.sty (/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty) (/usr/share/texlive/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty (/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty))) (/usr/share/texlive/texmf-dist/tex/latex/hycolor/hycolor.sty) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty) (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
+(/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty))) (/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty) (/usr/share/texlive/texmf-dist/tex/generic/stringenc/stringenc.sty) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def) (/usr/share/texlive/texmf-dist/tex/generic/intcalc/intcalc.sty) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/puenc.def) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/backref.sty (/usr/share/texlive/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty (/usr/share/texlive/texmf-dist/tex/latex/base/atveryend-ltx.sty) (/usr/share/texlive/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty (/usr/share/texlive/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty)))) (/usr/share/texlive/texmf-dist/tex/latex/url/url.sty) (/usr/share/texlive/texmf-dist/tex/generic/bitset/bitset.sty) (/usr/share/texlive/texmf-dist/tex/latex/base/atbegshi-ltx.sty)) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/bookman.sty) (/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pbk.fd)) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty)) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty)) (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd) (./baseboxes.sty) (./basecolor.sty)
+
+LaTeX Warning: \include should only be used after \begin{document} on input line 180.
+
+(./macros.tex) (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def) (./tese.aux (./1_introducao.aux) (./2_am.aux) (./3_ranking.aux) (./4_roc.aux) (./5_calibracao.aux) (./6_cotraining.aux) (./7_conclusoes.aux)) (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg))
+*geometry* detected driver: pdftex
+(./tese.out) (./tese.out) (./capa.tex (/usr/share/texlive/texmf-dist/tex/latex/base/ulasy.fd) (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd) (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd)
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}]
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 28--33
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 28--33
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pag.fd) (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1pbk.fd)
+[3]
+[4]) (./agradecimentos.tex
+[5]
+[6]) (./resumo.tex
+[7]
+[8])
+[9] (./tese.toc
+[10])
+[11]
+[12] (./tese.lof
+Overfull \hbox (83.30087pt too wide) in paragraph at lines 28--28
+ [][] [][][]\T1/pbk/l/n/12 Suporte para Cap-tura das ima-gens pro-posta por [[]][][][] [][]  
+
+Overfull \hbox (78.9808pt too wide) in paragraph at lines 29--29
+ [][] [][][]\T1/pbk/l/n/12 Imagens re-ti-ra-das do con-junto de Trei-na-mento [[]][].[][] [][]  
+
+Underfull \vbox (badness 4686) has occurred while \output is active
+[13])
+[14] (./tese.lot)
+[15]
+[16] (./1_introducao.tex
+Cap\'{\i }tulo 1.
+
+Overfull \hbox (58.47256pt too wide) in paragraph at lines 10--11
+\T1/pbk/l/n/12 [[]][] tem do-mi-nado o es-tado da arte [[]][].
+
+Overfull \hbox (27.66881pt too wide) in paragraph at lines 10--11
+\T1/pbk/l/n/12 Es-tu-dos po-dem ser en-con-tra-dos para de-tec-ção de ob-je-tos [[],
+
+Overfull \hbox (55.84319pt too wide) in paragraph at lines 10--11
+[]\T1/pbk/l/n/12 , [], [], []][],
+
+Overfull \hbox (29.36026pt too wide) in paragraph at lines 10--11
+\T1/pbk/l/n/12 de ob-je-tos [[], [], []][],
+
+Overfull \hbox (57.1455pt too wide) in paragraph at lines 12--17
+\T1/pbk/l/n/12 [[]][], Re-ti-na-Net [[]][], Yo-loV3 [[]][]).
+
+Underfull \vbox (badness 1102) has occurred while \output is active
+[1]
+Overfull \hbox (17.49219pt too wide) in paragraph at lines 25--28
+\T1/pbk/l/n/12 dade de ob-je-tos tem apre-sen-tado re-sul-ta-dos pro-mis-so-res [[],
+
+Overfull \hbox (60.37895pt too wide) in paragraph at lines 29--35
+\T1/pbk/l/n/12 [[]][] tem sido grande alvo de es-tu-dos. Por exem-plo, [[]][]
+
+Overfull \hbox (0.20866pt too wide) in paragraph at lines 36--40
+[]\T1/pbk/l/n/12 , [], []][]). Di-fe-rente do
+
+Underfull \vbox (badness 10000) has occurred while \output is active
+[2]
+Overfull \hbox (4.81102pt too wide) in paragraph at lines 79--82
+\T1/pbk/l/n/12 ge-ral, a con-ta-gem acon-tece por téc-ni-cas de bar-ra-gens [[]][],
+
+Underfull \vbox (badness 10000) has occurred while \output is active
+[3])
+[4 <./image/escadadepeixes.jpg> <./image/saladaagua.png>] (./2_am.tex
+Cap\'{\i }tulo 2.
+
+Overfull \hbox (32.73866pt too wide) in paragraph at lines 13--14
+\T1/pbk/l/n/12 sões) e ví-deos ($\OML/cmm/m/it/12 n$ \T1/pbk/l/n/12 di-men-sões) como en-tra-das para trei-na-mento [[]][]. 
+
+Overfull \hbox (57.15729pt too wide) in paragraph at lines 26--28
+\T1/pbk/l/n/12 (\T1/pbk/l/it/12 Deep Le-ar-ning\T1/pbk/l/n/12 ) [[], [], [],
+
+Overfull \hbox (1.17316pt too wide) in paragraph at lines 33--36
+\T1/pbk/l/n/12 de-tec-tando dois ob-je-tos como um [[], [],
+
+Overfull \hbox (97.69893pt too wide) in paragraph at lines 33--36
+[]\T1/pbk/l/n/12 , [], [], [],
+
+Overfull \hbox (57.4642pt too wide) in paragraph at lines 33--36
+[]\T1/pbk/l/n/12 , [], [],
+
+[5]
+Overfull \hbox (4.1708pt too wide) in paragraph at lines 57--60
+[]\T1/pbk/l/n/12 , []][]. Nesse tra-ba-lho, é pro-posto uma
+
+Underfull \vbox (badness 10000) has occurred while \output is active
+[6]
+[7]
+Overfull \hbox (58.67336pt too wide) in paragraph at lines 130--132
+[]\T1/pbk/l/n/12 [[]][] apre-sen-tou a com-bi-na-ção da Res-Net101 [[]][],
+)
+[8] (./3_ranking.tex
+Cap\'{\i }tulo 3.
+
+Overfull \hbox (25.60643pt too wide) in paragraph at lines 14--21
+ [][] 
+
+[9]
+Underfull \vbox (badness 2884) has occurred while \output is active
+[10 <./image/model.pdf>]
+Underfull \vbox (badness 1117) has occurred while \output is active
+[11 <./image/VE.pdf>]
+[12 <./image/caract.png (PNG copy)> <./image/carac.png>]
+[13]
+[14 <./image/sigmas/frame001018Ponto.png> <./image/sigmas/frame001018_label_1_5.png> <./image/sigmas/frame001018_label_2_5.png>]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+[15]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+)
+[16 <./image/VD.pdf>]
+[17 <./image/frame000089.png_tracking.png> <./image/frame000126.png_tracking.png> <./image/frame000176.png_tracking.png> <./image/frame000089.pngquiver_t.png> <./image/frame000126.pngquiver_t.png> <./image/frame000176.pngquiver_t.png> <./image/heatmap2.pdf>] (./4_roc.tex
+Cap\'{\i }tulo 4.
+
+Underfull \hbox (badness 4353) in paragraph at lines 11--11
+[]\T1/pbk/l/n/12 Figura 4.1: |Su-porte para Cap-tura das ima-gens pro-posta por
+
+[18 <./image/estruturaCaptura.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 47--47
+[]\T1/pbk/l/n/12 Figura 4.2: |Ima-gens re-ti-ra-das do con-junto de Trei-na-mento
+
+[19 <./image/Train/VID15_frame000222.png (PNG copy)> <./image/Train/VID18_frame000244.png (PNG copy)> <./image/Train/VID19_frame000313.png (PNG copy)>]
+[20])
+[21] (./5_calibracao.tex
+Overfull \hbox (0.67757pt too wide) in paragraph at lines 99--99
+ []\T1/pbk/db/n/10.95 Sigma 
+
+Overfull \hbox (2.16512pt too wide) in paragraph at lines 99--100
+ [][] 
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+[22]
+Overfull \hbox (2.21696pt too wide) in paragraph at lines 151--151
+ []\T1/pbk/db/n/10.95 Estágios 
+
+Overfull \hbox (2.40608pt too wide) in paragraph at lines 151--152
+ [][] 
+
+Overfull \hbox (2.341pt too wide) in paragraph at lines 192--192
+ []\T1/pbk/db/n/10.95 Temporal 
+
+[23]
+[24 <./image/VID06_frame000147.pdf>]
+[25 <./image/ResultadosQ/VID09_frame000039.png> <./image/ResultadosQ/VID09_frame000039_points_.png> <./image/ResultadosQ/VID09_frame000039_points.png> <./image/ResultadosQ/VID09_frame000039_vectors.png>])
+[26 <./image/ResultadosQ2/VID11_frame000217.png> <./image/ResultadosQ2/VID11_frame000217_points_gt_.png> <./image/ResultadosQ2/VID11_frame000217_points.png> <./image/ResultadosQ2/VID11_frame000217_vectors.png>] (./6_cotraining.tex) (./7_conclusoes.tex
+Cap\'{\i }tulo 5.
+
+[27])
+[28 <./image/187.png> <./image/188.png>]
+[29 <./image/frame0004810.png (PNG copy)> <./image/frame0000247.png (PNG copy)>] (./tese.bbl (./tese.brf) (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd)
+Underfull \hbox (badness 1308) in paragraph at lines 8--8
+\T1/pbk/l/n/12 de iga-ra-pava.  [][]$\T1/pcr/m/n/12 http : / / www . uhe-[]igarapava . com . br / zpublisher /
+
+[30]
+[31]
+Underfull \hbox (badness 3907) in paragraph at lines 97--97
+[]\T1/pbk/l/n/12 Girshick, R. B. (2015).  Fast R-CNN.  \T1/pbk/l/it/12 CoRR\T1/pbk/l/n/12 ,
+
+[32]
+Underfull \hbox (badness 1057) in paragraph at lines 148--148
+\T1/pbk/l/n/12 Fast ani-mal de-tec-tion in uav ima-ges using con-vo-lu-ti-o-nal neu-ral
+
+[33]
+[34]
+Underfull \hbox (badness 3977) in paragraph at lines 236--236
+[]\T1/pbk/l/n/12 Russakovsky, O., Deng, J., e Su, H.
+
+[35])
+[36] (./tese.aux (./1_introducao.aux) (./2_am.aux) (./3_ranking.aux) (./4_roc.aux) (./5_calibracao.aux) (./6_cotraining.aux) (./7_conclusoes.aux))
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `tese.brf' has changed.
+(rerunfilecheck)                Rerun to get bibliographical references right.
+
+ )
+(see the transcript file for additional information)
+pdfTeX warning (dest): name{page.xiii} has been referenced but does not exist, replaced by a fixed one
+
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/avantgar/uagk8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/avantgar/uagko8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/bookman/ubkd8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/bookman/ubkl8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/bookman/ubkli8a.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb>
+Output written on tese.pdf (52 pages, 16396596 bytes).
+Transcript written on tese.log.

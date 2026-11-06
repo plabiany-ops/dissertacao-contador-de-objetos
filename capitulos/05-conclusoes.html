@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Capítulo 5 — Conclusões</title>
+<meta name="description" content="Dissertação de mestrado de Plabiany Rodrigo Acosta: contador de objetos em vídeos usando redes neurais convolucionais.">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-inner">
+    <a class="brand" href="../index.html">
+      <strong>Contador de objetos em vídeos</strong>
+      <span>Dissertação · Plabiany R. Acosta</span>
+    </a>
+    <nav class="toc" aria-label="Sumário">
+      <a class="toc-chapter" href="../index.html">Capa</a>
+      <a class="toc-chapter" href="../preliminares.html">Preliminares</a>
+      <div class="toc-sep"></div>
+      <a class="toc-chapter" href="01-introducao.html"><span class="toc-num">1.</span> Introdução</a>
+      <a class="toc-chapter" href="02-revisao-bibliografica.html"><span class="toc-num">2.</span> Revisão Bibliográfica</a>
+      <a class="toc-chapter" href="03-metodo-proposto.html"><span class="toc-num">3.</span> Método Proposto</a>
+      <a class="toc-chapter" href="04-experimentos-e-resultados.html"><span class="toc-num">4.</span> Experimentos e Resultados</a>
+      <a class="toc-chapter active" href="05-conclusoes.html"><span class="toc-num">5.</span> Conclusões</a>
+      <a class="toc-sub" href="05-conclusoes.html#sec:c:resumo"><span class="toc-num">5.1</span> Resumo dos Objetivos e Principais Resultados</a>
+      <a class="toc-sub" href="05-conclusoes.html#sec:c:limitacoes"><span class="toc-num">5.2</span> Limitações</a>
+      <a class="toc-sub" href="05-conclusoes.html#sec:c:futuros"><span class="toc-num">5.3</span> Trabalhos Futuros</a>
+      <div class="toc-sep"></div>
+      <a class="toc-chapter" href="../figuras.html">Figuras</a>
+      <a class="toc-chapter" href="referencias.html">Referências</a>
+      <a class="pdf-link" href="../assets/dissertacao.pdf">Baixar PDF</a>
+    </nav>
+  </div>
+</aside>
+<button class="menu-toggle" type="button" aria-label="Abrir sumário" aria-controls="sidebar">☰</button>
+<div class="overlay" aria-hidden="true"></div>
+<main class="page">
+<article class="sheet">
+<header class="chapter-header"><p class="chapter-kicker">Capítulo 5</p><h1 class="chapter-title" id="chap:conclusoes">Conclusões</h1></header>
+<p>Neste capítulo são apresentadas as conclusões deste trabalho. Na
+Seção <a data-reference="sec:c:resumo" data-reference-type="ref" href="#sec:c:resumo">5.1</a> é realizado um paralelo entre os
+objetivos desta tese e os resultados obtidos. Na Seção  <a data-reference="sec:c:limitacoes" data-reference-type="ref" href="#sec:c:limitacoes">5.2</a> são discutidas algumas
+limitações das soluções propostas e na Seção <a data-reference="sec:c:futuros" data-reference-type="ref" href="#sec:c:futuros">5.3</a> são
+apresentadas algumas direções de trabalhos futuros.</p>
+<h2 class="section-title" id="sec:c:resumo"><span class="sec-num">5.1</span> Resumo dos Objetivos e Principais Resultados</h2>
+<p>O objetivo principal deste trabalho foi apresentar a capacidade de
+aplicar camadas convolucionais para contar objetos em vídeos,
+considerando as posições dos mesmos no quadro anterior. Assim são
+estimados um mapa de densidade e a estimativa de deslocamento de
+alevino.</p>
+<p>O melhor resultado obtido alcançou 98% de acertos avaliados pela
+métrica F1, o que nos mostra que a técnica proposta se ajusta
+positivamente ao conjunto de dados. A métrica de erro MAE afirma que os
+equívocos cometidos pela rede em camadas é próximos a 0. O objetivo de
+refinar o mapa de características utilizando os vetor de deslocamento
+foi alcançado visto que os melhores resultados se mostraram a partir do
+processamento das posições que precedem o quadro atual.</p>
+<h2 class="section-title" id="sec:c:limitacoes"><span class="sec-num">5.2</span> Limitações</h2>
+<p>Os alevinos estão em constante movimento nos vídeos, porém existem
+alguns peixes, geralmente dois(ou até mais) que se juntam e mantém um
+certo movimento uniforme confundindo a CNN, fazendo-a detectar apenas um
+peixe naquela posição na imagem. Como o deslocamento dos dois são
+análogos nos quadros anteriores
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">I_{t-1}</annotation></semantics></math>,
+no quadro atual
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mi>t</mi></msub><annotation encoding="application/x-tex">I_{t}</annotation></semantics></math>
+processado não há possibilidade de se distinguir um do outro. O pico
+apontado pela CNN para estes peixes extremamente próximos é único e como
+a detecção é obtida através deles, a CNN detecta estes peixes como um.
+Na imagem <a data-reference="fig:PeixesPróximos" data-reference-type="ref" href="#fig:PeixesPróximos">5.1</a> temos um exemplo de dois
+peixes que se movimentam igualmente sem indicar uma desaproximação.</p>
+<figure class="figura" data-latex-placement="!ht" id="fig:PeixesPróximos"><div class="subfigs"><div class="subfig" style="flex:0 1 46%;max-width:46%"><img alt="quadro 187" class="figimg" loading="lazy" src="../assets/figuras/187.png" style="width:46.0%"/><span class="subcap">quadro 187</span></div><div class="subfig" style="flex:0 1 46%;max-width:46%"><img alt="quadro 188" class="figimg" loading="lazy" src="../assets/figuras/188.png" style="width:46.0%"/><span class="subcap">quadro 188</span></div></div><figcaption><span class="fig-num">Figura 5.1.</span> <span data-label="fig:PeixesPróximos" id="fig:PeixesPróximos"></span> Exemplos dos peixes extremamente
+próximos que se movem uniformemente. Imagens do vídeo 06, quadro 187 e
+188. </figcaption></figure>
+<h2 class="section-title" id="sec:c:futuros"><span class="sec-num">5.3</span> Trabalhos Futuros</h2>
+<p>O fato de ocorrer peixes muito próximos nos faz entender que a
+técnica deverá abordar este tipo de situação. No qual serão testados
+técnicas para distinguir tais alevinos de maneira com que cada um seja
+detectado e somado a contagem final.</p>
+<p>O método proposto será reavaliado em outro banco de imagens, para
+averiguar o potencial da técnica em detectar peixes em várias situações
+do mundo real. Nas imagens da Figura <a data-reference="fig:proxbanco" data-reference-type="ref" href="#fig:proxbanco">5.2</a> temos
+amostras do banco a ser utilizado em novos experimentos.</p>
+<figure class="figura" data-latex-placement="!ht" id="fig:proxbanco"><div class="subfigs"><div class="subfig" style="flex:0 1 80%;max-width:80%"><img alt="quadro 4810" class="figimg" loading="lazy" src="../assets/figuras/frame0004810.png" style="width:80.0%"/><span class="subcap">quadro 4810</span></div><div class="subfig" style="flex:0 1 80%;max-width:80%"><img alt="quadro 6253" class="figimg" loading="lazy" src="../assets/figuras/frame0000247.png" style="width:80.0%"/><span class="subcap">quadro 6253</span></div></div><figcaption><span class="fig-num">Figura 5.2.</span> <span data-label="fig:proxbanco" id="fig:proxbanco"></span>
+Amostra do próximo banco de imagens a ser testado - vídeo 203.
+.</figcaption></figure>
+
+<nav class="pager" aria-label="Navegação entre páginas">
+<a class="prev" href="04-experimentos-e-resultados.html"><span class="label">Anterior</span>Capítulo 4 — Experimentos e Resultados</a>
+<a class="next" href="referencias.html"><span class="label">Próximo</span>Referências</a>
+</nav>
+<footer class="site-footer">
+  <p>Plabiany Rodrigo Acosta · Dissertação de Mestrado · FACOM/UFMS · 2021</p>
+  <p><a href="../assets/dissertacao.pdf">Versão em PDF</a></p>
+</footer>
+</article>
+</main>
+<script src="../assets/js/site.js"></script>
+</body>
+</html>

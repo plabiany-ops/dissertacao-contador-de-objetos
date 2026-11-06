@@ -1,0 +1,34 @@
+\chapter*{Abstract}
+%English Text
+
+This work presents a method of Neural Network Convolutional (CNN) to count and locate objects in videos through density maps.
+Each object is represented by a dot only. In this way a 2D Gaussian core is applied at each point to originate the \textit{Ground Truth} of the density map.
+The method receives a frame from the video in an instant $t$ and the frame in the instant $ t-1 $. In this way, the time displacement vectors of the objects are estimated, and a refinement of the density map takes place through stages.
+
+A comparison of the number of stages used in the refinement branches is presented, as well as a variation of $\sigma$ to generate the \textit{Ground Truth} of the objects.
+
+% stages (E) were also used to refine the predicted confidence map.
+The proposed method was evaluated by the FISHCV155V database, developed by the UCDB INOVISÃO group in partnership with IFMS and Projeto Pacu. In this context, the count of fingerlings, which are newly hatched fish and move thoughtlessly, was analyzed and tested. The architecture obtained $MAE = 0.11$ and $\textit{F-measure} = 98\%$ with $\sigma = 1.1$, using the time displacement vector of the objects. The method demonstrated that the vector of displacement of the objects can assist in the detection and the labeling in the point type can be the way to count excessive amounts of objects in an image.
+
+
+
+\chapter*{Resumo}
+
+Este trabalho apresenta um método de Rede Neural Convolutional (CNN) para contar e localizar objetos em vídeos através de mapas de densidade. 
+Cada objeto é representado por um ponto apenas. Desta forma um núcleo Gaussiano 2D é aplicado em cada ponto para originar o \textit{Ground Truth} do mapa de densidade.
+O método recebe um quadro do vídeo em um instante $t$ e o quadro no instante $t-1$. Desta forma Vetores de Deslocamento Temporal dos objetos são estimados, e um refinamento do mapa de densidade acontece através de estágios. 
+São apresentados um comparativo na quantidade de estágios utilizados nos ramos de refinamento, e uma  variação de $\sigma$ para geração do \textit{Ground Truth} dos objetos.
+
+%estágios (E) também foram utilizados para refinar o mapa de confiança previsto. 
+O método proposto foi avaliado pelo banco de dados FISHCV155V, desenvolvido pelo grupo INOVISÃO da UCDB em parceria com o IFMS e a empresa Projeto Pacu. Neste contexto foi analisado e testado a contagem de alevinos, que são peixes recém chocados e se movem irrefletidamente. A arquitetura obteve $MAE = 0.11$ e $\textit{F-measure} = 98\%$ com $\sigma = 1.1$, utilizando o vetor de deslocamento temporal dos objetos. O método demonstrou que o vetor de deslocamento dos objetos pode auxiliar na detecção e a rotulação no tipo ponto pode ser o caminho para contar quantidades excessivas de objetos em uma imagem.  
+
+%Ao utilizar 2 quadros auxiliares, a técnica obteve erro médio absoluto (MAE) de 0.12, um erro quadrático médio de raiz (RMSE) igual a 0, coeficiente de determinação ($R^2$) igual a 0,977 e a média harmônica da métrica F1 igual a 98.4\% de acertos. O método demonstrou ser eficiente na localização e contagem de alevinos
+
+
+%As 4 primeiras camadas da VGG19 foram aplicadas para estimar o mapa de recursos e camadas convolucionais foram empregadas para aprimorar tal mapa de maneira com que a presença do(s) alevino(s) nas imagens se sobressaia(m) ao fundo. O método utiliza a presciência das localizações dos peixes nos quadros anteriores para um refinamento do mapa de densidade do quadro atual. A arquitetura proposta foi ratificada através de experimentos com vídeos do mundo real. A média harmônica da métrica F1 obteve uma exatidão de 98,4\% na contagem utilizando como reforço o deslocamento realizado pelo alevino através da posição onde ele se encontrava no quadro anterior. A métrica de erro NRMSE obteve o valor 0, e as métricas MAE e MSE obtiveram valores 0.12 e 0.15 sucessivamente.
+
+%Portuguese Text
+
+%This paper presents a Convolutional Neural Network (CNN) approach for counting and locating ob-jects with high-ensity. To the best of our knowledge, this is the first object counting and locatingmethod based on a feature map enhancement and a Multi-tage Refinement of the confidence map.The proposed method was evaluated in two counting data-ets: tree and car. For the tree data-et, ourmethod returned a mean absolute error (MAE) of 2.05, a root-ean-quared error (RMSE) of 3.57and a coefficient of determination (R 2 ) of 0.977. In the car data-et (CARPK and PUCPR+), ourmethod was superior to state-f-he-rt methods like Deep-oU-NN, VGG-AP-R, VGG-AP,LPN, RetinaNet, and others. In the CARPK and PUCPR+ data-ets, it achieved an MAE of 4.45 and3.16, an RMSE of 6.18 and 4.39, and an R 2 of 0.975 and 0.999, respectively. The method is suitablefor dealing with high object-ensity, returning a state-f-he-rt performance for counting and locatingobjects.
+
+%The purpose of this work is to develop computational intelligence models based on neuralnetworks (NN), fuzzy models (FM), support vector machines (SVM) and long short-erm memorynetworks (LSTM) to predict human pose and activity from image sequences, based on computervision approaches to gather the required features. To obtain the human pose semantics (outputclasses), based on a set of 3D points that describe the human body model (the input variablesof the predictive model), prediction models were obtained from the acquired data, for example,video images. In the same way, to predict the semantics of the atomic activities that compose anactivity, based again in the human body model extracted at each video frame, prediction modelswere learned using LSTM networks. In both cases the best learned models were implemented in anapplication to test the systems. The SVM model obtained 95.97\% of correct classification of the sixdifferent human poses tackled in this work, during tests in different situations from the training phase.The implemented LSTM learned model achieved an overall accuracy of 88\%, during tests in differentsituations from the training phase. These results demonstrate the validity of both approaches topredict human pose and activity from image sequences. Moreover, the system is capable of obtainingthe atomic activities and quantifying the time interval in which each activity takes place.

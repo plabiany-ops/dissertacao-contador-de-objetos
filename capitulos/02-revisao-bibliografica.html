@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Capítulo 2 — Revisão Bibliográfica</title>
+<meta name="description" content="Dissertação de mestrado de Plabiany Rodrigo Acosta: contador de objetos em vídeos usando redes neurais convolucionais.">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-inner">
+    <a class="brand" href="../index.html">
+      <strong>Contador de objetos em vídeos</strong>
+      <span>Dissertação · Plabiany R. Acosta</span>
+    </a>
+    <nav class="toc" aria-label="Sumário">
+      <a class="toc-chapter" href="../index.html">Capa</a>
+      <a class="toc-chapter" href="../preliminares.html">Preliminares</a>
+      <div class="toc-sep"></div>
+      <a class="toc-chapter" href="01-introducao.html"><span class="toc-num">1.</span> Introdução</a>
+      <a class="toc-chapter active" href="02-revisao-bibliografica.html"><span class="toc-num">2.</span> Revisão Bibliográfica</a>
+      <a class="toc-sub" href="02-revisao-bibliografica.html#contagem-de-peixes"><span class="toc-num">2.1</span> Contagem de Peixes</a>
+      <a class="toc-chapter" href="03-metodo-proposto.html"><span class="toc-num">3.</span> Método Proposto</a>
+      <a class="toc-chapter" href="04-experimentos-e-resultados.html"><span class="toc-num">4.</span> Experimentos e Resultados</a>
+      <a class="toc-chapter" href="05-conclusoes.html"><span class="toc-num">5.</span> Conclusões</a>
+      <div class="toc-sep"></div>
+      <a class="toc-chapter" href="../figuras.html">Figuras</a>
+      <a class="toc-chapter" href="referencias.html">Referências</a>
+      <a class="pdf-link" href="../assets/dissertacao.pdf">Baixar PDF</a>
+    </nav>
+  </div>
+</aside>
+<button class="menu-toggle" type="button" aria-label="Abrir sumário" aria-controls="sidebar">☰</button>
+<div class="overlay" aria-hidden="true"></div>
+<main class="page">
+<article class="sheet">
+<header class="chapter-header"><p class="chapter-kicker">Capítulo 2</p><h1 class="chapter-title" id="chap:am">Revisão Bibliográfica</h1></header>
+<p>As Redes Neurais Convolucionais tem dominado estudos de Aprendizado
+Profundo, e demonstram resultados promissores quando testadas em
+problemas reais. Tais redes usam a convolução em pelo menos uma de suas
+camadas, sendo a convolução uma operação linear <span class="citation" data-cites="deeplearningbook">(Goodfellow; Bengio; Courville,
+2016)</span>. Além disso, são capazes de operar com uma ou mais
+dimensões, portanto é possível utilizar as imagens RGB
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3</mn><annotation encoding="application/x-tex">3</annotation></semantics></math>
+dimensões) e vídeos
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
+dimensões) como entradas para treinamento <span class="citation" data-cites="5605630">(Arel; Rose; Karnowski, 2010)</span>.</p>
+<p>Frente as dificuldades das CNN’s, conforme descrito na Seção <a data-reference="sec:Motivacao" data-reference-type="ref" href="01-introducao.html#sec:Motivacao">1.1</a>. As Redes Neurais Convolucionais
+ocuparam espaços nos artigos ciêntifícos e são considerados por muitos o
+estado da arte do Aprendizado Profundo (<em>Deep Learning</em>) <span class="citation" data-cites="DBLP:journals/corr/abs-1904-00889 8437104 8489369 rs11010011 8186148 Zhao2017CVPR DBLP:journals/corr/CaoSWS16 8186148 DBLP:journals/corr/CaoSWS16 articleLuiz">(Aparna
+et al., 2018; Cao et al., 2016, 2016; Laguna et al., 2019; Li et al.,
+2018; Luiz Antonio Macarini, 2019; S. Arruda et al., 2018; Tayara; Gil
+Soo; Chong, 2018, 2018; Zhao et al., 2017)</span>.</p>
+<p><span data-label="sec:relatedWork" id="sec:relatedWork"></span></p>
+<p>Rotular imagens tornou-se um problema significativo, pois quanto
+maior a quantidade de amostras, melhor serão os resultados nas
+predições. Por outro lado, um grande desafio na contagem é a detecção de
+objetos muitos próximos ou em oclusão, sendo que muitos métodos acabam
+detectando dois objetos como um <span class="citation" data-cites="article 8451787 inproceedings DBLP:journals/corr/abs-1711-04433 8489369 8127090 s17040905 DBLP:journals/corr/abs-1804-00307 articleLuiz DBLP:journals/corr/CheangCT17a">(Cheang;
+Cheang; Tay, 2017; Kellenberger; Volpi; Tuia, 2017; Liu et al., 2018;
+Liu et al., 2019b; Luiz Antonio Macarini, 2019; Ming Liu et al., 2018;
+Rahnemoonfar; Sheppard, 2017; S. Arruda et al., 2018; Zhang et al.,
+2015; Zhang; Shi; Chen, 2017)</span>.</p>
+<p><span class="citation" data-cites="Cao2017">(Cao et al., 2017)</span>
+demonstrou o início de uma linha de pesquisa que abrange a detecção de
+pessoas e a estimativa das partes do corpo em tempo real utilizando
+Redes Neurais Convolucionais. O trabalho propõe o cálculo dos membros de
+cada pessoa detectada além de uma estimativa do vetor de deslocamento
+desses membros. Dentre as adversidades encontradas pela técnica de <span class="citation" data-cites="Cao2017">(Cao et al., 2017)</span>, uma
+delas esta em detectar indivíduos que se encontram na imagem, porém com
+membros em oclusão. <span class="citation" data-cites="Cao2017">(Cao et
+al., 2017)</span> utiliza a conexão de membros para detectar e assim
+estimar o corpo humano nas imagens. Desta maneira, cada membro estimado
+possui um ponto e linhas que ligam tais pontos. Com o intuito de
+distinguir cada pessoa nas predições, <span class="citation" data-cites="Cao2017">(Cao et al., 2017)</span> dividiram as predições em
+conjuntos disjuntos. Os autores assumem que todos os pontos preditos
+pelo modelo são vértices, e as linhas que ligam os membros contemplam as
+arestas. Assumindo assim um grafo para cada corpo humano predito.</p>
+<p>O método foi avaliado com base no banco de dados <em>MPII-Person
+Dataset</em> e <em>COCO Keypoints Challenge</em>. Para avaliar os
+resultados obtidos, <span class="citation" data-cites="Cao2017">(Cao et
+al., 2017)</span> calcularam a média da precisão das partes do corpo
+estimados. Assim, o método alcançou uma média de precisão dos membros de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>91.2</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">91.2\%</annotation></semantics></math>
+para o banco de dados <em>MPII Multi-Person</em>. O banco de dados COCO
+obteve uma precisão de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>68.2</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">68.2\%</annotation></semantics></math>
+para detecção de pessoas em larga escala.</p>
+<p>Em 2018 <span class="citation" data-cites="Cao2018">(Cao et al.,
+2018)</span> propôs o novo estado da arte para a estimativa da pose 2D
+de pessoas presentes nas imagens em tempo real. As poses são construídas
+com o auxílio de campos de afinidades que estimam os membros do corpo
+humano, assim como no trabalho de 2017 <span class="citation" data-cites="Cao2017">(Cao et al., 2017)</span>. Além da releitura dos
+resultados obtidos no banco de dados utilizados no artigo anterior, são
+apresentados os resultados obtidos pelo metodo para o banco de dados
+<em>Foot Keypoint Dataset</em> e uma estimativa da pose de veículos. O
+método obteve
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>77.9</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">77.9\%</annotation></semantics></math>
+de precisão no conjunto de validação para estimativa da posição humana,
+e a estimativa da pose de veículos nas imagens em tempo real obteve
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>70.1</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">70.1\%</annotation></semantics></math>
+no conjunto de validação.</p>
+<p>Em vídeos a detecção e a contagem acontecem em cada quadro do vídeo.
+Assim os vídeos proporcionam grandes atributos auxiliares na extração
+das características dos objetos. Uma vez que é possível obter o
+rastreamento do objeto, a localização, se houve locomoção, se houve
+alteração no seu formato durante o deslocamento, entre outros . Por
+outra perspectiva a quantidade excessiva de objetos de interesse nas
+imagens, fazem com que alguns objetos acabem oclusos, impedindo uma
+extração de características próxima do ideal, para aquele objeto
+individualmente.</p>
+<p>Contar peixes tem se tornado o foco de pesquisadores pelo mundo, pois
+obter a quantidade exata de peixes presentes em um criadouro auxilia na
+produção <span class="citation" data-cites="FAO">(FAO, 2016)</span>. A
+distribuição desigual dos peixes a serem contados demanda métodos de
+CNN’s que consigam distinguir cada objeto individualmente <span class="citation" data-cites="article Simonyan14c inproceedings 8451787">(Liu et al.,
+2019b; Ming Liu et al., 2018; Simonyan; Zisserman, 2014; Zhang et al.,
+2015)</span>. Nesse trabalho, é proposto uma técnica para contar
+objetos, tendo a ciência indireta das suas localizações em um instante
+anterior. Na seção a seguir são apresentados métodos para contagem de
+peixes.</p>
+<h2 class="section-title" id="contagem-de-peixes"><span class="sec-num">2.1</span> Contagem de Peixes</h2>
+<p><span class="citation" data-cites="Junior2019UFMS">(Silva Oliveira
+Junior, 2019)</span> propôs a contagem e estimativa da massa de alevinos
+em imagens. O trabalho inclui também um comparativo entre redes
+convolucionais profundas e algoritmos rasos de regressão. O autor
+enfatiza que a iluminação presente nas imagens são fundamentais para uma
+extração relevante das formas de cada objeto. Uma limiarização é
+aplicada nas imagens de entrada para separar os pixels pertencentes aos
+peixes do fundo. O <em>SLIC Superpixels</em> <span class="citation" data-cites="SLIC">(Achanta et al., 2012)</span> é aplicado com o intuito
+de agrupar os pixels que possuem semelhanças, o filtro Kalman <span class="citation" data-cites="Kalman">(Bianco; Terra, 2009)</span> nas
+regiões de interesse e por fim a exclusão do fundo. Além disso é levado
+em consideração pelo método a quantidade de vezes que um objeto foi
+contado. O melhor resultado foi obtido após o estudo de diversos
+parâmetros empíricos (e.g., limiar da segmentação, distância entre
+objetos, etc), tendo uma média dos erros absolutos de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn><mo>,</mo><mn>99</mn></mrow><annotation encoding="application/x-tex">5,99</annotation></semantics></math>
+unidade de alevinos.</p>
+<p><span class="citation" data-cites="Junior2019UFMS">(Silva Oliveira
+Junior, 2019)</span> também comparou o uso dos seguintes algoritmos
+rasos de classificação: IBK, com
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">k = 3</annotation></semantics></math>,
+J48, e SMO. O algoritmo J48 obteve o melhor resultado, atingindo uma
+acurácia de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>58</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">58\%</annotation></semantics></math>,
+revocação
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>58</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">58\%</annotation></semantics></math>
+e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="italic">𝐹-𝑚𝑒𝑎𝑠𝑢𝑟𝑒</mtext><mo>=</mo><mn>58</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">\textit{F-measure} = 58\%</annotation></semantics></math>.
+O comparativo entre as redes convolucionais deu-se atraves da
+InceptionV3, ResNet50, VGG16, VGG19 e Xception. Tendo como destaque a
+ResNet50 <span class="citation" data-cites="ResNet50">(He et al.,
+2015)</span> que obteve
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>67</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">67\%</annotation></semantics></math>
+de acurácia no conjunto de testes. O autor destaca que a transferência
+de aprendizado pode acentuar os resultados, visto que foi realizado um
+comparativo entre a inicialização da ResNet com e sem os pesos
+pré-treinados da IMAGENET <span class="citation" data-cites="IMAGENET">(Deng et al., 2009)</span>. O trabalhdo de <span class="citation" data-cites="Junior2019UFMS">(Silva Oliveira Junior,
+2019)</span> mostra que as CNN’s se sobresaem quando comparadas a
+algoritmos rasos.</p>
+<p><span class="citation" data-cites="Erikson">(Morais et al.,
+2005)</span> propõe a contagem de peixes e a classificação de espécies.
+Bem como a avaliação da eficácia da escada de peixes (vide Seção <a data-reference="sec:Aplicação" data-reference-type="ref" href="01-introducao.html#sec:Aplicação">1.2</a>), também é abordado pela
+dissertação de mestrado. O método alcançou
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>80</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">80\%</annotation></semantics></math>
+de acurácia na contagem utilizando o rastreador bayesiano de multiplos
+objetos (BraMBLe). A contagem dos peixes acontecem em uma sequência de
+imagens, através de um rastreamento realizado para cada objeto de
+interesse. Nesse contexto os objetos são detectados pela estimativa da
+trajetória realizada por ele na sequência de quadros. Assim quando um
+objeto sai de cena, e um outro começa a aparecer, uma nova trajetória é
+construída para este peixe. O esquema de estimar a trajetória do peixe
+em cena, fez com que o trabalho conseguisse distinguir, por exemplo,
+dois peixes, que no início do vídeo estão juntos, porém cada um toma um
+rumo distinto no decorrer do vídeo.</p>
+<p><span class="citation" data-cites="ICESJournal">(Tseng; Kuo,
+2020)</span> apresentou a combinação da ResNet101 <span class="citation" data-cites="ResNet50">(He et al., 2015)</span>, e a FPN (<em>feature
+pyramid network</em> <span class="citation" data-cites="FPN">(Lin et
+al., 2016)</span>) para contar e detectar peixes. O resultado obtido foi
+de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>77.3</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">77.3\%</annotation></semantics></math>
+de precisão e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>93.8</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">93.8\%</annotation></semantics></math>
+de revocação, na contagem de peixes. <span class="citation" data-cites="YOLOFish">(Sung; Yu; Girdhar, 2017)</span> aplicou a Rede
+Neural Convolucional YOLO (<em>You Only Look Once</em>) na detecção de
+peixes no fundo do mar. A YOLO alcançou
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>93</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">93\%</annotation></semantics></math>
+de acurácia, sendo que os autores afirmam que a CNN não obteve uma boa
+acurácia em lugares com pouca iluminação.</p>
+<p><span class="citation" data-cites="FingerLing">(Lainez; Gonzales,
+2019)</span> apresentou uma técnica com 4 passos principais para a
+contagem de alevinos: redimensionamento das imagens de entrada para
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>400</mn><mo>×</mo><mn>400</mn></mrow><annotation encoding="application/x-tex">400\times400</annotation></semantics></math>
+pixels, converter as imagens para escala de cinza, fatiar cada imagem em
+16 ou 36 segmentos, encontrar o valor de limiar e por fim detectar e
+contar alevinos, utilizando uma CNN. A CNN aplicada para detectar e
+contar os alevinos é uma proposta dos autores <span class="citation" data-cites="FingerLing">(Lainez; Gonzales, 2019)</span>, e a rede
+consiste basicamente em duas camadas convolucionais seguidas de
+<em>Pooling</em> e no fim uma camada totalmente conectada. A rede possui
+duas camadas convolucionais, seguidas de <em>Pooling</em> e por último
+uma camada totalmente conectada. A detecção e contagem obteve uma
+precisão de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>99.63</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">99.63\%</annotation></semantics></math>
+e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>99.17</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">99.17\%</annotation></semantics></math>.</p>
+<p>Os trabalhos citados comprovam a eficácia das CNN’s quando testadas
+em várias situações de contagem no mundo real. Os trabalhos que realizam
+a contagem em vídeos quase sempre utiliza informações de várias cenas
+para auxiliar na detecção. A técnica de utilizar cenas anteriores para
+melhorar os resultados, será avaliada neste trabalho, pois as
+localizações anteriores de cada objeto são levadas em consideração.</p>
+
+<nav class="pager" aria-label="Navegação entre páginas">
+<a class="prev" href="01-introducao.html"><span class="label">Anterior</span>Capítulo 1 — Introdução</a>
+<a class="next" href="03-metodo-proposto.html"><span class="label">Próximo</span>Capítulo 3 — Método Proposto</a>
+</nav>
+<footer class="site-footer">
+  <p>Plabiany Rodrigo Acosta · Dissertação de Mestrado · FACOM/UFMS · 2021</p>
+  <p><a href="../assets/dissertacao.pdf">Versão em PDF</a></p>
+</footer>
+</article>
+</main>
+<script src="../assets/js/site.js"></script>
+</body>
+</html>

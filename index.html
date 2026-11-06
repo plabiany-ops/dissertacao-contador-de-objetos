@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contador de objetos em vídeos usando redes neurais convolucionais</title>
+<meta name="description" content="Dissertação de mestrado de Plabiany Rodrigo Acosta: contador de objetos em vídeos usando redes neurais convolucionais.">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-inner">
+    <a class="brand" href="index.html">
+      <strong>Contador de objetos em vídeos</strong>
+      <span>Dissertação · Plabiany R. Acosta</span>
+    </a>
+    <nav class="toc" aria-label="Sumário">
+      <a class="toc-chapter active" href="index.html">Capa</a>
+      <a class="toc-chapter" href="preliminares.html">Preliminares</a>
+      <div class="toc-sep"></div>
+      <a class="toc-chapter" href="capitulos/01-introducao.html"><span class="toc-num">1.</span> Introdução</a>
+      <a class="toc-chapter" href="capitulos/02-revisao-bibliografica.html"><span class="toc-num">2.</span> Revisão Bibliográfica</a>
+      <a class="toc-chapter" href="capitulos/03-metodo-proposto.html"><span class="toc-num">3.</span> Método Proposto</a>
+      <a class="toc-chapter" href="capitulos/04-experimentos-e-resultados.html"><span class="toc-num">4.</span> Experimentos e Resultados</a>
+      <a class="toc-chapter" href="capitulos/05-conclusoes.html"><span class="toc-num">5.</span> Conclusões</a>
+      <div class="toc-sep"></div>
+      <a class="toc-chapter" href="figuras.html">Figuras</a>
+      <a class="toc-chapter" href="capitulos/referencias.html">Referências</a>
+      <a class="pdf-link" href="assets/dissertacao.pdf">Baixar PDF</a>
+    </nav>
+  </div>
+</aside>
+<button class="menu-toggle" type="button" aria-label="Abrir sumário" aria-controls="sidebar">☰</button>
+<div class="overlay" aria-hidden="true"></div>
+<main class="page">
+<div class="landing"><section class="hero">
+  <div class="hero-content">
+    <p class="kicker">Dissertação de Mestrado · FACOM/UFMS</p>
+    <h1>Contador de objetos em vídeos usando redes neurais convolucionais</h1>
+    <p class="hero-author">Plabiany Rodrigo Acosta</p>
+    <p class="hero-meta">Orientador: Prof. Dr. Wesley Nunes Gonçalves<br>Universidade Federal de Mato Grosso do Sul · Campo Grande · 2021</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="capitulos/01-introducao.html">Ler a dissertação</a>
+      <a class="btn btn-ghost" href="assets/dissertacao.pdf">Baixar PDF</a>
+    </div>
+  </div>
+</section>
+<div class="resumo-grid">
+  <article class="card"><h2>Resumo</h2>
+<p>Este trabalho apresenta um método de Rede Neural Convolutional (CNN)
+para contar e localizar objetos em vídeos através de mapas de densidade.
+Cada objeto é representado por um ponto apenas. Desta forma um núcleo
+Gaussiano 2D é aplicado em cada ponto para originar o <em>Ground
+Truth</em> do mapa de densidade. O método recebe um quadro do vídeo em
+um instante
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+e o quadro no instante
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t-1</annotation></semantics></math>.
+Desta forma Vetores de Deslocamento Temporal dos objetos são estimados,
+e um refinamento do mapa de densidade acontece através de estágios. São
+apresentados um comparativo na quantidade de estágios utilizados nos
+ramos de refinamento, e uma variação de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>
+para geração do <em>Ground Truth</em> dos objetos.</p>
+<p>O método proposto foi avaliado pelo banco de dados FISHCV155V,
+desenvolvido pelo grupo INOVISÃO da UCDB em parceria com o IFMS e a
+empresa Projeto Pacu. Neste contexto foi analisado e testado a contagem
+de alevinos, que são peixes recém chocados e se movem irrefletidamente.
+A arquitetura obteve
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>A</mi><mi>E</mi><mo>=</mo><mn>0.11</mn></mrow><annotation encoding="application/x-tex">MAE = 0.11</annotation></semantics></math>
+e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="italic">𝐹-𝑚𝑒𝑎𝑠𝑢𝑟𝑒</mtext><mo>=</mo><mn>98</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">\textit{F-measure} = 98\%</annotation></semantics></math>
+com
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>1.1</mn></mrow><annotation encoding="application/x-tex">\sigma = 1.1</annotation></semantics></math>,
+utilizando o vetor de deslocamento temporal dos objetos. O método
+demonstrou que o vetor de deslocamento dos objetos pode auxiliar na
+detecção e a rotulação no tipo ponto pode ser o caminho para contar
+quantidades excessivas de objetos em uma imagem.</p>
+</article>
+  <article class="card"><h2>Abstract</h2>
+<p>This work presents a method of Neural Network Convolutional (CNN) to
+count and locate objects in videos through density maps. Each object is
+represented by a dot only. In this way a 2D Gaussian core is applied at
+each point to originate the <em>Ground Truth</em> of the density map.
+The method receives a frame from the video in an instant
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+and the frame in the instant
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t-1</annotation></semantics></math>.
+In this way, the time displacement vectors of the objects are estimated,
+and a refinement of the density map takes place through stages.</p>
+<p>A comparison of the number of stages used in the refinement branches
+is presented, as well as a variation of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>
+to generate the <em>Ground Truth</em> of the objects.</p>
+<p>The proposed method was evaluated by the FISHCV155V database,
+developed by the UCDB INOVISÃO group in partnership with IFMS and
+Projeto Pacu. In this context, the count of fingerlings, which are newly
+hatched fish and move thoughtlessly, was analyzed and tested. The
+architecture obtained
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>A</mi><mi>E</mi><mo>=</mo><mn>0.11</mn></mrow><annotation encoding="application/x-tex">MAE = 0.11</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="italic">𝐹-𝑚𝑒𝑎𝑠𝑢𝑟𝑒</mtext><mo>=</mo><mn>98</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">\textit{F-measure} = 98\%</annotation></semantics></math>
+with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>1.1</mn></mrow><annotation encoding="application/x-tex">\sigma = 1.1</annotation></semantics></math>,
+using the time displacement vector of the objects. The method
+demonstrated that the vector of displacement of the objects can assist
+in the detection and the labeling in the point type can be the way to
+count excessive amounts of objects in an image.</p>
+</article>
+</div>
+<section class="sumario">
+  <h2>Sumário</h2>
+  <ol class="sumario-list">
+    <li><a href="preliminares.html">Preliminares</a></li>
+    <li><a href="capitulos/01-introducao.html"><span class="sum-num">1.</span> Introdução</a><ul><li><a href="capitulos/01-introducao.html#sec:Motivacao"><span class="toc-num">1.1</span> Motivação e Lacuna</a></li><li><a href="capitulos/01-introducao.html#sec:Aplicação"><span class="toc-num">1.2</span> Aplicação em Contagem de Peixes</a></li><li><a href="capitulos/01-introducao.html#sec:objetivos"><span class="toc-num">1.3</span> Objetivos</a></li><li><a href="capitulos/01-introducao.html#objetivo-geral"><span class="toc-num">1.4</span> Objetivo Geral</a></li><li><a href="capitulos/01-introducao.html#objetivos-específicos"><span class="toc-num">1.5</span> Objetivos Específicos</a></li></ul></li><li><a href="capitulos/02-revisao-bibliografica.html"><span class="sum-num">2.</span> Revisão Bibliográfica</a><ul><li><a href="capitulos/02-revisao-bibliografica.html#contagem-de-peixes"><span class="toc-num">2.1</span> Contagem de Peixes</a></li></ul></li><li><a href="capitulos/03-metodo-proposto.html"><span class="sum-num">3.</span> Método Proposto</a><ul><li><a href="capitulos/03-metodo-proposto.html#sec:Images"><span class="toc-num">3.1</span> Pré-Processamento das Imagens</a></li><li><a href="capitulos/03-metodo-proposto.html#sec:VGG"><span class="toc-num">3.2</span> Extração do Mapa de Características</a></li><li><a href="capitulos/03-metodo-proposto.html#sec:EstimativaDensidade"><span class="toc-num">3.3</span> Estimativa do Mapa de Densidade</a></li><li><a href="capitulos/03-metodo-proposto.html#sec:EstimativaVetores"><span class="toc-num">3.4</span> Estimativa dos Vetores de
+Deslocamento</a></li><li><a href="capitulos/03-metodo-proposto.html#localização-dos-objetos-pelo-mapa-de-densidade"><span class="toc-num">3.5</span> Localização dos
+Objetos pelo Mapa de Densidade</a></li></ul></li><li><a href="capitulos/04-experimentos-e-resultados.html"><span class="sum-num">4.</span> Experimentos e Resultados</a><ul><li><a href="capitulos/04-experimentos-e-resultados.html#chap:basedeimagens"><span class="toc-num">4.1</span> Base de Imagens</a></li><li><a href="capitulos/04-experimentos-e-resultados.html#sec:resultados"><span class="toc-num">4.2</span> Resultados e Discussão</a></li></ul></li><li><a href="capitulos/05-conclusoes.html"><span class="sum-num">5.</span> Conclusões</a><ul><li><a href="capitulos/05-conclusoes.html#sec:c:resumo"><span class="toc-num">5.1</span> Resumo dos Objetivos e Principais Resultados</a></li><li><a href="capitulos/05-conclusoes.html#sec:c:limitacoes"><span class="toc-num">5.2</span> Limitações</a></li><li><a href="capitulos/05-conclusoes.html#sec:c:futuros"><span class="toc-num">5.3</span> Trabalhos Futuros</a></li></ul></li>
+    <li><a href="capitulos/referencias.html">Referências</a></li>
+    <li><a href="figuras.html">Figuras</a></li>
+  </ol>
+</section>
+<section class="about">
+  <h2>Sobre</h2>
+  <div class="about-grid">
+    <div><h3>Autor</h3><p>Plabiany Rodrigo Acosta</p></div>
+    <div><h3>Orientação</h3><p>Prof. Dr. Wesley Nunes Gonçalves</p></div>
+    <div><h3>Instituição</h3><p>Faculdade de Computação — FACOM<br>Universidade Federal de Mato Grosso do Sul</p></div>
+    <div><h3>Ano</h3><p>2021</p></div>
+  </div>
+</section></div>
+</main>
+<script src="assets/js/site.js"></script>
+</body>
+</html>

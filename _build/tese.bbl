@@ -1,0 +1,302 @@
+\begin{thebibliography}{}
+
+\bibitem[UHE, 2020]{UHE}
+ (2020).
+\newblock {UHE Igarapava}consórcio da usina hidrelétrica de igarapava.
+\newblock \url{http://www.uhe-igarapava.com.br/zpublisher/secoes/home.asp}.
+\newblock Accessed: 2020-01-01.
+
+\bibitem[Abadi et~al., 2015]{tensorflow2015-whitepaper}
+Abadi, M., Agarwal, A., Barham, P., Brevdo, E., Chen, Z., Citro, C., Corrado, G.~S., Davis, A., Dean, J., Devin, M., Ghemawat, S., Goodfellow, I., Harp, A., Irving, G., Isard, M., Jia, Y., Jozefowicz, R., Kaiser, L., Kudlur, M., Levenberg, J., Man\'{e}, D., Monga, R., Moore, S., Murray, D., Olah, C., Schuster, M., Shlens, J., Steiner, B., Sutskever, I., Talwar, K., Tucker, P., Vanhoucke, V., Vasudevan, V., Vi\'{e}gas, F., Vinyals, O., Warden, P., Wattenberg, M., Wicke, M., Yu, Y., e Zheng, X. (2015).
+\newblock {TensorFlow}: Large-scale machine learning on heterogeneous systems.
+\newblock Software available from tensorflow.org.
+
+\bibitem[Achanta et~al., 2012]{SLIC}
+Achanta, R., Shaji, A., Smith, K., Lucchi, A., Fua, P., e Susstrunk, S. (2012).
+\newblock Slic superpixels compared to state-of-the-art superpixel methods.
+\newblock {\em IEEE transactions on pattern analysis and machine intelligence}, 34.
+
+\bibitem[Aich and Stavness, 2018]{Aich2018ImprovingOC}
+Aich, S. e Stavness, I. (2018).
+\newblock Improving object counting with heatmap regulation.
+
+\bibitem[{Aparna} et~al., 2018]{8437104}
+{Aparna}, P., {MP}, H., {Sounder}, H., {K}, N., {P V}, V., e {Hebbar}, R. (2018).
+\newblock Cnn based technique for automatic tree counting using very high resolution data.
+\newblock In {\em 2018 International Conference on Design Innovations for 3Cs Compute Communicate Control (ICDI3C)}, páginas 127--129.
+
+\bibitem[{Arel} et~al., 2010]{5605630}
+{Arel}, I., {Rose}, D.~C., e {Karnowski}, T.~P. (2010).
+\newblock Deep machine learning - a new frontier in artificial intelligence research [research frontier].
+\newblock {\em IEEE Computational Intelligence Magazine}, 5(4):13--18.
+
+\bibitem[Azimi et~al., 2018]{CarCount}
+Azimi, S., Vig, E., Kurz, F., e Reinartz, P. (2018).
+\newblock Segment-and-count: Vehicle counting in aerial imagery using atrous convolutional neural networks.
+\newblock {\em ISPRS - International Archives of the Photogrammetry, Remote Sensing and Spatial Information Sciences}, XLII-1:19--23.
+
+\bibitem[Bianco and Terra, 2009]{Kalman}
+Bianco, A.~F. e Terra, M.~H. (2009).
+\newblock Filtros de kalman robustos para sistemas dinâmicos singulares em tempo discreto.
+\newblock Master's thesis, Universidade de São Paulo.
+
+\bibitem[Cao et~al., 2018]{Cao2018}
+Cao, Z., Hidalgo, G., Simon, T., Wei, S., e Sheikh, Y. (2018).
+\newblock Openpose: Realtime multi-person 2d pose estimation using part affinity fields.
+\newblock {\em CoRR}, abs/1812.08008.
+
+\bibitem[Cao et~al., 2016]{DBLP:journals/corr/CaoSWS16}
+Cao, Z., Simon, T., Wei, S., e Sheikh, Y. (2016).
+\newblock Realtime multi-person 2d pose estimation using part affinity fields.
+\newblock {\em CoRR}, abs/1611.08050.
+
+\bibitem[Cao et~al., 2017]{Cao2017}
+Cao, Z., Simon, T., Wei, S.-E., e Sheikh, Y. (2017).
+\newblock Realtime multi-person 2d pose estimation using part affinity fields.
+\newblock In {\em IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}, páginas 1302--1310.
+
+\bibitem[Cheang et~al., 2017]{DBLP:journals/corr/CheangCT17a}
+Cheang, E.~K., Cheang, T.~K., e Tay, Y.~H. (2017).
+\newblock Using convolutional neural networks to count palm trees in satellite images.
+\newblock {\em CoRR}, abs/1701.06462.
+
+\bibitem[Chollet et~al., 2015]{chollet2015keras}
+Chollet, F. et~al. (2015).
+\newblock Keras.
+\newblock \url{https://keras.io}.
+
+\bibitem[d.~S.~Arruda et~al., 2018]{8489369}
+d.~S.~Arruda, M., Spadon, G., Rodrigues, J.~F., Gonçalves, W.~N., e Machado, B.~B. (2018).
+\newblock Recognition of endangered pantanal animal species using deep learning methods.
+\newblock In {\em 2018 International Joint Conference on Neural Networks (IJCNN)}, páginas 1--8.
+
+\bibitem[Danelljan et~al., 2015]{Danelljan_2015_ICCV_Workshops}
+Danelljan, M., Hager, G., Shahbaz~Khan, F., e Felsberg, M. (2015).
+\newblock Convolutional features for correlation filter based visual tracking.
+\newblock In {\em The IEEE International Conference on Computer Vision (ICCV) Workshops}.
+
+\bibitem[Deng et~al., 2009]{IMAGENET}
+Deng, J., Dong, W., Socher, R., Li, L.-J., Li, K., e Fei-Fei, L. (2009).
+\newblock {ImageNet: A Large-Scale Hierarchical Image Database}.
+\newblock In {\em CVPR09}.
+
+\bibitem[FAO, 2016]{FAO}
+FAO, editor (2016).
+\newblock {\em FAO}.
+\newblock FAO, Rome, Italy.
+
+\bibitem[{Ferrari} et~al., 2015]{7320116}
+{Ferrari}, A., {Lombardi}, S., e {Signoroni}, A. (2015).
+\newblock Bacterial colony counting by convolutional neural networks.
+\newblock In {\em 2015 37th Annual International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC)}, páginas 7458--7461.
+
+\bibitem[Girshick, 2015]{DBLP:journals/corr/Girshick15}
+Girshick, R.~B. (2015).
+\newblock Fast {R-CNN}.
+\newblock {\em CoRR}, abs/1504.08083.
+
+\bibitem[Goldman et~al., 2019]{Goldman2019CVPR}
+Goldman, E., Herzig, R., Eisenschtat, A., Goldberger, J., e Hassner, T. (2019).
+\newblock Precise detection in densely packed scenes.
+\newblock In {\em IEEE Conf. on Computer Vision and Pattern Recognition}, páginas 5227--5236.
+
+\bibitem[Gonçalves et~al., 2020]{ExtractHuman}
+Gonçalves, P., Lourenço, B., Santos, S., Barlogis, R., e Misson, A. (2020).
+\newblock Computer vision intelligent approaches to extract human pose and its activity from image sequences.
+\newblock {\em Electronics}, 9:159.
+
+\bibitem[Goodfellow et~al., 2016]{deeplearningbook}
+Goodfellow, I., Bengio, Y., e Courville, A. (2016).
+\newblock {\em Deep Learning}.
+\newblock MIT Press.
+\newblock \url{http://www.deeplearningbook.org}.
+
+\bibitem[He et~al., 2015]{ResNet50}
+He, K., Zhang, X., Ren, S., e Sun, J. (2015).
+\newblock Deep residual learning for image recognition.
+\newblock {\em CoRR}, abs/1512.03385.
+
+\bibitem[{Hou} et~al., 2019]{8898173}
+{Hou}, B., {Li}, J., {Zhang}, X., {Wang}, S., e {Jiao}, L. (2019).
+\newblock Object detection and trcacking based on convolutional neural networks for high-resolution optical remote sensing video.
+\newblock In {\em IGARSS 2019 - 2019 IEEE International Geoscience and Remote Sensing Symposium}, páginas 5433--5436.
+
+\bibitem[{Hsieh} et~al., 2017]{8237708}
+{Hsieh}, M., {Lin}, Y., e {Hsu}, W.~H. (2017).
+\newblock Drone-based object counting by spatially regularized regional proposal network.
+\newblock In {\em 2017 IEEE International Conference on Computer Vision (ICCV)}, páginas 4165--4173.
+
+\bibitem[Idrees et~al., 2018]{DBLP:journals/corr/abs-1808-01050}
+Idrees, H., Tayyab, M., Athrey, K., Zhang, D., Al{-}M{\'{a}}adeed, S., Rajpoot, N.~M., e Shah, M. (2018).
+\newblock Composition loss for counting, density map estimation and localization in dense crowds.
+\newblock {\em CoRR}, abs/1808.01050.
+
+\bibitem[{Jain} et~al., 1996]{ANN}
+{Jain}, A.~K., {Jianchang Mao}, e {Mohiuddin}, K.~M. (1996).
+\newblock Artificial neural networks: a tutorial.
+\newblock {\em Computer}, 29(3):31--44.
+
+\bibitem[{Kamijo} et~al., 2000]{880968}
+{Kamijo}, S., {Matsushita}, Y., {Ikeuchi}, K., e {Sakauchi}, M. (2000).
+\newblock Traffic monitoring and accident detection at intersections.
+\newblock {\em IEEE Transactions on Intelligent Transportation Systems}, 1(2):108--118.
+
+\bibitem[{Kellenberger} et~al., 2017]{8127090}
+{Kellenberger}, B., {Volpi}, M., e {Tuia}, D. (2017).
+\newblock Fast animal detection in uav images using convolutional neural networks.
+\newblock In {\em 2017 IEEE International Geoscience and Remote Sensing Symposium (IGARSS)}, páginas 866--869.
+
+\bibitem[Laguna et~al., 2019]{DBLP:journals/corr/abs-1904-00889}
+Laguna, A.~B., Riba, E., Ponsa, D., e Mikolajczyk, K. (2019).
+\newblock Key.net: Keypoint detection by handcrafted and learned {CNN} filters.
+\newblock {\em CoRR}, abs/1904.00889.
+
+\bibitem[{Lainez} and {Gonzales}, 2019]{FingerLing}
+{Lainez}, S. M.~D. e {Gonzales}, D.~B. (2019).
+\newblock Automated fingerlings counting using convolutional neural network.
+\newblock In {\em 2019 IEEE 4th International Conference on Computer and Communication Systems (ICCCS)}, páginas 67--72.
+
+\bibitem[Li et~al., 2018a]{c231stan}
+Li, F., Johnson, J., e Yeung, S. (Spring 2018a).
+\newblock Cs231n: Convolutional neural networks for visual recognition.
+\newblock \url{http://cs231n.github.io/assets/cnn/depthcol}.
+
+\bibitem[Li et~al., 2018b]{rs11010011}
+Li, W., Dong, R., Fu, H., e Yu, L. (2018b).
+\newblock Large-scale oil palm tree detection from high-resolution satellite images using two-stage convolutional neural networks.
+\newblock {\em Remote Sensing}, 11(1).
+
+\bibitem[Lin et~al., 2017]{DBLP:journals/corr/abs-1708-02002}
+Lin, T., Goyal, P., Girshick, R.~B., He, K., e Doll{\'{a}}r, P. (2017).
+\newblock Focal loss for dense object detection.
+\newblock {\em CoRR}, abs/1708.02002.
+
+\bibitem[Lin et~al., 2016]{FPN}
+Lin, T.-Y., Doll{\'{a}}r, P., Girshick, R.~B., He, K., Hariharan, B., e Belongie, S.~J. (2016).
+\newblock Feature pyramid networks for object detection.
+\newblock {\em CoRR}, abs/1612.03144.
+
+\bibitem[Liu et~al., 2018]{DBLP:journals/corr/abs-1804-00307}
+Liu, X., Chen, S.~W., Aditya, S., Sivakumar, N., Dcunha, S., Qu, C., Taylor, C.~J., Das, J., e Kumar, V. (2018).
+\newblock Robust fruit counting: Combining deep learning, tracking, and structure from motion.
+\newblock {\em CoRR}, abs/1804.00307.
+
+\bibitem[Liu et~al., 2019a]{DBLP:peri/corr/abs-1904-01333}
+Liu, Y., Shi, M., Zhao, Q., e Wang, X. (2019a).
+\newblock Point in, box out: Beyond counting persons in crowds.
+\newblock {\em CoRR}, abs/1904.01333.
+
+\bibitem[Liu et~al., 2019b]{article}
+Liu, Z., Chen, Y., Chen, B., Zhu, L., Wu, D., e Shen, G. (2019b).
+\newblock Crowd counting method based on convolutional neural network with global density feature.
+\newblock {\em IEEE Access}, PP:1--1.
+
+\bibitem[Luiz Antonio~Macarini, 2019]{articleLuiz}
+Luiz Antonio~Macarini, A. C.~S. (2019).
+\newblock Using convolutional neural network to detect and count individuals on eucalyptus plantation.
+\newblock {\em X Computer on the Beach}, páginas 1--1.
+
+\bibitem[Ma et~al., 2015]{Ma_2015_ICCV}
+Ma, C., Huang, J.-B., Yang, X., e Yang, M.-H. (2015).
+\newblock Hierarchical convolutional features for visual tracking.
+\newblock In {\em The IEEE International Conference on Computer Vision (ICCV)}.
+
+\bibitem[{Ming Liu} et~al., 2018]{8451787}
+{Ming Liu}, {Jue Jiang}, {Zhenqei Guo}, {Zenan Wang}, e {Yang Liu} (2018).
+\newblock Crowd counting with fully convolutional neural network.
+\newblock In {\em 2018 25th IEEE International Conference on Image Processing (ICIP)}, páginas 953--957.
+
+\bibitem[Morais et~al., 2005]{Erikson}
+Morais, E.~F., Campos, M. F.~M., Machado, A. M.~C., e Carceroni, R.~L. (2005).
+\newblock Rastreamento e contagem de peixes utilizando filtro preditivo.
+
+\bibitem[Nam and Han, 2016]{Nam_2016_CVPR}
+Nam, H. e Han, B. (2016).
+\newblock Learning multi-domain convolutional neural networks for visual tracking.
+\newblock In {\em The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}.
+
+\bibitem[OECD et~al., 2018]{OECD}
+OECD, Food, e of~the United~Nations, A.~O. (2018).
+\newblock Ecd-fao agricultural outlook (edition 2018).
+
+\bibitem[Rahnemoonfar and Sheppard, 2017]{s17040905}
+Rahnemoonfar, M. e Sheppard, C. (2017).
+\newblock Deep count: Fruit counting based on deep simulated learning.
+\newblock {\em Sensors}, 17(4).
+
+\bibitem[Redmon and Farhadi, 2018]{DBLP:journals/corr/abs-1804-02767}
+Redmon, J. e Farhadi, A. (2018).
+\newblock Yolov3: An incremental improvement.
+\newblock {\em CoRR}, abs/1804.02767.
+
+\bibitem[Russakovsky et~al., 2014]{DBLP:journals/corr/RussakovskyDSKSMHKKBBF14}
+Russakovsky, O., Deng, J., e Su, H. (2014).
+\newblock Imagenet large scale visual recognition challenge.
+\newblock {\em CoRR}, abs/1409.0575.
+
+\bibitem[{Sarwar} et~al., 2018]{8639306}
+{Sarwar}, F., {Griffin}, A., {Periasamy}, P., {Portas}, K., e {Law}, J. (2018).
+\newblock Detecting and counting sheep with a convolutional neural network.
+\newblock In {\em 2018 15th IEEE International Conference on Advanced Video and Signal Based Surveillance (AVSS)}, páginas 1--6.
+
+\bibitem[Sasaki, 2007]{f1}
+Sasaki, Y. (2007).
+\newblock The truth of the f-measure.
+\newblock {\em Teach Tutor Mater}.
+
+\bibitem[Silva Oliveira~Junior, 2019]{Junior2019UFMS}
+Silva Oliveira~Junior, A. (2019).
+\newblock Contagem e estimativa da massa de alevinos de pintado real utilizando técnicas de visão computacional e aprendizagem de máquina.
+\newblock Master's thesis, Universidade Federal de Mato Grosso do Sul, Campo Grande.
+
+\bibitem[Simonyan and Zisserman, 2014]{Simonyan14c}
+Simonyan, K. e Zisserman, A. (2014).
+\newblock Very deep cnn for large-scale image recognition.
+\newblock {\em CoRR}, abs/1409.1556.
+
+\bibitem[Simonyan and Zisserman, 2015]{VGG}
+Simonyan, K. e Zisserman, A. (2015).
+\newblock Very deep convolutional networks for large-scale image recognition.
+\newblock {\em CoRR}.
+
+\bibitem[{Sung} et~al., 2017]{YOLOFish}
+{Sung}, M., {Yu}, S., e {Girdhar}, Y. (2017).
+\newblock Vision based real-time fish detection using convolutional neural network.
+\newblock In {\em OCEANS 2017 - Aberdeen}, páginas 1--6.
+
+\bibitem[{Tayara} et~al., 2018]{8186148}
+{Tayara}, H., {Gil Soo}, K., e {Chong}, K.~T. (2018).
+\newblock Vehicle detection and counting in high-resolution aerial images using convolutional regression neural network.
+\newblock {\em IEEE Access}, 6:2220--2230.
+
+\bibitem[Tseng and Kuo, 2020]{ICESJournal}
+Tseng, C.-H. e Kuo, Y.-F. (2020).
+\newblock {Detecting and counting harvested fish and identifying fish types in electronic monitoring system videos using deep convolutional neural networks}.
+\newblock {\em ICES Journal of Marine Science}, 77(4):1367--1378.
+
+\bibitem[Wang and Lu, 2018]{MAE}
+Wang, W. e Lu, Y. (2018).
+\newblock Analysis of the mean absolute error (mae) and the root mean square error (rmse) in assessing rounding model.
+\newblock {\em IOP Conference Series: Materials Science and Engineering}, 324:012049.
+
+\bibitem[Wang et~al., 2019]{WANG201962}
+Wang, Y., Luo, X., Ding, L., Fu, S., e Wei, X. (2019).
+\newblock Detection based visual tracking with convolutional neural network.
+\newblock {\em Knowledge-Based Systems}, 175:62 -- 71.
+
+\bibitem[Zhang et~al., 2015]{inproceedings}
+Zhang, C., Li, H., Wang, X., e Yang, X. (2015).
+\newblock Cross-scene crowd counting via deep convolutional neural networks.
+\newblock páginas 833--841.
+
+\bibitem[Zhang et~al., 2017]{DBLP:journals/corr/abs-1711-04433}
+Zhang, L., Shi, M., e Chen, Q. (2017).
+\newblock Crowd counting via scale-adaptive convolutional neural network.
+\newblock {\em CoRR}, abs/1711.04433.
+
+\bibitem[Zhao et~al., 2017]{Zhao2017CVPR}
+Zhao, H., Shi, J., Qi, X., Wang, X., e Jia, J. (2017).
+\newblock Pyramid scene parsing network.
+\newblock In {\em The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}.
+
+\end{thebibliography}

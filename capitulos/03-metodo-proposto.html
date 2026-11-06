@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Capítulo 3 — Método Proposto</title>
+<meta name="description" content="Dissertação de mestrado de Plabiany Rodrigo Acosta: contador de objetos em vídeos usando redes neurais convolucionais.">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-inner">
+    <a class="brand" href="../index.html">
+      <strong>Contador de objetos em vídeos</strong>
+      <span>Dissertação · Plabiany R. Acosta</span>
+    </a>
+    <nav class="toc" aria-label="Sumário">
+      <a class="toc-chapter" href="../index.html">Capa</a>
+      <a class="toc-chapter" href="../preliminares.html">Preliminares</a>
+      <div class="toc-sep"></div>
+      <a class="toc-chapter" href="01-introducao.html"><span class="toc-num">1.</span> Introdução</a>
+      <a class="toc-chapter" href="02-revisao-bibliografica.html"><span class="toc-num">2.</span> Revisão Bibliográfica</a>
+      <a class="toc-chapter active" href="03-metodo-proposto.html"><span class="toc-num">3.</span> Método Proposto</a>
+      <a class="toc-sub" href="03-metodo-proposto.html#sec:Images"><span class="toc-num">3.1</span> Pré-Processamento das Imagens</a>
+      <a class="toc-sub" href="03-metodo-proposto.html#sec:VGG"><span class="toc-num">3.2</span> Extração do Mapa de Características</a>
+      <a class="toc-sub" href="03-metodo-proposto.html#sec:EstimativaDensidade"><span class="toc-num">3.3</span> Estimativa do Mapa de Densidade</a>
+      <a class="toc-subsub" href="03-metodo-proposto.html#sec:geracao_mapa"><span class="toc-num">3.3.1</span> Geração do Ground Truth do Mapa de
+Densidade</a>
+      <a class="toc-sub" href="03-metodo-proposto.html#sec:EstimativaVetores"><span class="toc-num">3.4</span> Estimativa dos Vetores de
+Deslocamento</a>
+      <a class="toc-subsub" href="03-metodo-proposto.html#sec:geracao_mapa2"><span class="toc-num">3.4.1</span> Geração do Ground Truth do Vetor de
+Deslocamento</a>
+      <a class="toc-sub" href="03-metodo-proposto.html#localização-dos-objetos-pelo-mapa-de-densidade"><span class="toc-num">3.5</span> Localização dos
+Objetos pelo Mapa de Densidade</a>
+      <a class="toc-chapter" href="04-experimentos-e-resultados.html"><span class="toc-num">4.</span> Experimentos e Resultados</a>
+      <a class="toc-chapter" href="05-conclusoes.html"><span class="toc-num">5.</span> Conclusões</a>
+      <div class="toc-sep"></div>
+      <a class="toc-chapter" href="../figuras.html">Figuras</a>
+      <a class="toc-chapter" href="referencias.html">Referências</a>
+      <a class="pdf-link" href="../assets/dissertacao.pdf">Baixar PDF</a>
+    </nav>
+  </div>
+</aside>
+<button class="menu-toggle" type="button" aria-label="Abrir sumário" aria-controls="sidebar">☰</button>
+<div class="overlay" aria-hidden="true"></div>
+<main class="page">
+<article class="sheet">
+<header class="chapter-header"><p class="chapter-kicker">Capítulo 3</p><h1 class="chapter-title" id="sec:MetodoPrincipal">Método Proposto</h1></header>
+<p>O método proposto recebe um quadro
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mi>t</mi></msub><annotation encoding="application/x-tex">I_{t}</annotation></semantics></math>
+no instante
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+e o quadro no instante anterior
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">I_{t-1}</annotation></semantics></math>.
+A saída gerada pela arquitetura consiste em um mapa de densidade 2D
+indicando a localização de cada alevino presente no quadro e a
+estimativa dos vetores de deslocamento para cada alevino.</p>
+<p>Vide as dificuldades das CNN’s em detectar objetos que se movem
+rapidamente em vídeos (Seção <a data-reference="sec:Motivacao" data-reference-type="ref" href="01-introducao.html#sec:Motivacao">1.1</a>). Este
+método recebe informações das cenas anteriores a fim de passar para os
+ramos de estimativa, a localização e formato do objeto em diversas
+ocasiões.</p>
+<p>A ordenação metodológica pode ser descrita em quatro passos
+principais conforme a Figura <a data-reference="fig:model" data-reference-type="ref" href="#fig:model">3.1</a>.
+Inicialmente, as imagens passam por um pré-processamento (passo 1) para
+construção do volume de entrada (V). Após isso um mapa de
+características é obtido para
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>V</mi><annotation encoding="application/x-tex">V</annotation></semantics></math>
+usando uma CNN (e.g., VGG19<span class="citation" data-cites="VGG">(Simonyan; Zisserman, 2015)</span>) (passo 2). O mapa
+de características é dado como entrada para dois ramos que estimam o
+mapa de densidade (passo 3) e os vetores de deslocamento (passo 4). As
+seções abaixo descrevem as etapas em detalhes.</p>
+<figure class="figura" data-latex-placement="!hbt" id="fig:model"><div class="subfigs"><div class="subfig" style="flex:0 1 100%;max-width:100%"><img class="figimg" loading="lazy" src="../assets/figuras/model.png" style="width:106.0%"/></div></div><figcaption><span class="fig-num">Figura 3.1.</span>  Método proposto recebe o quadro atual
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mi>t</mi></msub><annotation encoding="application/x-tex">I_{t}</annotation></semantics></math>
+e o quadro no instante anterior
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">I_{t-1}</annotation></semantics></math>.
+O resultado da concatenação gera um volume de entrada para a VGG-19. A
+saída desta arquitetura consiste em um mapa de características inicial.
+Esse mapa alimenta dois ramos que são responsáveis por realizar as
+predições do mapa de densidade e de vetores de deslocamento. Cada ramo é
+composto por uma série de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>E</mi><annotation encoding="application/x-tex">E</annotation></semantics></math>
+estágios que refinam a suas predições. Ambos ramos compartilham as
+informações para auxiliar na estimação.</figcaption></figure>
+<h2 class="section-title" id="sec:Images"><span class="sec-num">3.1</span> Pré-Processamento das Imagens</h2>
+<p>Dada uma imagem
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mi>t</mi></msub><annotation encoding="application/x-tex">I_t</annotation></semantics></math>
+no instante
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+com
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mo>×</mo><mi>h</mi></mrow><annotation encoding="application/x-tex">w \times h</annotation></semantics></math>
+pixels, em que
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>w</mi><annotation encoding="application/x-tex">w</annotation></semantics></math>
+é a largura e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>h</mi><annotation encoding="application/x-tex">h</annotation></semantics></math>
+é a altura da imagem, o primeiro pré-processamento consiste em
+redimensionar todas as imagens para um tamanho fixo de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \times n</annotation></semantics></math>
+pixels.</p>
+<p>O método recebe um volume de entrada
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>V</mi><annotation encoding="application/x-tex">V</annotation></semantics></math>,
+resultante da concatenação de um quadro
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mi>t</mi></msub><annotation encoding="application/x-tex">I_{t}</annotation></semantics></math>
+no instante
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+e o quadro anterior
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">I_{t-1}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo>=</mo><mo form="prefix" stretchy="false">(</mo><msub><mi>I</mi><mi>t</mi></msub><mo>,</mo><msub><mi>I</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">V = (I_{t},I_{t-1})</annotation></semantics></math>,
+conforme a figura <a data-reference="fig:entrada" data-reference-type="ref" href="#fig:entrada">3.2</a>. Sendo
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mi>t</mi></msub><annotation encoding="application/x-tex">I_{t}</annotation></semantics></math>
+uma imagem RGB com
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>512</mn><mo>×</mo><mn>512</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">512\times512\times3</annotation></semantics></math>
+pixels e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">I_{t-1}</annotation></semantics></math>
+uma outra imagem do instante anterior com a mesma dimensão, temos que
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>V</mi><annotation encoding="application/x-tex">V</annotation></semantics></math>
+possui dimensão
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>512</mn><mo>×</mo><mn>512</mn><mo>×</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">512\times512\times6</annotation></semantics></math>.</p>
+<div class="center">
+<figure class="figura" data-latex-placement="!htb" id="fig:entrada"><div class="subfigs"><div class="subfig" style="flex:0 1 90%;max-width:90%"><img class="figimg" loading="lazy" src="../assets/figuras/VE.png" style="width:90.0%"/></div></div><figcaption><span class="fig-num">Figura 3.2.</span> Ilustração do volume de entrada
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>V</mi><annotation encoding="application/x-tex">V</annotation></semantics></math>
+que consiste na concatenação de um quadro
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mi>t</mi></msub><annotation encoding="application/x-tex">I_{t}</annotation></semantics></math>
+e um quadro anterior
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">I_{t-1}</annotation></semantics></math>.</figcaption></figure>
+</div>
+<h2 class="section-title" id="sec:VGG"><span class="sec-num">3.2</span> Extração do Mapa de Características</h2>
+<p>Nessa etapa, o volume de entrada
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo>=</mo><mo form="prefix" stretchy="false">(</mo><msub><mi>I</mi><mi>t</mi></msub><mo>,</mo><msub><mi>I</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">V = (I_{t},I_{t-1})</annotation></semantics></math>
+é submetido a uma CNN VGGNet <span class="citation" data-cites="VGG">(Simonyan; Zisserman, 2015)</span> para obtenção de um
+mapa de características. Esse mapa tem como objetivo extrair informações
+relevantes da imagem de entrada. A VGGNet mostrou que a profundidade da
+CNN é um componente importante para o bom desempenho. Os autores da
+VGG19 apresentaram seis arquiteturas: duas com 11, uma com 13, duas com
+16, e uma com 19 camadas <span class="citation" data-cites="VGG">(Simonyan; Zisserman, 2015)</span>. A CNN de 19 camadas
+convolucionais e totalmente conectadas é uma das melhores arquiteturas
+dentre as propostas pelos autores, sendo uma arquitetura homogênea pois
+só executa convoluções com campo receptivo
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3 \times 3</annotation></semantics></math>
+e subamostragens
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2 \times 2</annotation></semantics></math>.
+A Figura <a data-reference="fig:model" data-reference-type="ref" href="#fig:model">3.1</a> ilustra as camadas da arquitetura
+VGG19 aplicadas no método proposto.</p>
+<p>A entrada da VGG19 consiste em duas imagens RGB com dimensão
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>512</mn><mo>×</mo><mn>512</mn><mo>×</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">512 \times 512 \times 6</annotation></semantics></math>,
+que passa por um pré-processamento inicial no qual é realizada a
+subtração da cor média de todos os pixels da imagem. Esse processo é
+repetido para todas as imagens que serão usadas para o treinamento da
+CNN. As imagens passam pelas camadas convolucionais que aplicam um
+filtro de tamanho
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3 \times 3</annotation></semantics></math>,
+por ser o menor tamanho capaz de aprender características das quatro
+direções e do centro durante o processo de convolução. O passo de
+deslocamento do filtro convolucional (<em>stride</em>) é de 1 pixel. O
+preenchimento com zeros ao redor da imagem é realizado de forma a
+preservar a dimensão da imagem após a convolução, ou seja, para os
+filtros de tamanho
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3 \times 3</annotation></semantics></math>
+é usado um preenchimento com zeros de tamanho 1. Além disso, a função de
+ativação não-linear ReLu é aplicada após cada camada convolucional.</p>
+<p>A amostragem descendente (<em>Pooling</em>) é feita através de duas
+camadas de subamostragens distribuídas no corpo da CNN. Assim, nem todas
+camadas convolucionais são seguidas de camadas de subamostragens. Os
+autores usam uma camada de subamostragem máxima com campo receptivo
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2 \times 2</annotation></semantics></math>
+e deslocamento de 2 pixels. Ao final da primeira etapa, o volume de
+entrada
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>V</mi><annotation encoding="application/x-tex">V</annotation></semantics></math>
+é representado por um mapa de características
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math>
+extraído pelas camadas da VGGNet. Na Figura <a data-reference="fig:carac" data-reference-type="ref" href="#fig:carac">3.3</a> temos a
+imagem original e o mapa de características obtido através da VGG19.</p>
+<figure class="figura" data-latex-placement="!ht" id="fig:carac"><div class="subfigs"><div class="subfig" style="flex:0 1 50%;max-width:50%"><img alt="Imagem Original" class="figimg" loading="lazy" src="../assets/figuras/caract.png" style="width:50.0%"/><span class="subcap">Imagem Original</span></div><div class="subfig" style="flex:0 1 37%;max-width:37%"><img alt="mapa de características" class="figimg" loading="lazy" src="../assets/figuras/carac.png" style="width:37.0%"/><span class="subcap">mapa de características</span></div></div><figcaption><span class="fig-num">Figura 3.3.</span> <span data-label="fig:carac" id="fig:carac"></span> Exemplo
+de um mapa de características predito pela VGG-19.</figcaption></figure>
+<h2 class="section-title" id="sec:EstimativaDensidade"><span class="sec-num">3.3</span> Estimativa do Mapa de Densidade</h2>
+<p>Dado o mapa de característica
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math>,
+o primeiro ramo do método proposto estima o mapa de densidade com o
+objetivo de detectar cada objeto. Essa predição é realizada por
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>E</mi><annotation encoding="application/x-tex">E</annotation></semantics></math>
+estágios. No primeiro estágio (Figura <a data-reference="fig:model" data-reference-type="ref" href="#fig:model">3.1</a> (c)), uma
+série de camadas convolucionais
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="normal">Ω</mi><annotation encoding="application/x-tex">\Omega</annotation></semantics></math>
+geram o mapa de densidade
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>C</mi><mo accent="true">̂</mo></mover><mn>1</mn></msup><mo>=</mo><mi mathvariant="normal">Ω</mi><mo form="prefix" stretchy="false">(</mo><mi>F</mi><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\hat{C}^1 = \Omega (F)</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="normal">Ω</mi><annotation encoding="application/x-tex">\Omega</annotation></semantics></math>
+é uma sequência de cinco camadas convolucionais: três camadas com 128
+filtros de tamanho
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3 \times 3</annotation></semantics></math>,
+uma camada com 512 filtros de tamanho
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">1 \times 1</annotation></semantics></math>
+e uma camada com um único filtro que corresponde ao mapa de densidade. O
+segundo ramo responsável pela estimativa dos vetores de deslocamento
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mover><mi>D</mi><mo accent="true">̂</mo></mover><mn>1</mn></msup><annotation encoding="application/x-tex">\hat{D}^{1}</annotation></semantics></math>
+estão detalhadas na Seção <a data-reference="sec:EstimativaVetores" data-reference-type="ref" href="#sec:EstimativaVetores">3.4</a>. Por enquanto precisamos
+saber que as estimativas também são utilizados para servir de entrada
+dos estágios seguintes.</p>
+<p>Os estágios refinam as predições do mapa de densidade em etapas
+sucessivas por
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>E</mi><annotation encoding="application/x-tex">E</annotation></semantics></math>
+estágios, i.e.,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>e</mi><mo>∈</mo><mo form="prefix" stretchy="false">{</mo><mn>1</mn><mo>,</mo><mi>…</mi><mo>,</mo><mi>E</mi><mo form="postfix" stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">e \in \{1, \dots, E\}</annotation></semantics></math>.
+Nos estágios subsequentes ao primeiro (Figura <a data-reference="fig:model" data-reference-type="ref" href="#fig:model">3.1</a>), o mapa de
+características
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math>,
+a estimativa de densidade do estágio anterior
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mover><mi>C</mi><mo accent="true">̂</mo></mover><mi>t</mi><mrow><mi>e</mi><mo>−</mo><mn>1</mn></mrow></msubsup><annotation encoding="application/x-tex">\hat{C}^{e-1}_t</annotation></semantics></math>
+e as estimativas dos vetores de deslocamento
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mover><mi>D</mi><mo accent="true">̂</mo></mover><mrow><mi>e</mi><mo>−</mo><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">\hat{D}^{e-1}</annotation></semantics></math>
+(Seção <a data-reference="sec:EstimativaVetores" data-reference-type="ref" href="#sec:EstimativaVetores">3.4</a>) são concatenados e
+usados para produzir um mapa de densidade refinado
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>C</mi><mo accent="true">̂</mo></mover><mi>e</mi></msup><mo>=</mo><mi mathvariant="normal">Ψ</mi><mo form="prefix" stretchy="false">(</mo><mi>F</mi><mo>,</mo><msup><mover><mi>C</mi><mo accent="true">̂</mo></mover><mrow><mi>e</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>,</mo><msup><mover><mi>D</mi><mo accent="true">̂</mo></mover><mrow><mi>e</mi><mo>−</mo><mn>1</mn></mrow></msup><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\hat{C}^e = \Psi(F, \hat{C}^{e-1}, \hat{D}^{e-1})</annotation></semantics></math>.
+A concatenação de diferentes informações auxilia no apendizado do método
+e espera-se que a informação de deslocamento ajude na detecção dos
+objetos no quadro atual. No refinamento,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="normal">Ψ</mi><annotation encoding="application/x-tex">\Psi</annotation></semantics></math>
+é uma sequência de sete camadas convolucionais: cinco camadas com 128
+filtros de tamanho
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>7</mn><mo>×</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">7 \times 7</annotation></semantics></math>,
+uma camada com 128 filtros de tamanho
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">1 \times 1</annotation></semantics></math>
+e uma camada com um único filtro que corresponde ao mapa de
+densidade.</p>
+<p>Para treinar os estágios, a função de perda (Equação <a data-reference="eq:loss" data-reference-type="ref" href="#eq:loss">[eq:loss]</a>) é aplicada no final de cada
+estágio comparando a predição do método
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mover><mi>C</mi><mo accent="true">̂</mo></mover><mi>e</mi></msup><annotation encoding="application/x-tex">\hat{C}^{e}</annotation></semantics></math>
+com as anotações realizadas por um especialista
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>.
+Esta supervisão intermediária aborda o problema do gradiente de
+desaparecimento, como mostrado em <span class="citation" data-cites="Cao2017">(Cao et al., 2017)</span>.</p>
+<p class="eq-line"><math display="block" id="eq:loss" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>f</mi><mi>e</mi></msup><mo>=</mo><munder><mo>∑</mo><mi>p</mi></munder><mo>∥</mo><mi>C</mi><mo form="prefix" stretchy="false">(</mo><mi>p</mi><mo form="postfix" stretchy="false">)</mo><mo>−</mo><msup><mover><mi>C</mi><mo accent="true">̂</mo></mover><mi>e</mi></msup><mo form="prefix" stretchy="false">(</mo><mi>p</mi><mo form="postfix" stretchy="false">)</mo><msubsup><mo>∥</mo><mn>2</mn><mn>2</mn></msubsup><mo>,</mo></mrow><annotation encoding="application/x-tex">\begin{equation}
+f^{e} = \sum_p \parallel C(p) - \hat{C}^{e}(p)\parallel^2_2,
+\label{eq:loss}
+\end{equation}</annotation></semantics></math> onde
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+é o <em>ground truth</em> do mapa de densidade do quadro
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+gerado de acordo com a Seção <a data-reference="sec:geracao_mapa" data-reference-type="ref" href="#sec:geracao_mapa">3.3.1</a>.
+Por fim, a função de perda global é dada pela soma de todos os
+estágios:<span class="eq-num">(3.1)</span></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo>=</mo><munderover><mo>∑</mo><mrow><mi>e</mi><mo>=</mo><mn>1</mn></mrow><mi>E</mi></munderover><msup><mi>f</mi><mi>e</mi></msup></mrow><annotation encoding="application/x-tex">\begin{equation}
+f = \sum_{e=1}^{E} f^{e}
+\end{equation}</annotation></semantics></math></p>
+<h3 class="section-title" id="sec:geracao_mapa"><span class="sec-num">3.3.1</span> Geração do <em>Ground Truth</em> do Mapa de
+Densidade</h3>
+<p>Dadas as posições
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo>=</mo><mo form="prefix" stretchy="false">[</mo><mo form="prefix" stretchy="false">{</mo><msup><mi>l</mi><mn>1</mn></msup><mo>,</mo><msup><mi>l</mi><mn>2</mn></msup><mo>,</mo><mi>…</mi><mo>,</mo><msup><mi>l</mi><mi>K</mi></msup><mo form="postfix" stretchy="false">}</mo><mo>∣</mo><mo>∀</mo><mspace width="0.222em"></mspace><msup><mi>l</mi><mi>k</mi></msup><mo>=</mo><mo form="prefix" stretchy="false">(</mo><msub><mi>x</mi><mi>k</mi></msub><mo>,</mo><msub><mi>y</mi><mi>k</mi></msub><mo form="postfix" stretchy="false">)</mo><mo form="postfix" stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">L = [\{l^1, l^2, \dots, l^K \} \mid \forall \: l^k = (x_k, y_k)]</annotation></semantics></math>
+de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>K</mi><annotation encoding="application/x-tex">K</annotation></semantics></math>
+objetos em um quadro
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mi>t</mi></msub><annotation encoding="application/x-tex">I_t</annotation></semantics></math>,
+o mapa de confiança (<em>ground truth</em>)
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+é obtido colocando-se um núcleo Gaussiano 2D em cada posição dos
+objetos. Para obter
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>,
+um mapa de confiança
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>C</mi><mi>k</mi></msup><annotation encoding="application/x-tex">C^k</annotation></semantics></math>
+é primeiro calculado para cada objeto
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>∈</mo><mo form="prefix" stretchy="false">[</mo><mn>1</mn><mo>,</mo><mi>K</mi><mo form="postfix" stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">k \in [1, K]</annotation></semantics></math>.
+O valor de cada posição
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>∈</mo><msup><mi>ℜ</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">p \in \Re^2</annotation></semantics></math>
+em
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>C</mi><mi>k</mi></msup><annotation encoding="application/x-tex">C^k</annotation></semantics></math>
+é definido como:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>C</mi><mi>k</mi></msup><mo form="prefix" stretchy="false">(</mo><mi>p</mi><mo form="postfix" stretchy="false">)</mo><mo>=</mo><mrow><mi mathvariant="normal">exp</mi><mo>⁡</mo></mrow><mrow><mo form="prefix" stretchy="true">(</mo><mi>−</mi><mfrac><mrow><mo form="postfix" stretchy="false">∥</mo><mi>p</mi><mo>−</mo><msup><mi>l</mi><mi>k</mi></msup><msubsup><mo form="postfix" stretchy="false">∥</mo><mn>2</mn><mn>2</mn></msubsup></mrow><msup><mi>σ</mi><mn>2</mn></msup></mfrac><mo form="postfix" stretchy="true">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">\begin{equation}
+C^k(p) = \exp \left(- \frac{\| p - l^k \|^2_2}{\sigma^2}\right),
+\end{equation}</annotation></semantics></math> onde
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>
+corresponde a largura dos picos que representa cada objeto.</p>
+<p>O mapa de confiança
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+é obtido pela agregação dos mapas individuais via operador máximo:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mo form="prefix" stretchy="false">(</mo><mi>p</mi><mo form="postfix" stretchy="false">)</mo><mo>=</mo><munder><mi mathvariant="normal">max</mi><mrow><mn>1</mn><mo>&lt;</mo><mi>k</mi><mo>&lt;</mo><mi>K</mi></mrow></munder><msup><mi>C</mi><mi>k</mi></msup><mo form="prefix" stretchy="false">(</mo><mi>p</mi><mo form="postfix" stretchy="false">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">\begin{equation}
+C(p) = \max_{1&lt;k&lt;K} C^k(p).
+\end{equation}</annotation></semantics></math></p>
+<p>A Figura <a data-reference="fig:sigma" data-reference-type="ref" href="#fig:sigma">3.4</a> ilustra o mapa de confiança para uma
+imagem e dois valores de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>.
+A primeira imagem mostra as posições dos objetos em pontos vermelhos que
+foram anotados pelo especialista. As próximas duas imagens apresentam os
+mapas de confiança para
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>1.5</mn></mrow><annotation encoding="application/x-tex">\sigma = 1.5</annotation></semantics></math>
+e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.5</mn><annotation encoding="application/x-tex">2.5</annotation></semantics></math>,
+respectivamente. Por fim, usamos o mapa de confiança <em>ground
+truth</em> para treinar a abordagem proposta.</p>
+<figure class="figura" data-latex-placement="!ht" id="fig:sigma"><div class="subfigs"><div class="subfig" style="flex:0 1 30%;max-width:30%"><img alt="Imagem Original" class="figimg" loading="lazy" src="../assets/figuras/sigmas/frame001018Ponto.png" style="width:30.0%"/><span class="subcap">Imagem Original</span></div><div class="subfig" style="flex:0 1 30%;max-width:30%"><img alt="σ = 1.5" class="figimg" loading="lazy" src="../assets/figuras/sigmas/frame001018_label_1_5.png" style="width:30.0%"/><span class="subcap">σ = 1.5</span></div><div class="subfig" style="flex:0 1 30%;max-width:30%"><img alt="σ = 2.5" class="figimg" loading="lazy" src="../assets/figuras/sigmas/frame001018_label_2_5.png" style="width:30.0%"/><span class="subcap">σ = 2.5</span></div></div><figcaption><span class="fig-num">Figura 3.4.</span> <span data-label="fig:sigma" id="fig:sigma"></span> Exemplo
+de uma cena e seu mapa de confiança correspondente para diferentes
+valores de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>.</figcaption></figure>
+<h2 class="section-title" id="sec:EstimativaVetores"><span class="sec-num">3.4</span> Estimativa dos Vetores de
+Deslocamento</h2>
+<p>O segundo ramo do método proposto (Figura <a data-reference="fig:model" data-reference-type="ref" href="#fig:model">3.1</a> (d)) possui
+camadas convolucionais com os mesmos parâmetros do primeiro ramo.
+Entretanto, a última camada de cada estágio produz a estimativa do
+deslocamento em x e y. O primeiro estágio possui uma série de camadas
+convolucionais
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="normal">Ω</mi><annotation encoding="application/x-tex">\Omega</annotation></semantics></math>
+que geram os vetores de deslocamento
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>D</mi><mo accent="true">̂</mo></mover><mn>1</mn></msup><mo>=</mo><mi mathvariant="normal">Ω</mi><mo form="prefix" stretchy="false">(</mo><mi>F</mi><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\hat{D}^{1} = \Omega (F)</annotation></semantics></math>
+para o quadro
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>.</p>
+<p>Nos demais estágios, o mapa de características
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math>,
+o mapa de densidade
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mover><mi>C</mi><mo accent="true">̂</mo></mover><mrow><mi>e</mi><mo>−</mo><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">\hat{C}^{e-1}</annotation></semantics></math>
+(Seção <a data-reference="sec:EstimativaDensidade" data-reference-type="ref" href="#sec:EstimativaDensidade">3.3</a>) e a estimativa do
+estágio anterior
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mover><mi>D</mi><mo accent="true">̂</mo></mover><mrow><mi>e</mi><mo>−</mo><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">\hat{D}^{e-1}</annotation></semantics></math>,
+são concatenados e usados para produzir os vetores de deslocamento
+refinado
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>D</mi><mo accent="true">̂</mo></mover><mi>e</mi></msup><mo>=</mo><mi mathvariant="normal">Ψ</mi><mo form="prefix" stretchy="false">(</mo><mi>F</mi><mo>,</mo><msup><mover><mi>C</mi><mo accent="true">̂</mo></mover><mrow><mi>e</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>,</mo><msup><mover><mi>D</mi><mo accent="true">̂</mo></mover><mrow><mi>e</mi><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\hat{D}^{e} = \Psi(F,\hat{C}^{e-1}, \hat{D}^{e-1}</annotation></semantics></math>).
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="normal">Ψ</mi><annotation encoding="application/x-tex">\Psi</annotation></semantics></math>
+é uma sequência de sete camadas convolucionais conforme o primeiro
+ramo.</p>
+<p>Para treinar os estágios dos vetores de deslocamento, a função de
+perda (Equação <a data-reference="eq:loss2" data-reference-type="ref" href="#eq:loss2">[eq:loss2]</a>) é aplicada no final de cada
+estágio.</p>
+<p class="eq-line"><math display="block" id="eq:loss2" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>f</mi><mi>e</mi></msup><mo>=</mo><munder><mo>∑</mo><mi>p</mi></munder><mo>∥</mo><mi>D</mi><mo form="prefix" stretchy="false">(</mo><mi>p</mi><mo form="postfix" stretchy="false">)</mo><mo>−</mo><msup><mover><mi>D</mi><mo accent="true">̂</mo></mover><mi>e</mi></msup><mo form="prefix" stretchy="false">(</mo><mi>p</mi><mo form="postfix" stretchy="false">)</mo><msubsup><mo>∥</mo><mn>2</mn><mn>2</mn></msubsup><mo>,</mo></mrow><annotation encoding="application/x-tex">\begin{equation}
+f^{e} = \sum_p \parallel D(p) - \hat{D}^{e}(p)\parallel^2_2,
+\label{eq:loss2}
+\end{equation}</annotation></semantics></math> onde
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>
+é o <em>ground truth</em> dos vetores de deslocamento do quadro
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+gerado de acordo com a Seção <a data-reference="sec:geracao_mapa2" data-reference-type="ref" href="#sec:geracao_mapa2">3.4.1</a>.
+Por fim, a função de perda global é dada por:<span class="eq-num">(3.5)</span></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo>=</mo><munderover><mo>∑</mo><mrow><mi>e</mi><mo>=</mo><mn>1</mn></mrow><mi>E</mi></munderover><msup><mi>f</mi><mi>e</mi></msup></mrow><annotation encoding="application/x-tex">\begin{equation}
+f = \sum_{e=1}^{E} f^{e}
+\end{equation}</annotation></semantics></math></p>
+<h3 class="section-title" id="sec:geracao_mapa2"><span class="sec-num">3.4.1</span> Geração do <em>Ground Truth</em> do Vetor de
+Deslocamento</h3>
+<p>Considere
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>l</mi><mi>t</mi><mi>k</mi></msubsup><annotation encoding="application/x-tex">l_t^k</annotation></semantics></math>
+como a posição de um objeto
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
+no quadro
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>l</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow><mi>k</mi></msubsup><annotation encoding="application/x-tex">l_{t-1}^k</annotation></semantics></math>
+sua posição no quadro anterior. O vetor de deslocamento do objeto
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
+é um vetor que aponta de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>l</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow><mi>k</mi></msubsup><annotation encoding="application/x-tex">l^k_{t-1}</annotation></semantics></math>
+até
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>l</mi><mi>t</mi><mi>k</mi></msubsup><annotation encoding="application/x-tex">l^k_{t}</annotation></semantics></math>,
+conforme a Figura <a data-reference="fig:vetor" data-reference-type="ref" href="#fig:vetor">3.5</a>. Para a construção dos vetores de
+deslocamento densos, isto é, para cada pixel da imagem, um conjunto de
+pixels
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math>
+ao redor do vetor de deslocamento principal é obtido. Todos os pixels
+cuja a distância para o vetor de deslocamento for menor ou igual a um é
+considerado nesse conjunto. Cada pixel
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>∈</mo><mi>ρ</mi></mrow><annotation encoding="application/x-tex">p \in \rho</annotation></semantics></math>
+armazena um vetor unitário
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>v</mi><annotation encoding="application/x-tex">v</annotation></semantics></math>
+com a mesma direção do deslocamento de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t-1</annotation></semantics></math>
+para
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+do objeto
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>,
+sendo
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi><mo>=</mo><mo form="prefix" stretchy="false">(</mo><msubsup><mi>l</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow><mi>k</mi></msubsup><mo>−</mo><msubsup><mi>l</mi><mi>t</mi><mi>k</mi></msubsup><mo form="postfix" stretchy="false">)</mo><mi>/</mi><mo form="postfix" stretchy="false">∥</mo><mo form="prefix" stretchy="false">(</mo><msubsup><mi>l</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow><mi>k</mi></msubsup><mo>−</mo><msubsup><mi>l</mi><mi>t</mi><mi>k</mi></msubsup><mo form="postfix" stretchy="false">)</mo><msub><mo form="postfix" stretchy="false">∥</mo><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">v = (l^k_{t-1} - l^k_{t})/\|(l^k_{t-1} - l^k_{t})\|_2</annotation></semantics></math>.
+Os pixels restantes recebe um vetor nulo. O mesmo procedimento é
+realizada para todos os objetos
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
+no quadro atual e um mapa denso de vetor de deslocamento
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>
+é obtido para treinamento do método proposto.</p>
+<figure class="figura" data-latex-placement="!htb" id="fig:vetor"><div class="subfigs"><div class="subfig" style="flex:0 1 90%;max-width:90%"><img class="figimg" loading="lazy" src="../assets/figuras/VD.png"/></div></div><figcaption><span class="fig-num">Figura 3.5.</span> <span data-label="fig:vetor" id="fig:vetor"></span>
+Ilustração de um vetor para um objeto em quadro.</figcaption></figure>
+<p>A Figura <a data-reference="fig:vetores" data-reference-type="ref" href="#fig:vetores">3.6</a> mostra os alevinos na cor branca,
+os pontos na cor azul apontam a posição dos alevinos no quadro atual
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mi>t</mi></msub><annotation encoding="application/x-tex">I_t</annotation></semantics></math>
+e os pontos na cor vermelho mostram as localizações no quadro anterior
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">I_{t-1}</annotation></semantics></math>.
+Nas imagens da Figura <a data-reference="fig:vetores2" data-reference-type="ref" href="#fig:vetores2">3.7</a> temos a ilustração dos vetores
+estimados, sendo estimado um vetor para cada pixel que representa o
+objeto de interesse.</p>
+<figure class="figura" data-latex-placement="h" id="fig:vetores"><div class="subfigs"><div class="subfig" style="flex:0 1 30%;max-width:30%"><img alt="image" class="figimg" loading="lazy" src="../assets/figuras/frame000089.png_tracking.png" style="width:30.0%"/></div><div class="subfig" style="flex:0 1 30%;max-width:30%"><img alt="image" class="figimg" loading="lazy" src="../assets/figuras/frame000126.png_tracking.png" style="width:30.0%"/></div><div class="subfig" style="flex:0 1 30%;max-width:30%"><img alt="image" class="figimg" loading="lazy" src="../assets/figuras/frame000176.png_tracking.png" style="width:30.0%"/></div></div><figcaption><span class="fig-num">Figura 3.6.</span> <span data-label="fig:vetores" id="fig:vetores"></span>
+Exemplos das localizações nos vetores</figcaption></figure>
+<figure class="figura" data-latex-placement="h" id="fig:vetores2"><div class="subfigs"><div class="subfig" style="flex:0 1 30%;max-width:30%"><img alt="image" class="figimg" loading="lazy" src="../assets/figuras/frame000089.pngquiver_t.png" style="width:30.0%"/></div><div class="subfig" style="flex:0 1 30%;max-width:30%"><img alt="image" class="figimg" loading="lazy" src="../assets/figuras/frame000126.pngquiver_t.png" style="width:30.0%"/></div><div class="subfig" style="flex:0 1 30%;max-width:30%"><img alt="image" class="figimg" loading="lazy" src="../assets/figuras/frame000176.pngquiver_t.png" style="width:30.0%"/></div></div><figcaption><span class="fig-num">Figura 3.7.</span> <span data-label="fig:vetores2" id="fig:vetores2"></span>
+Ilustração dos vetores estimados pelo segundo ramo apresentado, para
+cada pixel de cada objeto.</figcaption></figure>
+<h2 class="section-title" id="localização-dos-objetos-pelo-mapa-de-densidade"><span class="sec-num">3.5</span> Localização dos
+Objetos pelo Mapa de Densidade</h2>
+<p>A localização dos objetos é obtida dos picos (máximo local) do mapa
+de densidade predito do último estágio
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><msup><mi>C</mi><mi>E</mi></msup><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\hat{C^E}</annotation></semantics></math>.
+Um local
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><mo form="prefix" stretchy="false">(</mo><msub><mi>x</mi><mi>p</mi></msub><mo>,</mo><msub><mi>y</mi><mi>p</mi></msub><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p=(x_p, y_p)</annotation></semantics></math>
+é um máximo local se
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><msup><mi>C</mi><mi>E</mi></msup><mo accent="true">̂</mo></mover><mo form="prefix" stretchy="false">(</mo><mi>p</mi><mo form="postfix" stretchy="false">)</mo><mo>&gt;</mo><mover><msup><mi>C</mi><mi>E</mi></msup><mo accent="true">̂</mo></mover><mo form="prefix" stretchy="false">(</mo><mi>v</mi><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\hat{C^E}(p) &gt; \hat{C^E}(v)</annotation></semantics></math>
+para todos os vizinhos
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>v</mi><annotation encoding="application/x-tex">v</annotation></semantics></math>.
+Consideramos a vizinhança de 4 pixels para todos os locais
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><mo form="prefix" stretchy="false">(</mo><msub><mi>x</mi><mi>p</mi></msub><mo>,</mo><msub><mi>y</mi><mi>p</mi></msub><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p = (x_p, y_p)</annotation></semantics></math>,
+ou seja,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi><mo>=</mo><mo form="prefix" stretchy="false">(</mo><msub><mi>x</mi><mi>p</mi></msub><mo>±</mo><mn>1</mn><mo>,</mo><msub><mi>y</mi><mi>p</mi></msub><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">v = (x_p \pm 1, y_p)</annotation></semantics></math>
+ou
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo form="prefix" stretchy="false">(</mo><msub><mi>x</mi><mi>p</mi></msub><mo>,</mo><msub><mi>y</mi><mi>p</mi></msub><mo>±</mo><mn>1</mn><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(x_p, y_p \pm 1)</annotation></semantics></math>.</p>
+<p>Para evitar ruído, os picos precisam ser separados por pelo menos
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>δ</mi><annotation encoding="application/x-tex">\delta</annotation></semantics></math>
+pixels. Isso impede que dois alevinos sejam detectados muito próximos
+uns dos outros. Além disso, um pico deve ter uma confiança maior que um
+limite
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>τ</mi><annotation encoding="application/x-tex">\tau</annotation></semantics></math>.
+Após experiências preliminares, usamos
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>δ</mi><mo>=</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">\delta = 10</annotation></semantics></math>
+e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>τ</mi><mo>=</mo><mn>0.2</mn></mrow><annotation encoding="application/x-tex">\tau = 0.2</annotation></semantics></math>.
+A Figura <a data-reference="fig:heatmap" data-reference-type="ref" href="#fig:heatmap">3.8</a> mostra um exemplo tridimensional do
+mapa de confiança, onde a largura e a altura são as dimensões da imagem
+e os picos azuis representam as regiões com máxima confiança local.</p>
+<figure class="figura" data-latex-placement="h" id="fig:heatmap"><div class="subfigs"><div class="subfig" style="flex:0 1 60%;max-width:60%"><img class="figimg" loading="lazy" src="../assets/figuras/heatmap2.png"/></div></div><figcaption><span class="fig-num">Figura 3.8.</span> Exemplo do mapa de confiança em três dimensões.</figcaption></figure>
+<p><span data-label="chap:ranking" id="chap:ranking"></span></p>
+
+<nav class="pager" aria-label="Navegação entre páginas">
+<a class="prev" href="02-revisao-bibliografica.html"><span class="label">Anterior</span>Capítulo 2 — Revisão Bibliográfica</a>
+<a class="next" href="04-experimentos-e-resultados.html"><span class="label">Próximo</span>Capítulo 4 — Experimentos e Resultados</a>
+</nav>
+<footer class="site-footer">
+  <p>Plabiany Rodrigo Acosta · Dissertação de Mestrado · FACOM/UFMS · 2021</p>
+  <p><a href="../assets/dissertacao.pdf">Versão em PDF</a></p>
+</footer>
+</article>
+</main>
+<script src="../assets/js/site.js"></script>
+</body>
+</html>

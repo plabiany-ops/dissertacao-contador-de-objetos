@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Capítulo 4 — Experimentos e Resultados</title>
+<meta name="description" content="Dissertação de mestrado de Plabiany Rodrigo Acosta: contador de objetos em vídeos usando redes neurais convolucionais.">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-inner">
+    <a class="brand" href="../index.html">
+      <strong>Contador de objetos em vídeos</strong>
+      <span>Dissertação · Plabiany R. Acosta</span>
+    </a>
+    <nav class="toc" aria-label="Sumário">
+      <a class="toc-chapter" href="../index.html">Capa</a>
+      <a class="toc-chapter" href="../preliminares.html">Preliminares</a>
+      <div class="toc-sep"></div>
+      <a class="toc-chapter" href="01-introducao.html"><span class="toc-num">1.</span> Introdução</a>
+      <a class="toc-chapter" href="02-revisao-bibliografica.html"><span class="toc-num">2.</span> Revisão Bibliográfica</a>
+      <a class="toc-chapter" href="03-metodo-proposto.html"><span class="toc-num">3.</span> Método Proposto</a>
+      <a class="toc-chapter active" href="04-experimentos-e-resultados.html"><span class="toc-num">4.</span> Experimentos e Resultados</a>
+      <a class="toc-sub" href="04-experimentos-e-resultados.html#chap:basedeimagens"><span class="toc-num">4.1</span> Base de Imagens</a>
+      <a class="toc-subsub" href="04-experimentos-e-resultados.html#configuração-dos-experimentos"><span class="toc-num">4.1.1</span> Configuração dos
+Experimentos</a>
+      <a class="toc-subsub" href="04-experimentos-e-resultados.html#transfer-learning">Transfer Learning</a>
+      <a class="toc-subsub" href="04-experimentos-e-resultados.html#métricas-de-classificação">Métricas de Classificação</a>
+      <a class="toc-sub" href="04-experimentos-e-resultados.html#sec:resultados"><span class="toc-num">4.2</span> Resultados e Discussão</a>
+      <a class="toc-subsub" href="04-experimentos-e-resultados.html#subsec:ResultadosQ"><span class="toc-num">4.2.1</span> Resultados Quantitativos</a>
+      <a class="toc-subsub" href="04-experimentos-e-resultados.html#resultados-qualitativos"><span class="toc-num">4.2.2</span> Resultados Qualitativos</a>
+      <a class="toc-chapter" href="05-conclusoes.html"><span class="toc-num">5.</span> Conclusões</a>
+      <div class="toc-sep"></div>
+      <a class="toc-chapter" href="../figuras.html">Figuras</a>
+      <a class="toc-chapter" href="referencias.html">Referências</a>
+      <a class="pdf-link" href="../assets/dissertacao.pdf">Baixar PDF</a>
+    </nav>
+  </div>
+</aside>
+<button class="menu-toggle" type="button" aria-label="Abrir sumário" aria-controls="sidebar">☰</button>
+<div class="overlay" aria-hidden="true"></div>
+<main class="page">
+<article class="sheet">
+<header class="chapter-header"><p class="chapter-kicker">Capítulo 4</p><h1 class="chapter-title" id="chap:experimentos">Experimentos e Resultados</h1></header>
+<h2 class="section-title" id="chap:basedeimagens"><span class="sec-num">4.1</span> Base de Imagens</h2>
+<p>Os vídeos aplicados nos experimentos foram obtidos a partir do banco
+FISHCV155V, desenvolvido pelo grupo INOVISÃO da UCDB, em parceria com o
+IFMS e a empresa Projeto Pacu <span class="citation" data-cites="Junior2019UFMS">(Silva Oliveira Junior, 2019)</span>. Os
+vídeos foram gravados entre os meses de julho e setembro de 2018 com uma
+câmera com resolução full hd
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1920</mn><mo>×</mo><mn>1080</mn></mrow><annotation encoding="application/x-tex">1920\times1080</annotation></semantics></math>
+pixels) e uma taxa de captura de 30 quadros por segundo. A câmera foi
+acoplada a uma estrutura criada pelos autores com uma inclinação
+aproximada de 12 graus, por onde os alevinos deslizam com o auxílio de
+água. A Figura <a data-reference="Estrutura" data-reference-type="ref" href="#Estrutura">4.1</a> mostra a estrutura construída para a
+obtenção dos vídeos.</p>
+<figure class="figura" id="Estrutura"><div class="subfigs"><div class="subfig" style="flex:0 1 50%;max-width:50%"><img class="figimg" loading="lazy" src="../assets/figuras/estruturaCaptura.png" style="width:50.0%"/></div></div><figcaption><span class="fig-num">Figura 4.1.</span> Suporte para Captura das imagens proposta por <span class="citation" data-cites="Junior2019UFMS">(Silva Oliveira Junior,
+2019)</span></figcaption></figure>
+<p>Dentre os vídeos do banco de dados FISHCV155V, foram selecionados
+aleatoriamente 15 para compor o banco de dados do experimentos. O
+conjunto de treinamento é composto por 7 vídeos, sendo que o menor
+(tempo) vídeo contém 180 quadros e o maior 750 quadros; O conjunto de
+testes possui 4 vídeos, entre 240 e 300 quadros. O conjunto de validação
+possui 4 vídeos, sendo o menor 210 quadros e o maior 390. Na Figura <a data-reference="Train" data-reference-type="ref" href="#Train">4.2</a>
+temos alguns exemplos das imagens utilizadas nos experimentos. Na Tabela
+<a data-reference="tab:separation" data-reference-type="ref" href="#tab:separation">4.1</a> a quantidade exata do conjunto é
+apresentado.</p>
+<div class="table-wrap"><table class="tabela" id="tab:separation">
+<caption><span class="tab-num">Tabela 4.1.</span> Separação dos vídeos e quadros para os Experimentos</caption>
+<thead>
+<tr>
+<th rowspan="2" style="text-align: left;"><strong>Banco de Dados</strong></th>
+<th colspan="2" style="text-align: center;"><strong>Quantidades</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+
+<td style="text-align: center;"><strong>Vídeos</strong></td>
+<td style="text-align: center;"><strong>Quadros</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">Treinamento</td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>7</mn><annotation encoding="application/x-tex">7</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2730</mn><annotation encoding="application/x-tex">2730</annotation></semantics></math></td>
+</tr>
+<tr>
+<td style="text-align: left;">Teste</td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>4</mn><annotation encoding="application/x-tex">4</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1080</mn><annotation encoding="application/x-tex">1080</annotation></semantics></math></td>
+</tr>
+<tr>
+<td style="text-align: left;">Validação</td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>4</mn><annotation encoding="application/x-tex">4</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1230</mn><annotation encoding="application/x-tex">1230</annotation></semantics></math></td>
+</tr>
+</tbody>
+</table></div>
+<p>.</p>
+<figure class="figura" data-latex-placement="htb" id="Train"><div class="subfigs"><div class="subfig" style="flex:0 1 32%;max-width:32%"><img class="figimg" loading="lazy" src="../assets/figuras/Train/VID15_frame000222.png"/></div><div class="subfig" style="flex:0 1 32%;max-width:32%"><img class="figimg" loading="lazy" src="../assets/figuras/Train/VID18_frame000244.png"/></div><div class="subfig" style="flex:0 1 32%;max-width:32%"><img class="figimg" loading="lazy" src="../assets/figuras/Train/VID19_frame000313.png"/></div></div><figcaption><span class="fig-num">Figura 4.2.</span> Imagens retiradas do conjunto de Treinamento <span class="citation" data-cites="Junior2019UFMS">(Silva Oliveira Junior,
+2019)</span>.</figcaption></figure>
+<h3 class="section-title" id="configuração-dos-experimentos"><span class="sec-num">4.1.1</span> Configuração dos
+Experimentos</h3>
+<p>Para avaliar a abordagem proposta, as amostras foram divididas
+aleatoriamente em conjuntos de treinamento contendo 7 vídeos, validação
+4 vídeos e teste 4 vídeos. Para o treinamento, o otimizador Gradiente
+Descendente Estocástico foi usado com um momento de 0,9. O ajuste de
+hiper parâmetros na taxa de aprendizado e no número de épocas foi
+realizado usando o conjunto de validação para reduzir o risco de
+<em>overfitting</em>. Após experimentos preliminares para ajuste de
+hiper parâmetro, a taxa de aprendizado foi de 0,01 e o número de épocas
+foi de 100.</p>
+<p>Todos os experimentos foram executados na GPU (Unidade de
+Processamento Gráfico) NVIDIA GeForce GTX TITAN X (5120 Compute Unified
+Device Architecture - núcleos CUDA e memória gráfica de 12 GB ), sistema
+operacional Ubuntu 18.04. A implementação proposta faz o uso da API
+(Interface de Programação de Aplicativos) de alto nível denominada Keras
+<span class="citation" data-cites="chollet2015keras">(<span class="nocase">Chollet et al.</span>, 2015)</span>, escrita na linguagem
+de programação Python. As rotinas desta interface são executadas através
+da biblioteca de código aberto TensorFlow <span class="citation" data-cites="tensorflow2015-whitepaper">(Abadi et al., 2015)</span>.</p>
+<h4 class="section-title" id="transfer-learning">Transfer Learning</h4>
+<p>Em vez de treinar a abordagem proposta do zero, os pesos da primeira
+parte foram inicializados com pesos pré-treinados no ImageNet em um
+conceito conhecido como <em>transfer learning</em>. Esse método
+proporciona uma certa rapidez no treinamento de CNNs, evitando
+treinamentos do zero (aleatoriamente). Quanto maior e mais geral o
+conjunto de treinamento do modelo pré-treinado, maior será a eficiência
+da transferência de aprendizado (<span class="citation" data-cites="tensorflow2015-whitepaper c231stan">(Abadi et al., 2015; Li;
+Johnson; Yeung, Spring 2018)</span>). A ImageNet é um conjunto que
+contém 1,2 milhões de imagens com 1000 categorias <span class="citation" data-cites="DBLP:journals/corr/RussakovskyDSKSMHKKBBF14">(Russakovsky;
+Deng; Su, 2014)</span>. Por ser um conjunto extenso existem vários
+modelos treinados nas arquiteturas mais conhecidas da literatura.</p>
+<h4 class="section-title" id="métricas-de-classificação">Métricas de Classificação</h4>
+<p>Para avaliar o método foram utilizados as métricas de regressão que
+medem a concordância entre o número de objetos anotados e os preditos. A
+métrica de erro absoluto médio (<em>mean absolute error</em> - MAE) é
+calculada conforme a Equação <a data-reference="eq:MAE" data-reference-type="ref" href="#eq:MAE">[eq:MAE]</a>.</p>
+<p class="eq-line"><math display="block" id="eq:MAE" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>A</mi><mi>E</mi><mo>=</mo><mfrac><mrow><munderover><mo>∑</mo><mrow><mi>t</mi><mo>=</mo><mn>1</mn></mrow><mi>T</mi></munderover><mrow><mo form="prefix" stretchy="false">|</mo><msub><mover><mi>x</mi><mo accent="true">̂</mo></mover><mi>t</mi></msub><mo>−</mo><msub><mi>x</mi><mi>t</mi></msub><mo form="prefix" stretchy="false">|</mo></mrow></mrow><mi>T</mi></mfrac></mrow><annotation encoding="application/x-tex">\begin{equation}
+\label{eq:MAE}
+    MAE = \frac{\sum^{T}_{t=1}{|\hat{x}_t-{x}_t|}}{T}
+\end{equation}</annotation></semantics></math> onde
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mover><mi>x</mi><mo accent="true">̂</mo></mover><mi>t</mi></msub><annotation encoding="application/x-tex">\hat{x}_t</annotation></semantics></math>
+representa o número de objetos preditos pelo método e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mi>t</mi></msub><annotation encoding="application/x-tex">{x_t}</annotation></semantics></math>
+o número de objetos anotados em um conjunto de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+quadros do conjunto de testes <span class="citation" data-cites="MAE">(Wang; Lu, 2018)</span>.<span class="eq-num">(4.1)</span></p>
+<p>Para avaliar a localização dos objetos preditos em uma imagem, nós
+usamos a precisão, revocação e métrica F1 ou medida-f. Para calcular
+essas métricas, é necessário determinar o número de verdadeiros
+positivos (VP), falsos positivos (FP) e falsos negativos (FN). Um
+verdadeiro positivo é obtido se um ponto predito pelo método proposto
+está dentro de um raio máximo
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+de um ponto rotulado (neste trabalho usamos raio máximo igual a 5
+pixels). Um falso positivo é obtido quando o método proposto prediz um
+objeto que não foi rotulado, isto é, nenhum ponto a uma distância
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>.
+Por fim, um falso negativo é obtido quando nenhum ponto é predito a uma
+distância
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+de um ponto rotulado.</p>
+<p>A Precisão é definida conforme a Equação <a data-reference="eq:precision" data-reference-type="ref" href="#eq:precision">[eq:precision]</a>, isto é, o número de
+verdadeiros positivos (VP) sobre o número de verdadeiros positivos mais
+o número de falsos positivos (FP).</p>
+<p class="eq-line"><math display="block" id="eq:precision" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>=</mo><mfrac><mrow><mi>V</mi><mi>P</mi></mrow><mrow><mi>V</mi><mi>P</mi><mo>+</mo><mi>F</mi><mi>P</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\begin{equation}
+\label{eq:precision}
+    P = \frac{VP}{VP+FP}
+\end{equation}</annotation></semantics></math><span class="eq-num">(4.2)</span></p>
+<p>Revocação é definido com o número de verdadeiros positivos (VP) sobre
+o número de verdadeiros positivos mais o número de falsos negativos
+(FN), conforme a Equação <a data-reference="eq:recall" data-reference-type="ref" href="#eq:recall">[eq:recall]</a>.</p>
+<p class="eq-line"><math display="block" id="eq:recall" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo>=</mo><mfrac><mrow><mi>V</mi><mi>P</mi></mrow><mrow><mi>V</mi><mi>P</mi><mo>+</mo><mi>F</mi><mi>N</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\begin{equation}
+    \label{eq:recall}
+    R = \frac{VP}{VP+FN}
+\end{equation}</annotation></semantics></math><span class="eq-num">(4.3)</span></p>
+<p>Para obter uma exatidão dos acertos, usamos a F1 que produz uma média
+harmônica da precisão e da revocação. A revocação está focada nos pontos
+que deverão ser classificados como positivos, enquanto que a precisão
+calcula os pontos positivos que foram preditos como positivos pelo
+modelo. A função alcança seu melhor valor em 1 e pior em 0:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mn>1</mn><mo>=</mo><mn>2</mn><mo>⋅</mo><mfrac><mrow><mi>P</mi><mo>⋅</mo><mi>R</mi></mrow><mrow><mi>P</mi><mo>+</mo><mi>R</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\begin{equation}
+    F1 = 2 \cdot \frac{P\cdot R}{P + R}
+\end{equation}</annotation></semantics></math></p>
+<h2 class="section-title" id="sec:resultados"><span class="sec-num">4.2</span> Resultados e Discussão</h2>
+<p>Nas subseções abaixo são demonstrados os resultados com detalhes
+condizente com os experimentos e as técnicas que geraram resultados
+relevantes.</p>
+<h3 class="section-title" id="subsec:ResultadosQ"><span class="sec-num">4.2.1</span> Resultados Quantitativos</h3>
+<p>As Tabelas <a data-reference="tab:resultadosGeral" data-reference-type="ref" href="#tab:resultadosGeral">4.2</a>, <a data-reference="tab:resultadosEstagios" data-reference-type="ref" href="#tab:resultadosEstagios">4.3</a> e <a data-reference="tab:resultadosTemporal" data-reference-type="ref" href="#tab:resultadosTemporal">4.4</a> mostram os resultados
+obtidos nos experimentos do método proposto após treinamentos de 100
+épocas. As tabelas apresentam a comparação dos resultados obtidos para
+diferentes variações de sigmas, número de estágios e o uso dos vetores
+de deslocamento como informação auxiliar na detecção dos objetos. Para
+uma avaliação adequada em desafios com vários peixes em um único quadro,
+nós reportamos as métricas em diversos cenários apresentados em cada
+coluna nas tabelas. O primeiro considera o cálculo das métricas em todos
+os quadros do conjunto de teste (primeira coluna das tabelas). Os demais
+cenários consideram somente quadros que contenham uma quantidade
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>
+de peixes, e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mrow><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>8</mn><mo>,</mo><mn>10</mn></mrow></mrow><annotation encoding="application/x-tex">i \geq {1,2,4,6,8,10}</annotation></semantics></math>.
+Por exemplo, a coluna
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">i \geq 10</annotation></semantics></math>
+indica que somente foram considerados os quadros com 10 ou mais peixes
+no cálculo das métricas. Portanto, o desafio imposto nesse cenário é
+muito maior quando comparado com quadros com poucos peixes.</p>
+<p>Conforme descrito da Seção <a data-reference="sec:geracao_mapa" data-reference-type="ref" href="03-metodo-proposto.html#sec:geracao_mapa">3.3.1</a>, a
+parâmetro
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>
+controla a largura dos picos que representa cada objeto no mapa de
+densidade. Isto posto, a Tabela <a data-reference="tab:resultadosGeral" data-reference-type="ref" href="#tab:resultadosGeral">4.2</a>
+apresenta os resultados dos experimentos realizados para uma variação do
+valor de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>.
+Dessa forma,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>0.7</mn></mrow><annotation encoding="application/x-tex">\sigma = 0.7</annotation></semantics></math>
+gera picos com um raio menor, enquanto
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>1.3</mn></mrow><annotation encoding="application/x-tex">\sigma = 1.3</annotation></semantics></math>
+gera picos com um raio maior. O número de estágio nesses experimentos
+foi fixado em
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">E = 4</annotation></semantics></math>.</p>
+<p>Analisando os resultados apresentados na Tabela <a data-reference="tab:resultadosGeral" data-reference-type="ref" href="#tab:resultadosGeral">4.2</a>, podemos notar que o melhor
+resultado foi obtido para
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>1.1</mn></mrow><annotation encoding="application/x-tex">\sigma = 1.1</annotation></semantics></math>,
+alcançando
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mn>1</mn><mo>=</mo><mn>98</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">F1 = 98\%</annotation></semantics></math>
+e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>A</mi><mi>E</mi><mo>=</mo><mn>0.11</mn></mrow><annotation encoding="application/x-tex">MAE = 0.11</annotation></semantics></math>
+de acertos e erros contabilizando todos os quadros. Esse resultado é
+extremamente relevante pois o método proposta erra em média apenas 0.11
+peixes por quadro. Como esperado, quando a quantidade de peixes
+considerados por quadro aumenta, os valores de acertos diminuem.
+Entretanto, mesmo quando somente quadros com 10 ou mais peixes são
+considerados, foram obtidos resultados relevantes com
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mn>1</mn><mo>=</mo><mn>90</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">F1 = 90\%</annotation></semantics></math>
+e MAE = 1.71. Para as variadas quantidade de peixes
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≥</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>8</mn><mo>,</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">\geq 1,2,4,6,8,10</annotation></semantics></math>
+o melhor
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>
+obteve uma média de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mn>1</mn><mo>=</mo><mn>93</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">F1 =  93\%</annotation></semantics></math>
+de acertos.</p>
+<div class="table-wrap"><table class="tabela" id="tab:resultadosGeral">
+<caption><span class="tab-num">Tabela 4.2.</span> Resultados experimentais para a detecção dos alevinos com o
+método proposto. Comparação entre a variação dos
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>
+e estágios
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">E = 4</annotation></semantics></math>.</caption>
+<thead>
+<tr>
+<th rowspan="2" style="text-align: left;"><strong>Sigma</strong></th>
+<th colspan="2" style="text-align: center;"><strong>Todos</strong></th>
+<th colspan="2" style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">i \geq 1</annotation></semantics></math></th>
+<th colspan="2" style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">i \geq 2</annotation></semantics></math></th>
+<th colspan="2" style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">i \geq 4</annotation></semantics></math></th>
+<th colspan="2" style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">i \geq 6</annotation></semantics></math></th>
+<th colspan="2" style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">i \geq 8</annotation></semantics></math></th>
+<th colspan="2" style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">i \geq 10</annotation></semantics></math></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.7</mn><annotation encoding="application/x-tex">0.7</annotation></semantics></math></span></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.343</mn><annotation encoding="application/x-tex">0.343</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.933</mn><annotation encoding="application/x-tex">0.933</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.561</mn><annotation encoding="application/x-tex">0.561</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.893</mn><annotation encoding="application/x-tex">0.893</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.823</mn><annotation encoding="application/x-tex">0.823</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.877</mn><annotation encoding="application/x-tex">0.877</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.372</mn><annotation encoding="application/x-tex">1.372</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.849</mn><annotation encoding="application/x-tex">0.849</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.958</mn><annotation encoding="application/x-tex">2.958</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.765</mn><annotation encoding="application/x-tex">0.765</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3.133</mn><annotation encoding="application/x-tex">3.133</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.788</mn><annotation encoding="application/x-tex">0.788</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3.071</mn><annotation encoding="application/x-tex">3.071</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.816</mn><annotation encoding="application/x-tex">0.816</annotation></semantics></math></td>
+</tr>
+<tr>
+<td style="text-align: left;"><span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.8</mn><annotation encoding="application/x-tex">0.8</annotation></semantics></math></span></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.217</mn><annotation encoding="application/x-tex">0.217</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.960</mn><annotation encoding="application/x-tex">0.960</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.353</mn><annotation encoding="application/x-tex">0.353</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.938</mn><annotation encoding="application/x-tex">0.938</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.523</mn><annotation encoding="application/x-tex">0.523</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.926</mn><annotation encoding="application/x-tex">0.926</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.843</mn><annotation encoding="application/x-tex">0.843</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.915</mn><annotation encoding="application/x-tex">0.915</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.041</mn><annotation encoding="application/x-tex">2.041</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.852</mn><annotation encoding="application/x-tex">0.852</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.433</mn><annotation encoding="application/x-tex">2.433</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.842</mn><annotation encoding="application/x-tex">0.842</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.642</mn><annotation encoding="application/x-tex">2.642</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.843</mn><annotation encoding="application/x-tex">0.843</annotation></semantics></math></td>
+</tr>
+<tr>
+<td style="text-align: left;"><span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.9</mn><annotation encoding="application/x-tex">0.9</annotation></semantics></math></span></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.156</mn><annotation encoding="application/x-tex">0.156</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.975</mn><annotation encoding="application/x-tex">0.975</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.254</mn><annotation encoding="application/x-tex">0.254</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.960</mn><annotation encoding="application/x-tex">0.960</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.377</mn><annotation encoding="application/x-tex">0.377</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.952</mn><annotation encoding="application/x-tex">0.952</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.612</mn><annotation encoding="application/x-tex">0.612</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.945</mn><annotation encoding="application/x-tex">0.945</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.750</mn><annotation encoding="application/x-tex">1.750</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.878</mn><annotation encoding="application/x-tex">0.878</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.200</mn><annotation encoding="application/x-tex">2.200</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.858</mn><annotation encoding="application/x-tex">0.858</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.428</mn><annotation encoding="application/x-tex">2.428</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.857</mn><annotation encoding="application/x-tex">0.857</annotation></semantics></math></td>
+</tr>
+<tr>
+<td style="text-align: left;"><span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math></span></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.138</mn><annotation encoding="application/x-tex">0.138</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.978</mn><annotation encoding="application/x-tex">0.978</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.226</mn><annotation encoding="application/x-tex">0.226</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.965</mn><annotation encoding="application/x-tex">0.965</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.331</mn><annotation encoding="application/x-tex">0.331</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.959</mn><annotation encoding="application/x-tex">0.959</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.524</mn><annotation encoding="application/x-tex">0.524</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.954</mn><annotation encoding="application/x-tex">0.954</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.583</mn><annotation encoding="application/x-tex">1.583</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.891</mn><annotation encoding="application/x-tex">0.891</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.000</mn><annotation encoding="application/x-tex">2.000</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.872</mn><annotation encoding="application/x-tex">0.872</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.0</mn><annotation encoding="application/x-tex">2.0</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.885</mn><annotation encoding="application/x-tex">0.885</annotation></semantics></math></td>
+</tr>
+<tr>
+<td style="text-align: left;"><span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟏.𝟏</mtext><annotation encoding="application/x-tex">\textbf{1.1}</annotation></semantics></math></span></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟏𝟏𝟔</mtext><annotation encoding="application/x-tex">\textbf{0.116}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟖𝟏</mtext><annotation encoding="application/x-tex">\textbf{0.981}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟏𝟖𝟗</mtext><annotation encoding="application/x-tex">\textbf{0.189}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟕𝟏</mtext><annotation encoding="application/x-tex">\textbf{0.971}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟐𝟕𝟒</mtext><annotation encoding="application/x-tex">\textbf{0.274}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟔𝟕</mtext><annotation encoding="application/x-tex">\textbf{0.967}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟒𝟑𝟏</mtext><annotation encoding="application/x-tex">\textbf{0.431}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟔𝟑</mtext><annotation encoding="application/x-tex">\textbf{0.963}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟏.𝟑𝟓𝟒</mtext><annotation encoding="application/x-tex">\textbf{1.354}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟎𝟗</mtext><annotation encoding="application/x-tex">\textbf{0.909}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟏.𝟕𝟔𝟔</mtext><annotation encoding="application/x-tex">\textbf{1.766}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟖𝟖𝟖</mtext><annotation encoding="application/x-tex">\textbf{0.888}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟏.𝟕𝟏𝟒</mtext><annotation encoding="application/x-tex">\textbf{1.714}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟎𝟓</mtext><annotation encoding="application/x-tex">\textbf{0.905}</annotation></semantics></math></td>
+</tr>
+<tr>
+<td style="text-align: left;"><span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.2</mn><annotation encoding="application/x-tex">1.2</annotation></semantics></math></span></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.125</mn><annotation encoding="application/x-tex">0.125</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.980</mn><annotation encoding="application/x-tex">0.980</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.204</mn><annotation encoding="application/x-tex">0.204</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.969</mn><annotation encoding="application/x-tex">0.969</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.295</mn><annotation encoding="application/x-tex">0.295</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.965</mn><annotation encoding="application/x-tex">0.965</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.460</mn><annotation encoding="application/x-tex">0.460</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.961</mn><annotation encoding="application/x-tex">0.961</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.416</mn><annotation encoding="application/x-tex">1.416</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.904</mn><annotation encoding="application/x-tex">0.904</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.800</mn><annotation encoding="application/x-tex">1.800</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.886</mn><annotation encoding="application/x-tex">0.886</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.857</mn><annotation encoding="application/x-tex">1.857</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.895</mn><annotation encoding="application/x-tex">0.895</annotation></semantics></math></td>
+</tr>
+<tr>
+<td style="text-align: left;"><span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.3</mn><annotation encoding="application/x-tex">1.3</annotation></semantics></math></span></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.126</mn><annotation encoding="application/x-tex">0.126</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.982</mn><annotation encoding="application/x-tex">0.982</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.206</mn><annotation encoding="application/x-tex">0.206</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.972</mn><annotation encoding="application/x-tex">0.972</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.302</mn><annotation encoding="application/x-tex">0.302</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.965</mn><annotation encoding="application/x-tex">0.965</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.480</mn><annotation encoding="application/x-tex">0.480</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.959</mn><annotation encoding="application/x-tex">0.959</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.479</mn><annotation encoding="application/x-tex">1.479</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.900</mn><annotation encoding="application/x-tex">0.900</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.933</mn><annotation encoding="application/x-tex">1.933</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.877</mn><annotation encoding="application/x-tex">0.877</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.000</mn><annotation encoding="application/x-tex">2.000</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.886</mn><annotation encoding="application/x-tex">0.886</annotation></semantics></math></td>
+</tr>
+</tbody>
+</table></div>
+<p>.</p>
+<p>Outro parâmetro relevante do método proposto é a quantidade de
+estágios
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>E</mi><annotation encoding="application/x-tex">E</annotation></semantics></math>.
+Conforme a Seção <a data-reference="sec:MetodoPrincipal" data-reference-type="ref" href="03-metodo-proposto.html#sec:MetodoPrincipal">3</a>, os
+estágios podem ser concatenados para refinar as predições do mapa de
+densidade. Na Tabela <a data-reference="tab:resultadosEstagios" data-reference-type="ref" href="#tab:resultadosEstagios">4.3</a> temos os resultados para
+uma variação de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>E</mi><annotation encoding="application/x-tex">E</annotation></semantics></math>
+em cada ramo da arquitetura proposta. Os valores mostram que ao utilizar
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">E = 4</annotation></semantics></math>
+estágios temos um resultado maior do que quando
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>E</mi><annotation encoding="application/x-tex">E</annotation></semantics></math>
+assume outros valores. As métricas para
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">E = 4</annotation></semantics></math>
+estágios alcançaram o melhor resultado dentre os apresentados, tendo
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>98</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">98\%</annotation></semantics></math>
+de acertos para a contabilização de todos os peixes. Os resultados
+também mostram que usando
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>&lt;</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">E &lt; 4</annotation></semantics></math>
+apresenta valores excelentes para a contagem de todos os peixes, mas
+quando a contagem acontece por meio da quantidade de peixes em cada
+quadro, o método mostrou uma queda na eficiência de contagem. Isso
+mostra que os estágios ajudam a refinar o mapa para a contagem dos
+objetos.</p>
+<div class="table-wrap"><table class="tabela" id="tab:resultadosEstagios">
+<caption><span class="tab-num">Tabela 4.3.</span> Resultados experimentais para a detecção dos alevinos com o
+método proposto. Comparação entre a variação na quantidade de estágios E
+usando
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>1.1</mn></mrow><annotation encoding="application/x-tex">\sigma = 1.1</annotation></semantics></math></caption>
+<thead>
+<tr>
+<th rowspan="2" style="text-align: left;"><strong>Estágios</strong></th>
+<th colspan="2" style="text-align: center;"><strong>Todos</strong></th>
+<th colspan="2" style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">i \geq 1</annotation></semantics></math></th>
+<th colspan="2" style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">i \geq 2</annotation></semantics></math></th>
+<th colspan="2" style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">i \geq 4</annotation></semantics></math></th>
+<th colspan="2" style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">i \geq 6</annotation></semantics></math></th>
+<th colspan="2" style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">i \geq 8</annotation></semantics></math></th>
+<th colspan="2" style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">i \geq 10</annotation></semantics></math></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math></span></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.227</mn><annotation encoding="application/x-tex">0.227</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.955</mn><annotation encoding="application/x-tex">0.955</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.368</mn><annotation encoding="application/x-tex">0.368</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.931</mn><annotation encoding="application/x-tex">0.931</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.483</mn><annotation encoding="application/x-tex">0.483</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.928</mn><annotation encoding="application/x-tex">0.928</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.598</mn><annotation encoding="application/x-tex">0.598</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.939</mn><annotation encoding="application/x-tex">0.939</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.333</mn><annotation encoding="application/x-tex">1.333</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.902</mn><annotation encoding="application/x-tex">0.902</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.700</mn><annotation encoding="application/x-tex">1.700</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.880</mn><annotation encoding="application/x-tex">0.880</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.785</mn><annotation encoding="application/x-tex">1.785</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.899</mn><annotation encoding="application/x-tex">0.899</annotation></semantics></math></td>
+</tr>
+<tr>
+<td style="text-align: left;"><span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2</mn><annotation encoding="application/x-tex">2</annotation></semantics></math></span></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.140</mn><annotation encoding="application/x-tex">0.140</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.976</mn><annotation encoding="application/x-tex">0.976</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.227</mn><annotation encoding="application/x-tex">0.227</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.964</mn><annotation encoding="application/x-tex">0.964</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.333</mn><annotation encoding="application/x-tex">0.333</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.959</mn><annotation encoding="application/x-tex">0.959</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.524</mn><annotation encoding="application/x-tex">0.524</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.952</mn><annotation encoding="application/x-tex">0.952</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.520</mn><annotation encoding="application/x-tex">1.520</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.890</mn><annotation encoding="application/x-tex">0.890</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.900</mn><annotation encoding="application/x-tex">1.900</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.871</mn><annotation encoding="application/x-tex">0.871</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.071</mn><annotation encoding="application/x-tex">2.071</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.881</mn><annotation encoding="application/x-tex">0.881</annotation></semantics></math></td>
+</tr>
+<tr>
+<td style="text-align: left;"><span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟒</mtext><annotation encoding="application/x-tex">\textbf{4}</annotation></semantics></math></span></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟏𝟏𝟔</mtext><annotation encoding="application/x-tex">\textbf{0.116}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟖𝟏</mtext><annotation encoding="application/x-tex">\textbf{0.981}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟏𝟖𝟗</mtext><annotation encoding="application/x-tex">\textbf{0.189}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟕𝟏</mtext><annotation encoding="application/x-tex">\textbf{0.971}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟐𝟕𝟒</mtext><annotation encoding="application/x-tex">\textbf{0.274}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟔𝟕</mtext><annotation encoding="application/x-tex">\textbf{0.967}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟒𝟑𝟏</mtext><annotation encoding="application/x-tex">\textbf{0.431}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟔𝟑</mtext><annotation encoding="application/x-tex">\textbf{0.963}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟏.𝟑𝟓𝟒</mtext><annotation encoding="application/x-tex">\textbf{1.354}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟎𝟗</mtext><annotation encoding="application/x-tex">\textbf{0.909}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟏.𝟕𝟔𝟔</mtext><annotation encoding="application/x-tex">\textbf{1.766}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟖𝟖𝟖</mtext><annotation encoding="application/x-tex">\textbf{0.888}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟏.𝟕𝟏𝟒</mtext><annotation encoding="application/x-tex">\textbf{1.714}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟎𝟓</mtext><annotation encoding="application/x-tex">\textbf{0.905}</annotation></semantics></math></td>
+</tr>
+<tr>
+<td style="text-align: left;"><span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>6</mn><annotation encoding="application/x-tex">6</annotation></semantics></math></span></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.122</mn><annotation encoding="application/x-tex">0.122</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.980</mn><annotation encoding="application/x-tex">0.980</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.198</mn><annotation encoding="application/x-tex">0.198</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.969</mn><annotation encoding="application/x-tex">0.969</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.288</mn><annotation encoding="application/x-tex">0.288</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.965</mn><annotation encoding="application/x-tex">0.965</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.451</mn><annotation encoding="application/x-tex">0.451</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.961</mn><annotation encoding="application/x-tex">0.961</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.395</mn><annotation encoding="application/x-tex">1.395</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.905</mn><annotation encoding="application/x-tex">0.905</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.800</mn><annotation encoding="application/x-tex">1.800</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.886</mn><annotation encoding="application/x-tex">0.886</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.714</mn><annotation encoding="application/x-tex">1.714</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.904</mn><annotation encoding="application/x-tex">0.904</annotation></semantics></math></td>
+</tr>
+</tbody>
+</table></div>
+<p>.</p>
+<p>Após o modelo proposto apresentar o melhor resultado utilizando
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">E = 4</annotation></semantics></math>
+estágios e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>1.1</mn></mrow><annotation encoding="application/x-tex">\sigma = 1.1</annotation></semantics></math>,
+os resultados da Tabela <a data-reference="tab:resultadosTemporal" data-reference-type="ref" href="#tab:resultadosTemporal">4.4</a> mostra a comparação do
+uso ou não do ramo que estima os vetores de deslocamento temporal
+conforme a Seção <a data-reference="sec:Images" data-reference-type="ref" href="03-metodo-proposto.html#sec:Images">3.1</a>. Apesar dos valores similares, o
+resultado se destaca quando o ramo que estima os vetores de deslocamento
+é utilizado. Isso corrobora que a inclusão de informação mesmo que
+indireta da localização do objeto anteriormente melhora os
+resultados.</p>
+<div class="table-wrap"><table class="tabela" id="tab:resultadosTemporal">
+<caption><span class="tab-num">Tabela 4.4.</span> Resultados experimentais para a detecção dos alevinos com o
+método proposto,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">E = 4</annotation></semantics></math>
+estágios, e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>1.1</mn></mrow><annotation encoding="application/x-tex">\sigma = 1.1</annotation></semantics></math>.
+Comparação do método com e sem os vetores de deslocamento dos peixes,
+denominado temporal</caption>
+<thead>
+<tr>
+<th rowspan="2" style="text-align: left;"><strong>Temporal</strong></th>
+<th colspan="2" style="text-align: center;"><strong>Todos</strong></th>
+<th colspan="2" style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">i \geq 1</annotation></semantics></math></th>
+<th colspan="2" style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">i \geq 2</annotation></semantics></math></th>
+<th colspan="2" style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">i \geq 4</annotation></semantics></math></th>
+<th colspan="2" style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">i \geq 6</annotation></semantics></math></th>
+<th colspan="2" style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">i \geq 8</annotation></semantics></math></th>
+<th colspan="2" style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">i \geq 10</annotation></semantics></math></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><span><strong>Sim</strong></span></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟏𝟏𝟔</mtext><annotation encoding="application/x-tex">\textbf{0.116}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟖𝟏</mtext><annotation encoding="application/x-tex">\textbf{0.981}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟏𝟖𝟗</mtext><annotation encoding="application/x-tex">\textbf{0.189}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟕𝟏</mtext><annotation encoding="application/x-tex">\textbf{0.971}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟐𝟕𝟒</mtext><annotation encoding="application/x-tex">\textbf{0.274}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟔𝟕</mtext><annotation encoding="application/x-tex">\textbf{0.967}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟒𝟑𝟏</mtext><annotation encoding="application/x-tex">\textbf{0.431}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟔𝟑</mtext><annotation encoding="application/x-tex">\textbf{0.963}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟏.𝟑𝟓𝟒</mtext><annotation encoding="application/x-tex">\textbf{1.354}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟎𝟗</mtext><annotation encoding="application/x-tex">\textbf{0.909}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟏.𝟕𝟔𝟔</mtext><annotation encoding="application/x-tex">\textbf{1.766}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟖𝟖𝟖</mtext><annotation encoding="application/x-tex">\textbf{0.888}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟏.𝟕𝟏𝟒</mtext><annotation encoding="application/x-tex">\textbf{1.714}</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟎𝟓</mtext><annotation encoding="application/x-tex">\textbf{0.905}</annotation></semantics></math></td>
+</tr>
+<tr>
+<td style="text-align: left;"><span>Não</span></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.138</mn><annotation encoding="application/x-tex">0.138</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.978</mn><annotation encoding="application/x-tex">0.978</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.227</mn><annotation encoding="application/x-tex">0.227</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.964</mn><annotation encoding="application/x-tex">0.964</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.328</mn><annotation encoding="application/x-tex">0.328</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.959</mn><annotation encoding="application/x-tex">0.959</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.534</mn><annotation encoding="application/x-tex">0.534</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.949</mn><annotation encoding="application/x-tex">0.949</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.500</mn><annotation encoding="application/x-tex">1.500</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.897</mn><annotation encoding="application/x-tex">0.897</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.866</mn><annotation encoding="application/x-tex">1.866</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.882</mn><annotation encoding="application/x-tex">0.882</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.928</mn><annotation encoding="application/x-tex">1.928</annotation></semantics></math></td>
+<td style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.891</mn><annotation encoding="application/x-tex">0.891</annotation></semantics></math></td>
+</tr>
+</tbody>
+</table></div>
+<p>.</p>
+<h3 class="section-title" id="resultados-qualitativos"><span class="sec-num">4.2.2</span> Resultados Qualitativos</h3>
+<p>A Figura <a data-reference="fig:resultadosQuali" data-reference-type="ref" href="#fig:resultadosQuali">4.4</a> ilustra como o mapa de
+densidade representa a presença de um alevino na imagem. Cada pico
+apontado no <em>Heatmap</em> consiste na presença de um alevino.</p>
+<figure class="figura" data-latex-placement="htb" id="heatmap"><div class="subfigs"><div class="subfig" style="flex:0 1 90%;max-width:90%"><img class="figimg" loading="lazy" src="../assets/figuras/VID06_frame000147.png" style="width:90.0%"/></div></div><figcaption><span class="fig-num">Figura 4.3.</span> Ilustração do <em>Heatmap</em> obtido do <em>frame</em> 147
+do vídeo número 6, predito pelo modelo treinado por 100
+épocas.</figcaption></figure>
+<p>Podemos observar nas imagens da Figura <a data-reference="fig:resultadosQuali" data-reference-type="ref" href="#fig:resultadosQuali">4.4</a> o
+quadro original, o mapa de densidade, as detecções e a avaliação da
+métrica <em>F1</em> e a estimativa dos vetores de deslocamento. Todos os
+peixes presente no quadro foram detectados e os vetores foram
+estimatidos para as posições anteriores. Neste caso em específico temos
+dois peixes próximos que foram detectados e contabilizados
+individualmente.</p>
+<p>Haja vista a Seção <a data-reference="subsec:ResultadosQ" data-reference-type="ref" href="#subsec:ResultadosQ">4.2.1</a>
+os quadros onde a quantidade de alevinos é
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≤</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">\leq 6</annotation></semantics></math>,
+os alevinos são facilmente detectados. Quando a presença de peixes é
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≥</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">\geq 6</annotation></semantics></math>
+a CNN detecta os alevinos em sua grande maioria, mas existe aqueles que
+por algum motivo tiveram uma deformação em sua forma na imagem. O
+movimento realizado pelo peixe diz muito sobre a sua forma.</p>
+<figure class="figura" data-latex-placement="!hbt" id="fig:resultadosQuali"><div class="subfigs"><div class="subfig" style="flex:0 1 40%;max-width:40%"><img alt="Imagem Original" class="figimg" loading="lazy" src="../assets/figuras/ResultadosQ/VID09_frame000039.png" style="width:40.0%"/><span class="subcap">Imagem Original</span></div><div class="subfig" style="flex:0 1 40%;max-width:40%"><img alt="Mapa de densidade" class="figimg" loading="lazy" src="../assets/figuras/ResultadosQ/VID09_frame000039_points_.png" style="width:40.0%"/><span class="subcap">Mapa de densidade</span></div><div class="subfig" style="flex:0 1 40%;max-width:40%"><img alt="Predições" class="figimg" loading="lazy" src="../assets/figuras/ResultadosQ/VID09_frame000039_points.png" style="width:40.0%"/><span class="subcap">Predições</span></div><div class="subfig" style="flex:0 1 40%;max-width:40%"><img alt="Estimativa dos Vetores de Deslocamento" class="figimg" loading="lazy" src="../assets/figuras/ResultadosQ/VID09_frame000039_vectors.png" style="width:40.0%"/><span class="subcap">Estimativa dos Vetores de Deslocamento</span></div></div><figcaption><span class="fig-num">Figura 4.4.</span> <span data-label="fig:resultadosQuali" id="fig:resultadosQuali"></span> Exemplos dos resultados visuais
+obtidos para o quadro 30 do vídeo 09. A Figura (a) mostra a imagem
+original, (b) o mapa de densidade, (c) as predições e (d) a estimação
+dos vetores. </figcaption></figure>
+<p>Um dos problemas da abordagem proposta esta na detecção correta do
+alevino quando parte do seu corpo está oclusa na imagem. Isso acontece,
+pois uma das características da CNN é buscar identificar o alevino
+considerando uma distribuição de probabilidade de um alevino estar em um
+pixel. Dessa forma, para que a CNN consiga predizer um alevino, boa
+parte do formato dele deve aparecer na imagem, para que uma resposta
+alta a esse padrão seja encontrada.</p>
+<p>Nas imagens presentes na Figura <a data-reference="fig:resultadosJuntos" data-reference-type="ref" href="#fig:resultadosJuntos">4.5</a>
+temos um quadro onde existem três alevinos, porém os dois mais próximos,
+foram contabilizados apenas como um. Um alevino encontra-se extremamente
+próximo ao outro, impossibilitando de serem distinguidos a olho nu. Em
+alguns quadros na sequência temos que os dois peixes chegam a se
+separar, porém existem casos em que dois alevinos se movem
+uniformemente. Essa aproximação confundi a estimativa de vetores, que
+estima um número de vetores deslocamento diferente.</p>
+<figure class="figura" data-latex-placement="!htb" id="fig:resultadosJuntos"><div class="subfigs"><div class="subfig" style="flex:0 1 35%;max-width:35%"><img alt="Imagem Original" class="figimg" loading="lazy" src="../assets/figuras/ResultadosQ2/VID11_frame000217.png" style="width:35.0%"/><span class="subcap">Imagem Original</span></div><div class="subfig" style="flex:0 1 35%;max-width:35%"><img alt="&lt;em&gt;Ground Truth&lt;/em&gt;" class="figimg" loading="lazy" src="../assets/figuras/ResultadosQ2/VID11_frame000217_points_gt_.png" style="width:35.0%"/><span class="subcap"><em>Ground Truth</em></span></div><div class="subfig" style="flex:0 1 35%;max-width:35%"><img alt="Predições" class="figimg" loading="lazy" src="../assets/figuras/ResultadosQ2/VID11_frame000217_points.png" style="width:35.0%"/><span class="subcap">Predições</span></div><div class="subfig" style="flex:0 1 35%;max-width:35%"><img alt="Estimativa dos Vetores de Deslocamento" class="figimg" loading="lazy" src="../assets/figuras/ResultadosQ2/VID11_frame000217_vectors.png" style="width:35.0%"/><span class="subcap">Estimativa dos Vetores de Deslocamento</span></div></div><figcaption><span class="fig-num">Figura 4.5.</span> <span data-label="fig:resultadosJuntos" id="fig:resultadosJuntos"></span> Exemplos dos resultados
+visuais obtidos para o quadro 270 do vídeo 11. A Figura (a) nos mostra a
+imagem original, (b) o mapa de densidade, (c) as predições e (d) a
+estimação dos vetores. </figcaption></figure>
+<p>Por outro lado, outro grande desafio é detectar corretamente o
+formato do alevino na imagem. Podemos observar que quase sempre por
+conta da colisão entre eles os alevinos formam um padrão disforme ao
+usual. Apesar desses desafios, o método proposto é capaz de detectar
+corretamente a grande maioria dos alevinos.</p>
+
+<nav class="pager" aria-label="Navegação entre páginas">
+<a class="prev" href="03-metodo-proposto.html"><span class="label">Anterior</span>Capítulo 3 — Método Proposto</a>
+<a class="next" href="05-conclusoes.html"><span class="label">Próximo</span>Capítulo 5 — Conclusões</a>
+</nav>
+<footer class="site-footer">
+  <p>Plabiany Rodrigo Acosta · Dissertação de Mestrado · FACOM/UFMS · 2021</p>
+  <p><a href="../assets/dissertacao.pdf">Versão em PDF</a></p>
+</footer>
+</article>
+</main>
+<script src="../assets/js/site.js"></script>
+</body>
+</html>

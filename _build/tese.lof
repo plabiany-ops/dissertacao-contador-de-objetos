@@ -1,0 +1,47 @@
+\babel@toc {brazilian}{}\relax 
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces (a) Ilustração da Escada de peixes - \cite {UHE}, (b) sala abaixo do nível d'água \cite {Erikson}.}}{4}{figure.caption.11}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{4}{subfigure.1.1}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{4}{subfigure.1.2}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Método proposto recebe o quadro atual $I_{t}$ e o quadro no instante anterior $I_{t-1}$. O resultado da concatenação gera um volume de entrada para a VGG-19. A saída desta arquitetura consiste em um mapa de características inicial. Esse mapa alimenta dois ramos que são responsáveis por realizar as predições do mapa de densidade e de vetores de deslocamento. Cada ramo é composto por uma série de $E$ estágios que refinam a suas predições. Ambos ramos compartilham as informações para auxiliar na estimação.}}{10}{figure.caption.24}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Ilustração do volume de entrada $V$ que consiste na concatenação de um quadro $I_{t}$ e um quadro anterior $I_{t-1}$.}}{11}{figure.caption.26}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Exemplo de um mapa de características predito pela VGG-19.}}{12}{figure.caption.28}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Imagem Original}}}{12}{subfigure.3.1}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {mapa de características}}}{12}{subfigure.3.2}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Exemplo de uma cena e seu mapa de confiança correspondente para diferentes valores de $\sigma $.}}{14}{figure.caption.37}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Imagem Original}}}{14}{subfigure.4.1}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {$\sigma = 1.5$}}}{14}{subfigure.4.2}%
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {$\sigma = 2.5$}}}{14}{subfigure.4.3}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Ilustração de um vetor para um objeto em quadro.}}{16}{figure.caption.45}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Exemplos das localizações nos vetores}}{17}{figure.caption.46}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{17}{subfigure.6.1}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{17}{subfigure.6.2}%
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {}}}{17}{subfigure.6.3}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Ilustração dos vetores estimados pelo segundo ramo apresentado, para cada pixel de cada objeto.}}{17}{figure.caption.50}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{17}{subfigure.7.1}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{17}{subfigure.7.2}%
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {}}}{17}{subfigure.7.3}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Exemplo do mapa de confiança em três dimensões.}}{17}{figure.caption.55}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Suporte para Captura das imagens proposta por \cite {Junior2019UFMS}}}{18}{figure.caption.58}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Imagens retiradas do conjunto de Treinamento \cite {Junior2019UFMS}.}}{19}{figure.caption.60}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Ilustração do \textit {Heatmap} obtido do \textit {frame} 147 do vídeo número 6, predito pelo modelo treinado por 100 épocas.}}{24}{figure.caption.77}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Exemplos dos resultados visuais obtidos para o quadro 30 do vídeo 09. A Figura (a) mostra a imagem original, (b) o mapa de densidade, (c) as predições e (d) a estimação dos vetores. }}{25}{figure.caption.78}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Imagem Original}}}{25}{subfigure.4.1}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Mapa de densidade}}}{25}{subfigure.4.2}%
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Predições}}}{25}{subfigure.4.3}%
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {Estimativa dos Vetores de Deslocamento}}}{25}{subfigure.4.4}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Exemplos dos resultados visuais obtidos para o quadro 270 do vídeo 11. A Figura (a) nos mostra a imagem original, (b) o mapa de densidade, (c) as predições e (d) a estimação dos vetores. }}{26}{figure.caption.83}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Imagem Original}}}{26}{subfigure.5.1}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\textit {Ground Truth}}}}{26}{subfigure.5.2}%
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Predições}}}{26}{subfigure.5.3}%
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {Estimativa dos Vetores de Deslocamento}}}{26}{subfigure.5.4}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Exemplos dos peixes extremamente próximos que se movem uniformemente. Imagens do vídeo 06, quadro 187 e 188. }}{28}{figure.caption.91}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {quadro 187}}}{28}{subfigure.1.1}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {quadro 188}}}{28}{subfigure.1.2}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Amostra do próximo banco de imagens a ser testado - vídeo 203. .}}{29}{figure.caption.95}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {quadro 4810}}}{29}{subfigure.2.1}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {quadro 6253}}}{29}{subfigure.2.2}%

@@ -1,0 +1,261 @@
+
+\documentclass[12pt,twoside,openany]{book}
+
+%%% define a macro \ifpdf para compilação condicional -- PDF ou
+%%% DVI/PS.
+\usepackage{tikz}
+
+\usepackage[ruled]{algorithm2e}
+\renewcommand{\listalgorithmcfname}{Lista de Algoritmos}%
+\renewcommand{\algorithmcfname}{Algoritmo}%
+
+%\usepackage{subfigure}
+\usepackage{subfloat}
+%\usepackage{wrapfigure}
+%%% acentuação
+%\usepackage[latin1]{inputenc}
+%\usepackage[brazil]{babel}
+
+\usepackage[brazilian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%%% bibliografia
+%\usepackage{chicago}
+%\usepackage{natbib}
+%\usepackage[square,sort,comma,numbers]{natbib}
+\usepackage{latexsym}
+\usepackage{breakcites}
+
+\usepackage{setspace}
+%\usepackage{mathptm}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{xspace}
+\usepackage{colortbl}
+
+\usepackage{acronym}
+%%% referencias com página \vref
+\usepackage[brazil]{varioref}
+
+%%% identa primeiro parágrafo
+\usepackage{indentfirst}
+
+%%% figuras um ao lado do outro
+\usepackage{subfig}
+
+
+%%% definir títulos de seção
+\usepackage[sf,sl,outermarks]{titlesec}
+
+
+%%% para tabelas
+\usepackage{multirow}
+
+%%% boxes
+\usepackage{fancybox}
+\usepackage{fancyvrb}
+\usepackage{color}
+
+%%% somente na versão PDF
+
+%%% Para inclusão de gráficos
+%\usepackage[pdftex]{graphicx}
+\usepackage{graphicx}
+
+%%% dimensões do documento
+\usepackage{geometry}
+  \geometry{a4paper,left=3cm,right=3cm,top=2.0cm,bottom=2cm,twoside}
+
+%%% cria links no arquivo .pdf
+%%% comentar as linhas na versão para impressao
+\usepackage[pdfpagelabels,pagebackref]{hyperref}
+%\usepackage{hyperref}
+
+
+%%% propriedades do arquivo .pdf
+\hypersetup{
+    pdftitle = {},
+    pdfsubject = {},
+    pdfkeywords = {},
+    pdfauthor = {}
+    }
+
+
+
+
+\hypersetup{colorlinks=true,linkcolor=black,citecolor=black,hypertexnames=false}
+
+%%fonte
+\usepackage{bookman}
+\usepackage[T1]{fontenc}
+
+%%para os numeros reais
+\usepackage{amsfonts}
+\usepackage{amsmath}
+
+\DeclareFixedFont{\numberfont}{T1}{phv}{bx}{n}{2cm}
+
+%%% redefine o formato do título
+
+
+
+\titleformat{\chapter}[display]
+  {\normalfont\Large\sffamily
+  }
+  {%\titlerule[3pt]%
+   \filright
+   \rule[32pt]{.7\linewidth}{4pt}
+   \hspace{-11pt}
+   \shadowbox{
+   \begin{minipage}{.18\linewidth}
+     \begin{center}
+       \textsc{\Large\chaptertitlename}\\
+       \vspace{1ex}
+       {\numberfont\color[gray]{0.5} \thechapter}\\
+       \vspace{1ex}
+     \end{center}
+   \end{minipage}}
+  }
+  {0pt}
+  {\filcenter
+   \Huge
+   }
+  [\hfill\rule{.8\textwidth}{0.5pt}\\
+     \vskip-1.8ex\hfill\rule{.7\textwidth}{3pt}]
+
+
+%%% macro para destacar a(s) primeira(s) letra do texto
+%%% é necessário ter a fonte courier instalada
+%
+%  um texto do tipo:
+%
+%  \begin{document}
+%    \versal{IN} THE beginning God created the heaven and the earth.  Now the
+%    earth was unformed and void, and darkness was upon the face of the
+%    deep; and the spirit of God hovered over the face of the waters.
+%  \end{document}
+%
+%  irá produzir algo como:
+%
+%  I I\  I THE beginning God  created the heaven and  the earth.
+%  I I \ I Now the earth was unformed and void, and darkness was
+%  I I  \I upon the face of the deep; and the spirit of God hov-
+%  ered over the face of the waters.
+
+%\font\largefont= pzcmi scaled 6500
+
+\newcommand{\versal}[1]{{\noindent
+    \setbox0\hbox{\largefont #1 }%
+    \count0=\ht0                   % height of versal
+    \count1=\baselineskip          % baselineskip
+    \divide\count0 by \count1      % versal height/baselineskip
+    \dimen1 = \count0\baselineskip % distance to drop versal
+    \advance\count0 by 1\relax     % no of indented lines
+    \dimen0=\wd0                   % width of versal
+    \global\hangindent\dimen0      % set indentation distance
+    \global\hangafter-\count0      % set no of indented lines
+    \hskip-\dimen0\setbox0\hbox to\dimen0{\raise-\dimen1\box0\hss}%
+    \dp0=0in\ht0=0in\box0}}
+% Backref com colocação de "Citado na página..."
+\renewcommand*{\backref}[1]{}
+\renewcommand*{\backrefalt}[4]{
+   \ifcase #1
+       Não citado no texto.
+   \or
+       Citado na página~#2.
+   \else
+       Citado nas páginas #2.
+   \fi
+}
+
+\renewcommand{\backreftwosep}{ e~}
+\renewcommand{\backreflastsep}{, e~}
+
+
+\usepackage{pgf}
+\usepackage{baseboxes}
+\usepackage{basecolor}
+
+\include{macros}
+
+\begin{document}
+
+\pagestyle{empty}
+\pagenumbering{roman}
+
+%%% insere a capa
+%%% edite os campos para título, data, orientador e nome
+
+\newcommand{\titulo}{Contador de objetos em vídeos usando redes neurais convolucionais}
+  
+
+\input{capa}
+%\cleardoublepage
+
+\pagestyle{plain}
+
+
+\onehalfspacing
+
+\input{agradecimentos}
+%\cleardoublepage
+\input{resumo}
+%\cleardoublepage
+\tableofcontents
+\addcontentsline{toc}{section}{Sumário}
+\cleardoublepage
+
+\listoffigures
+\addcontentsline{toc}{section}{Lista de Figuras}
+\cleardoublepage
+
+\listoftables
+\addcontentsline{toc}{section}{Lista de Tabelas}
+\cleardoublepage
+
+
+%\addcontentsline{toc}{section}{Lista de Abreviaturas}
+%\cleardoublepage
+%\input{acron}
+%\cleardoublepage
+
+
+%\listofalgorithms
+%\addcontentsline{toc}{section}{Lista de Algoritmos}
+%\cleardoublepage
+
+
+
+
+%%% inserir resumo
+%\input{resumo}
+%
+%\newpage
+
+%%% corpo do texto
+
+
+\pagenumbering{arabic}
+
+%%% inclua os seu arquivos a partir daqui
+
+\include{1_introducao}
+\include{2_am}
+\include{3_ranking}
+\include{4_roc}
+\include{5_calibracao}
+\include{6_cotraining}
+\include{7_conclusoes}
+
+
+\appendix
+\bibliographystyle{apalike}
+
+%%% arquivo .bib
+\bibliography{main}
+\addcontentsline{toc}{chapter}{Referências}
+
+
+% Set the ending of a LaTeX document
+\end{document}

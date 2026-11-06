@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Preliminares</title>
+<meta name="description" content="Dissertação de mestrado de Plabiany Rodrigo Acosta: contador de objetos em vídeos usando redes neurais convolucionais.">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-inner">
+    <a class="brand" href="index.html">
+      <strong>Contador de objetos em vídeos</strong>
+      <span>Dissertação · Plabiany R. Acosta</span>
+    </a>
+    <nav class="toc" aria-label="Sumário">
+      <a class="toc-chapter" href="index.html">Capa</a>
+      <a class="toc-chapter active" href="preliminares.html">Preliminares</a>
+      <div class="toc-sep"></div>
+      <a class="toc-chapter" href="capitulos/01-introducao.html"><span class="toc-num">1.</span> Introdução</a>
+      <a class="toc-chapter" href="capitulos/02-revisao-bibliografica.html"><span class="toc-num">2.</span> Revisão Bibliográfica</a>
+      <a class="toc-chapter" href="capitulos/03-metodo-proposto.html"><span class="toc-num">3.</span> Método Proposto</a>
+      <a class="toc-chapter" href="capitulos/04-experimentos-e-resultados.html"><span class="toc-num">4.</span> Experimentos e Resultados</a>
+      <a class="toc-chapter" href="capitulos/05-conclusoes.html"><span class="toc-num">5.</span> Conclusões</a>
+      <div class="toc-sep"></div>
+      <a class="toc-chapter" href="figuras.html">Figuras</a>
+      <a class="toc-chapter" href="capitulos/referencias.html">Referências</a>
+      <a class="pdf-link" href="assets/dissertacao.pdf">Baixar PDF</a>
+    </nav>
+  </div>
+</aside>
+<button class="menu-toggle" type="button" aria-label="Abrir sumário" aria-controls="sidebar">☰</button>
+<div class="overlay" aria-hidden="true"></div>
+<main class="page">
+<article class="sheet">
+<h1 class="chapter-title">Preliminares</h1><blockquote class="dedicatoria">Aos meus pais,
+
+Plácido Acosta e Eusebia P. Villalva,
+
+Aos meus irmãos,
+
+Vanessa Cristina Acosta e Luiz César V. Acosta,
+
+Aos meus sobrinhos,
+
+Luiz Carlos A. Acosta e Larissa A. Acosta.</blockquote><h2 class="section-title" id="agradecimentos">Agradecimentos</h2>
+<p>A Deus que reside em mim e que se faz presente em minha respiração no
+dia-a-dia.</p>
+<p>Aos meus pais Plácido Acosta e Eusebia Parede Villalva Acosta, a
+minha irmã Vanessa Cristina Acosta e ao meu irmão Luiz Cézar Villalva
+Acosta, por todo o apoio e amor que já recebi e ainda vou receber
+deles.</p>
+<p>Ao Prof. Dr. Wesley Nunes Gonçalves por conduzir e ter idéias que
+tornaram este trabalho realidade. A Universidade Federal de Mato Grosso
+do Sul (UFMS).</p>
+<h2 class="section-title" id="resumo">Resumo</h2>
+<p>Este trabalho apresenta um método de Rede Neural Convolutional (CNN)
+para contar e localizar objetos em vídeos através de mapas de densidade.
+Cada objeto é representado por um ponto apenas. Desta forma um núcleo
+Gaussiano 2D é aplicado em cada ponto para originar o <em>Ground
+Truth</em> do mapa de densidade. O método recebe um quadro do vídeo em
+um instante
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+e o quadro no instante
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t-1</annotation></semantics></math>.
+Desta forma Vetores de Deslocamento Temporal dos objetos são estimados,
+e um refinamento do mapa de densidade acontece através de estágios. São
+apresentados um comparativo na quantidade de estágios utilizados nos
+ramos de refinamento, e uma variação de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>
+para geração do <em>Ground Truth</em> dos objetos.</p>
+<p>O método proposto foi avaliado pelo banco de dados FISHCV155V,
+desenvolvido pelo grupo INOVISÃO da UCDB em parceria com o IFMS e a
+empresa Projeto Pacu. Neste contexto foi analisado e testado a contagem
+de alevinos, que são peixes recém chocados e se movem irrefletidamente.
+A arquitetura obteve
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>A</mi><mi>E</mi><mo>=</mo><mn>0.11</mn></mrow><annotation encoding="application/x-tex">MAE = 0.11</annotation></semantics></math>
+e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="italic">𝐹-𝑚𝑒𝑎𝑠𝑢𝑟𝑒</mtext><mo>=</mo><mn>98</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">\textit{F-measure} = 98\%</annotation></semantics></math>
+com
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>1.1</mn></mrow><annotation encoding="application/x-tex">\sigma = 1.1</annotation></semantics></math>,
+utilizando o vetor de deslocamento temporal dos objetos. O método
+demonstrou que o vetor de deslocamento dos objetos pode auxiliar na
+detecção e a rotulação no tipo ponto pode ser o caminho para contar
+quantidades excessivas de objetos em uma imagem.</p>
+<h2 class="section-title" id="abstract">Abstract</h2>
+<p>This work presents a method of Neural Network Convolutional (CNN) to
+count and locate objects in videos through density maps. Each object is
+represented by a dot only. In this way a 2D Gaussian core is applied at
+each point to originate the <em>Ground Truth</em> of the density map.
+The method receives a frame from the video in an instant
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+and the frame in the instant
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t-1</annotation></semantics></math>.
+In this way, the time displacement vectors of the objects are estimated,
+and a refinement of the density map takes place through stages.</p>
+<p>A comparison of the number of stages used in the refinement branches
+is presented, as well as a variation of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>
+to generate the <em>Ground Truth</em> of the objects.</p>
+<p>The proposed method was evaluated by the FISHCV155V database,
+developed by the UCDB INOVISÃO group in partnership with IFMS and
+Projeto Pacu. In this context, the count of fingerlings, which are newly
+hatched fish and move thoughtlessly, was analyzed and tested. The
+architecture obtained
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>A</mi><mi>E</mi><mo>=</mo><mn>0.11</mn></mrow><annotation encoding="application/x-tex">MAE = 0.11</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="italic">𝐹-𝑚𝑒𝑎𝑠𝑢𝑟𝑒</mtext><mo>=</mo><mn>98</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">\textit{F-measure} = 98\%</annotation></semantics></math>
+with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>1.1</mn></mrow><annotation encoding="application/x-tex">\sigma = 1.1</annotation></semantics></math>,
+using the time displacement vector of the objects. The method
+demonstrated that the vector of displacement of the objects can assist
+in the detection and the labeling in the point type can be the way to
+count excessive amounts of objects in an image.</p>
+
+<nav class="pager" aria-label="Navegação entre páginas">
+<span></span>
+<a class="next" href="capitulos/01-introducao.html"><span class="label">Próximo</span>Capítulo 1 — Introdução</a>
+</nav>
+<footer class="site-footer">
+  <p>Plabiany Rodrigo Acosta · Dissertação de Mestrado · FACOM/UFMS · 2021</p>
+  <p><a href="assets/dissertacao.pdf">Versão em PDF</a></p>
+</footer>
+</article>
+</main>
+<script src="assets/js/site.js"></script>
+</body>
+</html>

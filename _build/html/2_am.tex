@@ -1,0 +1,140 @@
+\chapter{Revis{\~{a}}o Bibliogr{\'{a}}fica}
+\label{chap:am}
+
+%\section{Fundamentação Teórica}
+
+%Os computadores digitais modernos superam os humanos no domínio da computação numérica e manipulação de símbolos relacionados (\cite{ANN}). O surgimento de novas técnologias, novas capacidades computacionais facilita os estudos matemáticos que tem sido cada vez mais aplicados em sistemas computacionais. As Redes Neurais Artificiais é uma realidade e cada vez mais é utilizada em favor da vida humana (\cite{BASHEER20003}). 
+
+%\textbf{Falar aqui sobre aprendizagem profunda}
+
+
+%\section{Redes Neurais Convolucionais (CNN)}
+
+As Redes Neurais Convolucionais tem dominado estudos de Aprendizado Profundo, e demonstram resultados promissores quando testadas em problemas reais. Tais redes usam a convolução em pelo menos uma de suas camadas, sendo a convolução uma operação linear \cite{deeplearningbook}. Além disso, são capazes de operar com uma ou mais dimensões, portanto é possível utilizar as imagens RGB ($3$ dimensões) e vídeos ($n$ dimensões) como entradas para treinamento \cite{5605630}.
+
+%\subsubsection{Camada Convolucional}
+
+%As camadas convolucionais são responsáveis por aprender filtros que extraem as características das imagens de entrada. Tendo \textit{h} como altura e \textit{w} a largura, as imagens de entrada podem conter 3 canais de cores, assim temos que uma imagem de entrada possui dimensão $\textit{w} \times \textit{h} \times 3$. A camada convolucional aplica a operação de convolução na entrada, resultando em uma saída para cada um dos filtros da camada. 
+
+%Em geral, diversos filtros são treinados em uma camada convolucional, sendo que quanto maior o número de filtros maior será a quantidade de características extraídas da entrada. Os filtros se movimentam nas imagens de entrada e assim gera-se um mapa de ativações. Contudo, os filtros de camadas convolucionais mais profundas se ativam em regiões específicas das entradas, obtendo assim características como bordas ou manchas. A medida que as épocas acontecem, esses filtros são ajustados e ao mesmo tempo constroem uma mapa de características bidimensional que calcula as ativações.
+
+%Na Figura \ref{ZP} é apresentado o efeito de uma camada convolucional. O volume à esquerda representa a imagem ou entrada, enquanto que o volume à direita representa o volume de saída de uma camada convolucional. 
+%Para limitar o volume de saída da camada convolucional, temos três parâmetros principais: profundidade, \textit{stride} e \textit{zero-padding} \cite{RedesConvolucionaisComTensorflow}.
+
+%A combinação de camadas convolucionais tem sido cada vez mais estudada e testada no mundo real. 
+%A combinação de camadas convolucionais tem sido estudo e testado no mundo real por diversos pesquisadores.
+Frente as dificuldades das CNN's, conforme descrito na Seção \ref{sec:Motivacao}. As Redes Neurais Convolucionais ocuparam espaços nos artigos ciêntifícos e são considerados por muitos o estado da arte do Aprendizado Profundo (\textit{Deep Learning})
+\cite{DBLP:journals/corr/abs-1904-00889, 8437104, 8489369, rs11010011, 8186148, Zhao2017CVPR,DBLP:journals/corr/CaoSWS16, 8186148,DBLP:journals/corr/CaoSWS16,articleLuiz}.
+
+%Técnicas de aprendizado profundo dominaram o cenário da visão computacional para detecção \cite{DBLP:journals/corr/abs-1904-00889, 8437104, 8489369, rs11010011, 8186148}, segmentação \cite{Zhao2017CVPR,DBLP:journals/corr/CaoSWS16}, contagem \cite{8186148,DBLP:journals/corr/CaoSWS16,articleLuiz} e alguns outros âmbitos. 
+
+\label{sec:relatedWork}
+
+Rotular imagens tornou-se um problema significativo, pois quanto maior a quantidade de amostras, melhor serão os resultados nas predições. 
+%Uma forma tradicional para contagem por meio de contagem de objetos, pois para contar é necessário obter a presença ou não de objetos nas imagens \cite{s17040905}. 
+Por outro lado, um grande desafio na contagem é a detecção de objetos muitos próximos ou em oclusão, sendo que muitos métodos acabam detectando dois objetos como um \cite{article,8451787,inproceedings, DBLP:journals/corr/abs-1711-04433, 8489369, 8127090, s17040905, DBLP:journals/corr/abs-1804-00307, articleLuiz,DBLP:journals/corr/CheangCT17a}. 
+
+\cite{Cao2017} demonstrou o início de uma linha de pesquisa que abrange a detecção de pessoas e a estimativa das partes do corpo em tempo real utilizando Redes Neurais Convolucionais. O trabalho propõe o cálculo dos membros de cada pessoa detectada além de uma estimativa do vetor de deslocamento desses membros.
+Dentre as adversidades encontradas pela técnica de \cite{Cao2017}, uma delas esta em detectar indivíduos que se encontram na imagem, porém com membros em oclusão. \cite{Cao2017} utiliza a conexão de membros para detectar e assim estimar o corpo humano nas imagens. Desta maneira,  cada membro estimado possui um ponto e linhas que ligam tais pontos.
+Com o intuito de distinguir cada pessoa nas predições, \cite{Cao2017} dividiram as predições em conjuntos disjuntos.
+Os autores assumem que todos os pontos preditos pelo modelo são vértices, e as linhas que ligam os membros contemplam as arestas. Assumindo assim um grafo para cada corpo humano predito.
+
+O método foi avaliado com base no banco de dados \textit{MPII-Person Dataset} e \textit{COCO Keypoints Challenge}. Para avaliar os resultados obtidos, \cite{Cao2017} calcularam a média da precisão das partes do corpo estimados. Assim, o método alcançou uma média de precisão dos membros de $91.2\%$ para o banco de dados \textit{MPII Multi-Person}. O banco de dados COCO obteve uma precisão de $68.2\%$ para detecção de pessoas em larga escala.
+
+Em 2018 \cite{Cao2018} propôs o novo estado da arte para a estimativa da pose 2D de pessoas presentes nas imagens em tempo real. As poses são construídas com o auxílio de campos de afinidades que estimam os membros do corpo humano, assim como no trabalho de 2017 \cite{Cao2017}. Além da releitura dos resultados obtidos no banco de dados utilizados no artigo anterior, são apresentados os resultados obtidos pelo metodo para o banco de dados \textit{Foot Keypoint Dataset} e uma estimativa da pose de veículos. O método obteve $77.9\%$ de precisão no conjunto de validação para estimativa da posição humana, e a estimativa da pose de veículos nas imagens em tempo real obteve $70.1\%$ no conjunto de validação. 
+%Para resolver esse problema, a seguir trabalhos que procuram construir um mapa de densidade que estima a probabilidade de um objeto ser detectado.
+%A contagem pode ser encontrada em diferentes áreas, tais como contagem de pessoas \cite{article,8451787,inproceedings, DBLP:journals/corr/abs-1711-04433}, animais \cite{8489369} \cite{8127090}, frutas \cite{s17040905, DBLP:journals/corr/abs-1804-00307}, árvores \cite{articleLuiz,DBLP:journals/corr/CheangCT17a}, entre outros. 
+%Nas subseção a seguir alguns trabalhos relativamente significativos para contar usando CNNs.
+
+%\subsection{Contagem em Geral}
+%Na literatura, encontramos vários trabalhos que tentam estimar a quantidade de pessoas presentes nas imagens \cite{article} \cite{8451787} \cite{Simonyan14c}. 
+
+Em vídeos a detecção e a contagem acontecem em cada quadro do vídeo. Assim os vídeos proporcionam grandes atributos auxiliares na  extração das características dos objetos. Uma vez que é possível obter o rastreamento do objeto, a localização, se houve locomoção, se houve alteração no seu formato durante o deslocamento, entre outros . Por outra perspectiva a quantidade excessiva de objetos de interesse nas imagens, fazem com que alguns objetos acabem oclusos, impedindo uma extração de características próxima do ideal, para aquele objeto individualmente.
+
+%causando uma deformação na extração de características.
+
+%A distribuição desigual dos objetos a serem contados demanda métodos de CNN's que consigam distinguir cada objeto individualmente \cite{article, Simonyan14c, inproceedings, 8451787}.
+Contar peixes tem se tornado o foco de pesquisadores pelo mundo, pois obter a quantidade exata de peixes presentes em um criadouro auxilia na produção \cite{FAO}. A distribuição desigual dos peixes a serem contados demanda métodos de CNN's que consigam distinguir cada objeto individualmente \cite{article, Simonyan14c, inproceedings, 8451787}.
+Nesse trabalho, é proposto uma técnica para contar objetos, tendo a ciência indireta das suas localizações em um instante anterior.
+Na seção a seguir são apresentados métodos para contagem de peixes.
+
+\section{Contagem de Peixes}
+
+
+
+%A distribuição desigual dos objetos a serem contados, conhecidos como objetos de interesse, tem demandado métodos de CNN's que consigam distinguir cada objeto \cite{article, Simonyan14c, inproceedings}.
+
+%\cite{article} propôs um método para contar a multidão com o foco na distribuição desigual da multidão nas imagens. O método é dividido em três partes principais: O primeiro passo consiste em duas camadas convolucionais para obter a tarefa de classificação de densidade. 
+%A segunda parte o \textit{max-ave pool} é introduzida e, ao mesmo tempo, são utilizadas camadas deconvolucionais para restaurar os detalhes perdidos no processo de amostragem. A última etapa consiste na geração do mapa de densidade com base no mapa de recursos com características de densidade global. \cite{8451787} também propõe a contagem de pessoas porém para gerar o mapa de densidade em seu método é utilizado a Rede Neural Convolucional VGG16 \cite{Simonyan14c} sem as camadas totalmente conectadas.
+
+%O método de Zhang et al. \cite{inproceedings} recebe uma imagem de entrada e a fim de produzir uma escala semelhante para as pessoas presentes na imagem, o \textit{ground truth} é produzido através de pixels considerados relevantes e centrais dentre regiões específicas da figura. 
+
+
+%\cite{DBLP:journals/corr/CaoSWS16} propuseram uma arquitetura para detectar a pose 2D de várias pessoas em imagens. A arquitetura fornece simultaneamente mapas de densidade de detecção e campos de afinidade que codificam a associação de partes (do corpo humano). A CNN é dividida em dois ramos: o primeiro produz mapas de densidade e o segundo campos de afinidade. Ao estimar o mapa de densidade, é possível analisar detecções e avaliar itens muito próximos que foram classificados incorretamente. 
+
+
+%A SaCNN proposta por Zhang e Chen é uma rede neural convolucional adaptativa em escala (Scale-Adaptive CNN - SaCNN) \cite{DBLP:journals/corr/abs-1711-04433}.
+%O \textit{ground truth} é gerado com base nas cabeças das pessoas presentes nas imagens.
+%A CNN proposta é adaptável à escala, pois possui apenas um tamanho de filtro. As camadas presentes na arquitetura utilizam mapa de características obtido de camadas anteriores para um refinamento ainda mais preciso do mapa de densidade das camadas subsequentes.
+
+%
+%\subsection{Contagem de Frutas}
+%Contagens precisas de frutas antes da colheita fornecem informações úteis para o planejamento logístico.
+
+%\cite{s17040905} propuseram uma adaptação da Inception-Resnet para realizar a contagem de frutas em imagens do mundo real com uma precisão de $ 91\% $. No ano seguinte \cite{DBLP:journals/corr/abs-1804-00307} propuseram um pipeline de contagem de frutas que combina Deep Learning, rastreamento quadro-a-quadro e localização 3D para contar com precisão os frutos visíveis em uma sequência de imagens.
+%\cite{inproceedings} realizaram uma modificação no AlexNet para contagem de maçãs. O trabalho mostrou que a contagem de frutos em árvores pode ser um problema de classificação de classe.
+
+
+%\subsection{Contagem de Árvores}
+%\textbf{SOLUÇÕES COM CNN DE CONTAGEM GERAIS..}
+
+%
+%Os métodos de reconhecimento de árvores podem ser confundidos com os estágios de crescimento das espécies, algumas árvores sofrem várias transformações até atingirem a idade adulta (\cite {JournalArticle, 7805572,inproceedingsMaciel}). Detectar árvores em vários estágios de crescimento tornou-se um grande desafio para as CNN's. \cite{articleLuiz} aplicaram a CNN ResNet101 para detectar e contar eucalipto através de imagens adquiridas por UAVs. Um quadrado de $ 30 \times 30 $ foi definido em torno do ponto central no chão e foi verificado se o ponto detectado pela rede pertence a essa área. É montado como um verdadeiro positivo (VP) ou falso positivo (FP). Pode atingir uma taxa de detecção de $ 95,77\% $.
+
+%O método apresentado por \cite{DBLP:journals/corr/CheangCT17a} obteve $ 94\% $ de precisão na validação definida na contagem de palmeiras, usando imagens de satélite. O resultado destacado foi o uso do LeNet; Essa CNN foi treinada com duas classes de imagens: o centro de uma palmeira (coroa da árvore) e não contém o centro de uma palmeira (coroa).
+
+%\cite{LucasPrado} apresentou um estudo para a contagem de árvores cítricas, o método estima um mapa denso com a confiança de que uma planta ocorre em cada pixel, para isso foi usado no estudo $ \sigma $ igual a $ 0,5 $, $ 1,0 $ e $ 1,5 $, para gerar mapas diferentes de confiança real. Diferentes estágios ($ T $) também foram utilizados para refinar o mapa de confiança previsto. Os melhores resultados têm $ R ^ 2 $ de $ 0,97 $ e NRMSE $ 0,036 $. 
+
+%Maciel Zortea et al. \cite {inproceedingsMaciel} aponta a detecção de árvores cítricas, é método consiste na classificação de árvores através de uma CNN proposta no trabalho, rede utilizada para extração de características das imagens originais e no final do método para a classificação das árvores.
+
+
+%%%%%INTRODUCTION PART
+%In this study we point out the use of PSP \cite{Zhao2017CVPR} to work with information from different regions to form global information. Segmentation helps CNNs have information about the overall context of an image. Hengshuang Zhao proposed the Pyramid Scene Parsing Network (PSPNet) \cite{Zhao2017CVPR} which allows context information extraction at multiple scales. PSPNet uses ResNet for resource map extraction, then, the result of the pyramid pooling process goes through a UpSample and is concatenated with the initial feature map. The technique obtained Mean IoU (mIoU) accuracy of $85.4\%$. 
+
+
+
+%\textbf{Para superar esses problemas, este estudo apresenta uma nova CNN para a contagem de eucaliptos em linhas de plantio e em diferentes estágios de crescimento, usando como base os trabalhos de \cite{DBLP:journals/corr/CaoSWS16, Zhao2017CVPR}. Os detalhes são descritos nas próximas seções. Ao contrário de pesquisas anteriores que estimaram um retângulo para cada planta, o presente método estima um mapa denso com a confiança de que uma planta ocorre em cada pixel, o que é mais adequado para situações com alta densidade de plantas. Nos experimentos, o uso de diferentes estágios e sigmas foram testados para qual é o mais adequado a tarefa proposta. Esse tipo de análise pode contribuir para otimizar a contagem de plantas de eucaliptos e indicar a influência desses valores na detecção de linhas de plantios com árvores próximas e em diferentes estágios de crescimento.}
+
+%\subsection{Contagem de Peixes}
+
+
+\cite{Junior2019UFMS} propôs a contagem e estimativa da massa de alevinos em imagens. O trabalho inclui também um comparativo entre redes convolucionais profundas e algoritmos rasos de regressão.
+%Para realizar a captura das imagens, um equipamento foi construído para obter-se o banco de dados para os experimentos. 
+O autor enfatiza que a iluminação presente nas imagens são fundamentais para uma extração relevante das formas de cada objeto. 
+Uma limiarização é aplicada nas imagens de entrada para separar os pixels pertencentes aos peixes do fundo.
+O \textit{SLIC Superpixels} \cite{SLIC} é aplicado com o intuito de agrupar os pixels que possuem semelhanças, o filtro Kalman \cite{Kalman} nas regiões de interesse e por fim a exclusão do fundo. Além disso é levado em consideração pelo método a quantidade de vezes que um objeto foi contado.
+%O melhor resultado ocorre quando os parâmetros testados são: área do blob $62$, limiar do blob $33$, distância entre blobs $70$, limiar candidato $1$, desvio padrão $1.1$ e área mínima $1.7$.
+%Tendo uma média dos erros absolutos $5,99$, erros ao quadrado $99.20$ e raiz da média dos erros ao quadrado $9,96$.
+O melhor resultado foi obtido após o estudo de diversos parâmetros empíricos (e.g., limiar da segmentação, distância entre objetos, etc), tendo uma média dos erros absolutos de $5,99$ unidade de alevinos.
+
+\cite{Junior2019UFMS} também comparou o uso dos seguintes algoritmos rasos de classificação: IBK, com $k = 3$, J48, e SMO. O algoritmo J48 obteve o melhor resultado, atingindo uma acurácia de $58\%$, revocação 
+$58\%$ e $\textit{F-measure} = 58\%$. O comparativo entre as redes convolucionais deu-se atraves da InceptionV3, ResNet50, VGG16, VGG19 e Xception. Tendo como destaque a ResNet50 \cite{ResNet50} que obteve $67\%$ de acurácia no conjunto de testes.
+O autor destaca que a transferência de aprendizado pode acentuar os resultados, visto que foi realizado um comparativo entre a inicialização da ResNet com e sem os pesos pré-treinados da IMAGENET \cite{IMAGENET}. O trabalhdo de \cite{Junior2019UFMS} mostra que as CNN's se sobresaem quando comparadas a algoritmos rasos.
+
+
+\cite{Erikson} propõe a contagem de peixes e a classificação de espécies.
+Bem como a avaliação da eficácia da escada de peixes (vide Seção \ref{sec:Aplicação}), também é abordado pela dissertação de mestrado.
+O método alcançou $80\%$ de acurácia na contagem utilizando o rastreador bayesiano de multiplos objetos (BraMBLe). 
+A contagem dos peixes acontecem em uma sequência de imagens, através de um rastreamento realizado para cada objeto de interesse. Nesse contexto os objetos são detectados pela estimativa da trajetória realizada por ele na sequência de quadros. Assim quando um objeto sai de cena, e um outro começa a aparecer, uma nova trajetória é construída para este peixe. O esquema de estimar a trajetória do peixe em cena, fez com que o trabalho conseguisse distinguir, por exemplo, dois peixes, que no início do vídeo estão juntos, porém cada um toma um rumo distinto no decorrer do vídeo.
+
+\cite{ICESJournal} apresentou a combinação da ResNet101 \cite{ResNet50}, e a FPN (\textit{feature pyramid network} \cite{FPN}) para contar e detectar peixes. O resultado obtido foi de $77.3\%$ de precisão e $93.8\%$ de revocação, na contagem de peixes. \cite{YOLOFish} aplicou a Rede Neural Convolucional YOLO (\textit{You Only Look Once}) na detecção de peixes no fundo do mar. 
+A YOLO alcançou $93\%$ de acurácia, sendo que os autores afirmam que a CNN não obteve uma boa acurácia em lugares com pouca iluminação. 
+
+\cite{FingerLing} apresentou uma técnica com 4 passos principais para a contagem de alevinos: redimensionamento das imagens de entrada para $400\times400$ pixels, converter as imagens para escala de cinza, fatiar cada imagem em 16 ou 36 segmentos, encontrar o valor de limiar e por fim detectar e contar alevinos, utilizando uma CNN. A CNN aplicada para detectar e contar os alevinos é uma proposta dos autores \cite{FingerLing}, e a rede consiste basicamente em duas camadas convolucionais seguidas de \textit{Pooling} e no fim uma camada totalmente conectada.
+A rede possui duas camadas convolucionais, seguidas de \textit{Pooling} e por último uma camada totalmente conectada. 
+A detecção e contagem obteve uma precisão de $99.63\%$ e $99.17\%$. 
+
+
+
+Os trabalhos citados comprovam a eficácia das CNN's quando testadas em várias situações de contagem no mundo real. Os trabalhos que realizam a contagem em vídeos quase sempre utiliza informações de várias cenas para auxiliar na detecção. A técnica de utilizar cenas anteriores para melhorar os resultados, será avaliada neste trabalho, pois as localizações anteriores de cada objeto são levadas em consideração.
+%Independente da arquitetura, obter uma rotulação adequada e utilizar um método com um custo computacional satisfatório quase sempre obtem valores excelentes para contagem.

@@ -1,0 +1,58 @@
+This is BibTeX, Version 0.99d (TeX Live 2025/dev/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: tese.aux
+A level-1 auxiliary file: 1_introducao.aux
+A level-1 auxiliary file: 2_am.aux
+A level-1 auxiliary file: 3_ranking.aux
+A level-1 auxiliary file: 4_roc.aux
+A level-1 auxiliary file: 5_calibracao.aux
+A level-1 auxiliary file: 6_cotraining.aux
+A level-1 auxiliary file: 7_conclusoes.aux
+The style file: apalike.bst
+Database file #1: main.bib
+Warning--to sort, need author or key in UHE
+Warning--empty booktitle in Erikson
+Warning--empty journal in OECD
+Warning--empty booktitle in inproceedings
+You've used 60 entries,
+            1935 wiz_defined-function locations,
+            802 strings with 15560 characters,
+and the built_in function-call counts, 25844 in all, are:
+= -- 2407
+> -- 1423
+< -- 30
++ -- 504
+- -- 500
+* -- 2157
+:= -- 4554
+add.period$ -- 179
+call.type$ -- 60
+change.case$ -- 547
+chr.to.int$ -- 58
+cite$ -- 65
+duplicate$ -- 987
+empty$ -- 1607
+format.name$ -- 580
+if$ -- 5071
+int.to.chr$ -- 3
+int.to.str$ -- 0
+missing$ -- 54
+newline$ -- 302
+num.names$ -- 178
+pop$ -- 555
+preamble$ -- 1
+purify$ -- 549
+quote$ -- 0
+skip$ -- 751
+stack$ -- 0
+substring$ -- 1260
+swap$ -- 168
+text.length$ -- 14
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 356
+warning$ -- 4
+while$ -- 156
+width$ -- 0
+write$ -- 764
+(There were 4 warnings)

@@ -1,0 +1,92 @@
+\chapter{Revisão Bibliográfica}
+\label{chap:am}
+
+
+
+
+
+
+As Redes Neurais Convolucionais tem dominado estudos de Aprendizado Profundo, e demonstram resultados promissores quando testadas em problemas reais. Tais redes usam a convolução em pelo menos uma de suas camadas, sendo a convolução uma operação linear \cite{deeplearningbook}. Além disso, são capazes de operar com uma ou mais dimensões, portanto é possível utilizar as imagens RGB ($3$ dimensões) e vídeos ($n$ dimensões) como entradas para treinamento \cite{5605630}.
+
+
+
+
+
+Frente as dificuldades das CNN's, conforme descrito na Seção \ref{sec:Motivacao}. As Redes Neurais Convolucionais ocuparam espaços nos artigos ciêntifícos e são considerados por muitos o estado da arte do Aprendizado Profundo (\textit{Deep Learning})
+\cite{DBLP:journals/corr/abs-1904-00889, 8437104, 8489369, rs11010011, 8186148, Zhao2017CVPR,DBLP:journals/corr/CaoSWS16, 8186148,DBLP:journals/corr/CaoSWS16,articleLuiz}.
+
+
+\label{sec:relatedWork}
+
+Rotular imagens tornou-se um problema significativo, pois quanto maior a quantidade de amostras, melhor serão os resultados nas predições.
+Por outro lado, um grande desafio na contagem é a detecção de objetos muitos próximos ou em oclusão, sendo que muitos métodos acabam detectando dois objetos como um \cite{article,8451787,inproceedings, DBLP:journals/corr/abs-1711-04433, 8489369, 8127090, s17040905, DBLP:journals/corr/abs-1804-00307, articleLuiz,DBLP:journals/corr/CheangCT17a}.
+
+\cite{Cao2017} demonstrou o início de uma linha de pesquisa que abrange a detecção de pessoas e a estimativa das partes do corpo em tempo real utilizando Redes Neurais Convolucionais. O trabalho propõe o cálculo dos membros de cada pessoa detectada além de uma estimativa do vetor de deslocamento desses membros.
+Dentre as adversidades encontradas pela técnica de \cite{Cao2017}, uma delas esta em detectar indivíduos que se encontram na imagem, porém com membros em oclusão. \cite{Cao2017} utiliza a conexão de membros para detectar e assim estimar o corpo humano nas imagens. Desta maneira,  cada membro estimado possui um ponto e linhas que ligam tais pontos.
+Com o intuito de distinguir cada pessoa nas predições, \cite{Cao2017} dividiram as predições em conjuntos disjuntos.
+Os autores assumem que todos os pontos preditos pelo modelo são vértices, e as linhas que ligam os membros contemplam as arestas. Assumindo assim um grafo para cada corpo humano predito.
+
+O método foi avaliado com base no banco de dados \textit{MPII-Person Dataset} e \textit{COCO Keypoints Challenge}. Para avaliar os resultados obtidos, \cite{Cao2017} calcularam a média da precisão das partes do corpo estimados. Assim, o método alcançou uma média de precisão dos membros de $91.2\%$ para o banco de dados \textit{MPII Multi-Person}. O banco de dados COCO obteve uma precisão de $68.2\%$ para detecção de pessoas em larga escala.
+
+Em 2018 \cite{Cao2018} propôs o novo estado da arte para a estimativa da pose 2D de pessoas presentes nas imagens em tempo real. As poses são construídas com o auxílio de campos de afinidades que estimam os membros do corpo humano, assim como no trabalho de 2017 \cite{Cao2017}. Além da releitura dos resultados obtidos no banco de dados utilizados no artigo anterior, são apresentados os resultados obtidos pelo metodo para o banco de dados \textit{Foot Keypoint Dataset} e uma estimativa da pose de veículos. O método obteve $77.9\%$ de precisão no conjunto de validação para estimativa da posição humana, e a estimativa da pose de veículos nas imagens em tempo real obteve $70.1\%$ no conjunto de validação.
+
+
+Em vídeos a detecção e a contagem acontecem em cada quadro do vídeo. Assim os vídeos proporcionam grandes atributos auxiliares na  extração das características dos objetos. Uma vez que é possível obter o rastreamento do objeto, a localização, se houve locomoção, se houve alteração no seu formato durante o deslocamento, entre outros . Por outra perspectiva a quantidade excessiva de objetos de interesse nas imagens, fazem com que alguns objetos acabem oclusos, impedindo uma extração de características próxima do ideal, para aquele objeto individualmente.
+
+
+Contar peixes tem se tornado o foco de pesquisadores pelo mundo, pois obter a quantidade exata de peixes presentes em um criadouro auxilia na produção \cite{FAO}. A distribuição desigual dos peixes a serem contados demanda métodos de CNN's que consigam distinguir cada objeto individualmente \cite{article, Simonyan14c, inproceedings, 8451787}.
+Nesse trabalho, é proposto uma técnica para contar objetos, tendo a ciência indireta das suas localizações em um instante anterior.
+Na seção a seguir são apresentados métodos para contagem de peixes.
+
+\section{Contagem de Peixes}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\cite{Junior2019UFMS} propôs a contagem e estimativa da massa de alevinos em imagens. O trabalho inclui também um comparativo entre redes convolucionais profundas e algoritmos rasos de regressão.
+O autor enfatiza que a iluminação presente nas imagens são fundamentais para uma extração relevante das formas de cada objeto.
+Uma limiarização é aplicada nas imagens de entrada para separar os pixels pertencentes aos peixes do fundo.
+O \textit{SLIC Superpixels} \cite{SLIC} é aplicado com o intuito de agrupar os pixels que possuem semelhanças, o filtro Kalman \cite{Kalman} nas regiões de interesse e por fim a exclusão do fundo. Além disso é levado em consideração pelo método a quantidade de vezes que um objeto foi contado.
+O melhor resultado foi obtido após o estudo de diversos parâmetros empíricos (e.g., limiar da segmentação, distância entre objetos, etc), tendo uma média dos erros absolutos de $5,99$ unidade de alevinos.
+
+\cite{Junior2019UFMS} também comparou o uso dos seguintes algoritmos rasos de classificação: IBK, com $k = 3$, J48, e SMO. O algoritmo J48 obteve o melhor resultado, atingindo uma acurácia de $58\%$, revocação
+$58\%$ e $\textit{F-measure} = 58\%$. O comparativo entre as redes convolucionais deu-se atraves da InceptionV3, ResNet50, VGG16, VGG19 e Xception. Tendo como destaque a ResNet50 \cite{ResNet50} que obteve $67\%$ de acurácia no conjunto de testes.
+O autor destaca que a transferência de aprendizado pode acentuar os resultados, visto que foi realizado um comparativo entre a inicialização da ResNet com e sem os pesos pré-treinados da IMAGENET \cite{IMAGENET}. O trabalhdo de \cite{Junior2019UFMS} mostra que as CNN's se sobresaem quando comparadas a algoritmos rasos.
+
+
+\cite{Erikson} propõe a contagem de peixes e a classificação de espécies.
+Bem como a avaliação da eficácia da escada de peixes (vide Seção \ref{sec:Aplicação}), também é abordado pela dissertação de mestrado.
+O método alcançou $80\%$ de acurácia na contagem utilizando o rastreador bayesiano de multiplos objetos (BraMBLe).
+A contagem dos peixes acontecem em uma sequência de imagens, através de um rastreamento realizado para cada objeto de interesse. Nesse contexto os objetos são detectados pela estimativa da trajetória realizada por ele na sequência de quadros. Assim quando um objeto sai de cena, e um outro começa a aparecer, uma nova trajetória é construída para este peixe. O esquema de estimar a trajetória do peixe em cena, fez com que o trabalho conseguisse distinguir, por exemplo, dois peixes, que no início do vídeo estão juntos, porém cada um toma um rumo distinto no decorrer do vídeo.
+
+\cite{ICESJournal} apresentou a combinação da ResNet101 \cite{ResNet50}, e a FPN (\textit{feature pyramid network} \cite{FPN}) para contar e detectar peixes. O resultado obtido foi de $77.3\%$ de precisão e $93.8\%$ de revocação, na contagem de peixes. \cite{YOLOFish} aplicou a Rede Neural Convolucional YOLO (\textit{You Only Look Once}) na detecção de peixes no fundo do mar.
+A YOLO alcançou $93\%$ de acurácia, sendo que os autores afirmam que a CNN não obteve uma boa acurácia em lugares com pouca iluminação.
+
+\cite{FingerLing} apresentou uma técnica com 4 passos principais para a contagem de alevinos: redimensionamento das imagens de entrada para $400\times400$ pixels, converter as imagens para escala de cinza, fatiar cada imagem em 16 ou 36 segmentos, encontrar o valor de limiar e por fim detectar e contar alevinos, utilizando uma CNN. A CNN aplicada para detectar e contar os alevinos é uma proposta dos autores \cite{FingerLing}, e a rede consiste basicamente em duas camadas convolucionais seguidas de \textit{Pooling} e no fim uma camada totalmente conectada.
+A rede possui duas camadas convolucionais, seguidas de \textit{Pooling} e por último uma camada totalmente conectada.
+A detecção e contagem obteve uma precisão de $99.63\%$ e $99.17\%$.
+
+
+
+Os trabalhos citados comprovam a eficácia das CNN's quando testadas em várias situações de contagem no mundo real. Os trabalhos que realizam a contagem em vídeos quase sempre utiliza informações de várias cenas para auxiliar na detecção. A técnica de utilizar cenas anteriores para melhorar os resultados, será avaliada neste trabalho, pois as localizações anteriores de cada objeto são levadas em consideração.

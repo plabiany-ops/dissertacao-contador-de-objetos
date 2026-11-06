@@ -1,0 +1,2243 @@
+<div class="titlepage">
+<p> </p>
+<div class="center">
+<div class="minipage">
+<div class="center">
+<p><br />
+<span>Contador de objetos em vídeos usando redes neurais
+convolucionais</span><br />
+<strong><em>Plabiany Rodrigo Acosta</em></strong><br />
+<br />
+</p>
+</div>
+</div>
+</div>
+<div class="flushright">
+<div class="Sbox">
+<div class="minipage">
+<p>SERVIÇO DE PÓS-GRADUAÇÃO FACOM - UFMS<br />
+<br />
+Data de Depósito:<br />
+<br />
+Assinatura:</p>
+</div>
+</div>
+</div>
+<div class="center">
+<p><span>Contador de objetos em vídeos usando redes neurais
+convolucionais</span><a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a></p>
+<p><span><em>Plabiany Rodrigo Acosta</em></span></p>
+<p><span><strong>Orientador:</strong></span> <span><em>Profº Drº Wesley
+Nunes Gonçalves</em></span></p>
+</div>
+<div class="flushright">
+<div class="minipage">
+<p>Dissertação de Mestrado apresentada a Faculdade de Computação - FACOM
+- UFMS como parte dos requisitos necessários à obtenção do título de
+Mestre em Ciências de Computação.</p>
+</div>
+</div>
+<div class="center">
+<p><strong>MS - Campo Grande<br />
+março/2021</strong></p>
+</div>
+</div>
+<p> <br />
+</p>
+<div class="flushright">
+<p><em>Aos meus pais,<br />
+Plácido Acosta e Eusebia P. Villalva,<br />
+</em></p>
+<p>Aos meus irmãos,<br />
+Vanessa Cristina Acosta e Luiz César V. Acosta,<br />
+Aos meus sobrinhos,<br />
+Luiz Carlos A. Acosta e Larissa A. Acosta.</p>
+</div>
+<h1 class="unnumbered" id="agradecimentos">Agradecimentos</h1>
+<p>A Deus que reside em mim e que se faz presente em minha respiração no
+dia-a-dia.</p>
+<p>Aos meus pais Plácido Acosta e Eusebia Parede Villalva Acosta, a
+minha irmã Vanessa Cristina Acosta e ao meu irmão Luiz Cézar Villalva
+Acosta, por todo o apoio e amor que já recebi e ainda vou receber
+deles.</p>
+<p>Ao Prof. Dr. Wesley Nunes Gonçalves por conduzir e ter idéias que
+tornaram este trabalho realidade. A Universidade Federal de Mato Grosso
+do Sul (UFMS).</p>
+<h1 class="unnumbered" id="abstract">Abstract</h1>
+<p>This work presents a method of Neural Network Convolutional (CNN) to
+count and locate objects in videos through density maps. Each object is
+represented by a dot only. In this way a 2D Gaussian core is applied at
+each point to originate the <em>Ground Truth</em> of the density map.
+The method receives a frame from the video in an instant
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+and the frame in the instant
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t-1</annotation></semantics></math>.
+In this way, the time displacement vectors of the objects are estimated,
+and a refinement of the density map takes place through stages.</p>
+<p>A comparison of the number of stages used in the refinement branches
+is presented, as well as a variation of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>
+to generate the <em>Ground Truth</em> of the objects.</p>
+<p>The proposed method was evaluated by the FISHCV155V database,
+developed by the UCDB INOVISÃO group in partnership with IFMS and
+Projeto Pacu. In this context, the count of fingerlings, which are newly
+hatched fish and move thoughtlessly, was analyzed and tested. The
+architecture obtained
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>A</mi><mi>E</mi><mo>=</mo><mn>0.11</mn></mrow><annotation encoding="application/x-tex">MAE = 0.11</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="italic">𝐹-𝑚𝑒𝑎𝑠𝑢𝑟𝑒</mtext><mo>=</mo><mn>98</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">\textit{F-measure} = 98\%</annotation></semantics></math>
+with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>1.1</mn></mrow><annotation encoding="application/x-tex">\sigma = 1.1</annotation></semantics></math>,
+using the time displacement vector of the objects. The method
+demonstrated that the vector of displacement of the objects can assist
+in the detection and the labeling in the point type can be the way to
+count excessive amounts of objects in an image.</p>
+<h1 class="unnumbered" id="resumo">Resumo</h1>
+<p>Este trabalho apresenta um método de Rede Neural Convolutional (CNN)
+para contar e localizar objetos em vídeos através de mapas de densidade.
+Cada objeto é representado por um ponto apenas. Desta forma um núcleo
+Gaussiano 2D é aplicado em cada ponto para originar o <em>Ground
+Truth</em> do mapa de densidade. O método recebe um quadro do vídeo em
+um instante
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+e o quadro no instante
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t-1</annotation></semantics></math>.
+Desta forma Vetores de Deslocamento Temporal dos objetos são estimados,
+e um refinamento do mapa de densidade acontece através de estágios. São
+apresentados um comparativo na quantidade de estágios utilizados nos
+ramos de refinamento, e uma variação de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>
+para geração do <em>Ground Truth</em> dos objetos.</p>
+<p>O método proposto foi avaliado pelo banco de dados FISHCV155V,
+desenvolvido pelo grupo INOVISÃO da UCDB em parceria com o IFMS e a
+empresa Projeto Pacu. Neste contexto foi analisado e testado a contagem
+de alevinos, que são peixes recém chocados e se movem irrefletidamente.
+A arquitetura obteve
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>A</mi><mi>E</mi><mo>=</mo><mn>0.11</mn></mrow><annotation encoding="application/x-tex">MAE = 0.11</annotation></semantics></math>
+e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="italic">𝐹-𝑚𝑒𝑎𝑠𝑢𝑟𝑒</mtext><mo>=</mo><mn>98</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">\textit{F-measure} = 98\%</annotation></semantics></math>
+com
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>1.1</mn></mrow><annotation encoding="application/x-tex">\sigma = 1.1</annotation></semantics></math>,
+utilizando o vetor de deslocamento temporal dos objetos. O método
+demonstrou que o vetor de deslocamento dos objetos pode auxiliar na
+detecção e a rotulação no tipo ponto pode ser o caminho para contar
+quantidades excessivas de objetos em uma imagem.</p>
+<h1 id="introdução">Introdução</h1>
+<h2 id="sec:Motivacao">Motivação e Lacuna</h2>
+<p>A aprendizagem profunda (<em>Deep Learning</em>) tem se destacado no
+cenário de Visão Computacional e as Redes Neurais Convolucionais (CNN)
+<span class="citation" data-cites="Simonyan14c">(Simonyan; Zisserman,
+2014)</span> tem dominado o estado da arte <span class="citation"
+data-cites="ANN">(Jain; Jianchang Mao; Mohiuddin, 1996)</span>. Estudos
+podem ser encontrados para detecção de objetos <span class="citation"
+data-cites="DBLP:journals/corr/abs-1904-00889 8437104 8489369 rs11010011 8186148">(Aparna
+et al., 2018; Laguna et al., 2019; Li et al., 2018; S. Arruda et al.,
+2018; Tayara; Gil Soo; Chong, 2018)</span>, segmentação de imagens <span
+class="citation"
+data-cites="Zhao2017CVPR DBLP:journals/corr/CaoSWS16">(Cao et al., 2016;
+Zhao et al., 2017)</span>, contagem de objetos <span class="citation"
+data-cites="8186148 DBLP:journals/corr/CaoSWS16 articleLuiz">(Cao et
+al., 2016; Luiz Antonio Macarini, 2019; Tayara; Gil Soo; Chong,
+2018)</span>, entre outros.</p>
+<p>Entre as diversas aplicações da Visão Computacional, os métodos de
+contagem e localização de objetos consistem em detectar e obter a
+posição de cada objeto individualmente na imagem. Esses métodos tem
+auxiliado no controle e contagem de pessoas <span class="citation"
+data-cites="ExtractHuman">(Gonçalves et al., 2020)</span>, carros <span
+class="citation" data-cites="CarCount">(Azimi et al., 2018)</span>,
+animais <span class="citation" data-cites="8639306">(Sarwar et al.,
+2018)</span>, e até mesmo bactérias <span class="citation"
+data-cites="7320116">(Ferrari; Lombardi; Signoroni, 2015)</span>. A
+maioria dos métodos de contagem são baseados nos mais conhecidos métodos
+de detecção de objetos (Faster-RCNN <span class="citation"
+data-cites="DBLP:journals/corr/Girshick15">(Girshick, 2015)</span>,
+RetinaNet <span class="citation"
+data-cites="DBLP:journals/corr/abs-1708-02002">(Lin et al.,
+2017)</span>, YoloV3 <span class="citation"
+data-cites="DBLP:journals/corr/abs-1804-02767">(Redmon; Farhadi,
+2018)</span>). Esses métodos consideram um retângulo envolvente para
+cada objeto e podem fornecer tanto a posição (centro do retângulo
+envolvente) como a contagem (número de retângulos envolventes).</p>
+<p>Embora os métodos recentes tenham obtido resultados promissores, três
+desafios ainda se mantêm. O primeiro desafio é a alta densidade com
+objetos sobrepostos. Em geral, os métodos de detecção de objetos não são
+adequados para cenários densos de objetos <span class="citation"
+data-cites="Goldman2019CVPR">(Goldman et al., 2019)</span>. Neste caso,
+a grande sobreposição dos retângulos envolventes devido a oclusão
+dificulta o aprendizado dos métodos. Layout Proposal Networks (LPNs)
+<span class="citation" data-cites="8237708">(Hsieh; Lin; Hsu,
+2017)</span> é um método recente que tem seguido a proposta de detecção
+de objetos para contagem de carros utilizando camadas da VGG-16. Seu
+maior problema na contagem está na sobreposição dos retângulos quando
+carros estão lado a lado na imagem, como em um estacionamento.</p>
+<p>Por outro lado, estimar um mapa de densidade para obter a quantidade
+de objetos tem apresentado resultados promissores <span class="citation"
+data-cites="DBLP:journals/corr/abs-1808-01050 880968 Cao2017">(Cao et
+al., 2017; Idrees et al., 2018; Kamijo et al., 2000)</span> e feito com
+que estudos tenham esta direção. Um mapa de densidade consiste em
+estimar a probabilidade de um objeto ocorrer em cada pixel da imagem.
+Porém a diversidade encontrada nos cenários das imagens (e.g., escala,
+rotação, etc) dificulta a detecção e contagem por um mapa de densidade.
+Assim alguns trabalhos buscam encontrar um método eficaz que faça com
+que o objeto de interesse tenha um destaque nas probabilidades estimadas
+<span class="citation" data-cites="inproceedings">(Zhang et al.,
+2015)</span> <span class="citation"
+data-cites="DBLP:journals/corr/abs-1711-04433">(Zhang; Shi; Chen,
+2017)</span>.</p>
+<p>O segundo desafio é a necessidade da rotulação detalhada das imagens,
+o que é difícil de obter em grandes quantidades. A rotulação de um
+retângulo envolvente para cada objeto na imagem torna-se inviável para
+cenas muito densas em grandes quantidades de imagens. Por outro lado, a
+utilização de um único ponto para rotular cada objeto <span
+class="citation" data-cites="8237708">(Hsieh; Lin; Hsu, 2017)</span> tem
+sido grande alvo de estudos. Por exemplo, <span class="citation"
+data-cites="DBLP:peri/corr/abs-1904-01333">(Liu et al., 2019a)</span>
+propõem o método de detecção e contagem de multidões usando pontos na
+cabeça das pessoas. Os métodos baseados apenas em pontos consideram a
+informação de contexto ao redor do ponto, pois os objetos compartilham
+cores, textura e forma. Dessa forma, os métodos tendem a reconhecer
+mesmo que os limites dos objetos não estejam delimitados durante o
+aprendizado <span class="citation"
+data-cites="Aich2018ImprovingOC">(Aich; Stavness, 2018)</span>.</p>
+<p>O terceiro desafio consiste em contar e localizar objetos em uma
+sequência de imagens. A análise do movimento que objetos realizam nos
+vídeos podem fornecer informações valiosas que nem sempre são
+consideradas na contagem de objetos em uma imagem. Nesse contexto,
+alguns pesquisadores demonstram em seus estudos que rastrear o movimento
+pode auxiliar na detecção e reconhecimento, assim como distingui-los do
+fundo (<span class="citation"
+data-cites="Ma_2015_ICCV Nam_2016_CVPR Danelljan_2015_ICCV_Workshops WANG201962 8898173 ExtractHuman">(Danelljan
+et al., 2015; Gonçalves et al., 2020; Hou et al., 2019; Ma et al., 2015;
+Nam; Han, 2016; Wang et al., 2019)</span>). Diferente do rastreamento de
+objetos, o objetivo deste trabalho é considerar as informações do
+passado para contar e localizar os objetos em um quadro atual.</p>
+<p>Para contornar os desafios citados acima, este trabalho propõe um
+método para localizar e contar objetos em vídeos usando redes neurais
+convolucionais. Dado um quadro de um video e o quadro anterior, o método
+proposto estima uma mapa de densidade com a probabilidade de ocorrência
+de um objeto em cada pixel. Dessa forma, a rotulação apenas de pontos é
+suficiente para o treinamento do método e cenas densas podem ser melhor
+modeladas. Além disso, o método proposto também estima um mapa de
+vetores de deslocamento, isto é, vetores que indicam a direção do
+movimento de cada pixel da imagem. Essa estimativa dos vetores de
+deslocamento também é usada para predizer o mapa de densidade de um
+quadro atual. Todas essa informações são concatenadas para estimar a
+localização e contagem de objetos do quadro atual. Resultados
+experimentais mostram que a concatenação dessas informações é capaz de
+melhorar a contagem e localização dos objetos.</p>
+<h2 id="sec:Aplicação">Aplicação em Contagem de Peixes</h2>
+<p>O método proposto será aplicado na contagem de peixes e alevinos. Na
+maioria dos casos, a contagem é um trabalho árduo e requer mão de obra
+humana atenta, além de ser suscetível a erros. Por serem sensíveis, os
+peixes requerem uma afabilidade no manuseio durante a contagem. Em
+geral, a contagem acontece por técnicas de barragens <span
+class="citation" data-cites="Erikson">(Morais et al., 2005)</span>,
+alguns cultivadores realizam a peneiragem para extrair os peixes da água
+e, dessa maneira, obtêm-se uma estimativa da quantidade de peixes que
+residem em uma determinada região <span class="citation"
+data-cites="OECD FAO">(FAO, 2016; OECD; Food; United Nations,
+2018)</span>.</p>
+<p>A escada de peixes é uma das maneiras utilizadas na contagem. Assim
+os peixes passam por barragens conforme a Figura <a
+href="#fig:escadadepeixes" data-reference-type="ref"
+data-reference="fig:escadadepeixes">1.1</a> (a). Na usina hidrelétrica
+de Igarapava do rio Grande <span class="citation"
+data-cites="UHE">(<span>“<span>UHE Igarapava</span>Consórcio da Usina
+Hidrelétrica de Igarapava”</span>, 2020)</span>, pesquisadores
+construíram salas (Figura <a href="#fig:escadadepeixes"
+data-reference-type="ref" data-reference="fig:escadadepeixes">1.1</a>
+(b)) abaixo do nível d’água, sendo possível enxergar os peixes conforme
+eles atravessam. Especialistas na área buscam encontrar técnicas para
+automatizar a contagem dos peixes que transitam a hidrelétrica.</p>
+<figure id="fig:escadadepeixes" data-latex-placement="!ht">
+<p><img src="image/escadadepeixes.jpg" style="width:40.0%"
+alt="image" /> <img src="image/saladaagua.png" style="width:55.0%"
+alt="image" /></p>
+<figcaption>(a) Ilustração da Escada de peixes - <span class="citation"
+data-cites="UHE">(<span>“<span>UHE Igarapava</span>Consórcio da Usina
+Hidrelétrica de Igarapava”</span>, 2020)</span>, (b) sala abaixo do
+nível d’água <span class="citation" data-cites="Erikson">(Morais et al.,
+2005)</span>.</figcaption>
+</figure>
+<p>Os cultivadores precisam ter o controle da quantidade de peixes vivos
+presentes em seus cativeiros, para que a alimentação seja devidamente
+proporcional para todos, e se há necessidade do cultivo de novos peixes,
+ou até mesmo alterações no meio. É notória a necessidade de uma exatidão
+da quantidade que residem uma região.</p>
+<h2 id="sec:objetivos">Objetivos</h2>
+<h2 id="objetivo-geral">Objetivo Geral</h2>
+<p>O objetivo deste trabalho é propor um método para contagem de objetos
+em vídeos utilizando redes neurais convolucionais. Um dos intentos
+principais está em detectar tais objetos nas imagens levando em
+consideração a posição espacial no quadro anterior. Assim com a ciência
+das localizações anteriormente, uma estimativa mais refinada da posição
+atual pode ser obtida.</p>
+<h2 id="objetivos-específicos">Objetivos Específicos</h2>
+<p>Tendo o objetivo geral imposto, os seguintes objetivos específicos
+foram definidos:</p>
+<ol>
+<li><p>Estimar a contagem por meio de um mapa de densidade obtido por
+uma rede neural convolucional;</p></li>
+<li><p>Avaliar a inclusão do quadro anterior na estimativa do quadro
+atual;</p></li>
+<li><p>Incluir vetores de deslocamento na predição do mapa de
+densidade;</p></li>
+<li><p>Aplicar o método na contagem de alevinos.</p></li>
+</ol>
+<h1 id="chap:am">Revisão Bibliográfica</h1>
+<p>As Redes Neurais Convolucionais tem dominado estudos de Aprendizado
+Profundo, e demonstram resultados promissores quando testadas em
+problemas reais. Tais redes usam a convolução em pelo menos uma de suas
+camadas, sendo a convolução uma operação linear <span class="citation"
+data-cites="deeplearningbook">(Goodfellow; Bengio; Courville,
+2016)</span>. Além disso, são capazes de operar com uma ou mais
+dimensões, portanto é possível utilizar as imagens RGB
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3</mn><annotation encoding="application/x-tex">3</annotation></semantics></math>
+dimensões) e vídeos
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
+dimensões) como entradas para treinamento <span class="citation"
+data-cites="5605630">(Arel; Rose; Karnowski, 2010)</span>.</p>
+<p>Frente as dificuldades das CNN’s, conforme descrito na Seção <a
+href="#sec:Motivacao" data-reference-type="ref"
+data-reference="sec:Motivacao">1.1</a>. As Redes Neurais Convolucionais
+ocuparam espaços nos artigos ciêntifícos e são considerados por muitos o
+estado da arte do Aprendizado Profundo (<em>Deep Learning</em>) <span
+class="citation"
+data-cites="DBLP:journals/corr/abs-1904-00889 8437104 8489369 rs11010011 8186148 Zhao2017CVPR DBLP:journals/corr/CaoSWS16 8186148 DBLP:journals/corr/CaoSWS16 articleLuiz">(Aparna
+et al., 2018; Cao et al., 2016, 2016; Laguna et al., 2019; Li et al.,
+2018; Luiz Antonio Macarini, 2019; S. Arruda et al., 2018; Tayara; Gil
+Soo; Chong, 2018, 2018; Zhao et al., 2017)</span>.</p>
+<p><span id="sec:relatedWork" data-label="sec:relatedWork"></span></p>
+<p>Rotular imagens tornou-se um problema significativo, pois quanto
+maior a quantidade de amostras, melhor serão os resultados nas
+predições. Por outro lado, um grande desafio na contagem é a detecção de
+objetos muitos próximos ou em oclusão, sendo que muitos métodos acabam
+detectando dois objetos como um <span class="citation"
+data-cites="article 8451787 inproceedings DBLP:journals/corr/abs-1711-04433 8489369 8127090 s17040905 DBLP:journals/corr/abs-1804-00307 articleLuiz DBLP:journals/corr/CheangCT17a">(Cheang;
+Cheang; Tay, 2017; Kellenberger; Volpi; Tuia, 2017; Liu et al., 2018;
+Liu et al., 2019b; Luiz Antonio Macarini, 2019; Ming Liu et al., 2018;
+Rahnemoonfar; Sheppard, 2017; S. Arruda et al., 2018; Zhang et al.,
+2015; Zhang; Shi; Chen, 2017)</span>.</p>
+<p><span class="citation" data-cites="Cao2017">(Cao et al., 2017)</span>
+demonstrou o início de uma linha de pesquisa que abrange a detecção de
+pessoas e a estimativa das partes do corpo em tempo real utilizando
+Redes Neurais Convolucionais. O trabalho propõe o cálculo dos membros de
+cada pessoa detectada além de uma estimativa do vetor de deslocamento
+desses membros. Dentre as adversidades encontradas pela técnica de <span
+class="citation" data-cites="Cao2017">(Cao et al., 2017)</span>, uma
+delas esta em detectar indivíduos que se encontram na imagem, porém com
+membros em oclusão. <span class="citation" data-cites="Cao2017">(Cao et
+al., 2017)</span> utiliza a conexão de membros para detectar e assim
+estimar o corpo humano nas imagens. Desta maneira, cada membro estimado
+possui um ponto e linhas que ligam tais pontos. Com o intuito de
+distinguir cada pessoa nas predições, <span class="citation"
+data-cites="Cao2017">(Cao et al., 2017)</span> dividiram as predições em
+conjuntos disjuntos. Os autores assumem que todos os pontos preditos
+pelo modelo são vértices, e as linhas que ligam os membros contemplam as
+arestas. Assumindo assim um grafo para cada corpo humano predito.</p>
+<p>O método foi avaliado com base no banco de dados <em>MPII-Person
+Dataset</em> e <em>COCO Keypoints Challenge</em>. Para avaliar os
+resultados obtidos, <span class="citation" data-cites="Cao2017">(Cao et
+al., 2017)</span> calcularam a média da precisão das partes do corpo
+estimados. Assim, o método alcançou uma média de precisão dos membros de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>91.2</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">91.2\%</annotation></semantics></math>
+para o banco de dados <em>MPII Multi-Person</em>. O banco de dados COCO
+obteve uma precisão de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>68.2</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">68.2\%</annotation></semantics></math>
+para detecção de pessoas em larga escala.</p>
+<p>Em 2018 <span class="citation" data-cites="Cao2018">(Cao et al.,
+2018)</span> propôs o novo estado da arte para a estimativa da pose 2D
+de pessoas presentes nas imagens em tempo real. As poses são construídas
+com o auxílio de campos de afinidades que estimam os membros do corpo
+humano, assim como no trabalho de 2017 <span class="citation"
+data-cites="Cao2017">(Cao et al., 2017)</span>. Além da releitura dos
+resultados obtidos no banco de dados utilizados no artigo anterior, são
+apresentados os resultados obtidos pelo metodo para o banco de dados
+<em>Foot Keypoint Dataset</em> e uma estimativa da pose de veículos. O
+método obteve
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>77.9</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">77.9\%</annotation></semantics></math>
+de precisão no conjunto de validação para estimativa da posição humana,
+e a estimativa da pose de veículos nas imagens em tempo real obteve
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>70.1</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">70.1\%</annotation></semantics></math>
+no conjunto de validação.</p>
+<p>Em vídeos a detecção e a contagem acontecem em cada quadro do vídeo.
+Assim os vídeos proporcionam grandes atributos auxiliares na extração
+das características dos objetos. Uma vez que é possível obter o
+rastreamento do objeto, a localização, se houve locomoção, se houve
+alteração no seu formato durante o deslocamento, entre outros . Por
+outra perspectiva a quantidade excessiva de objetos de interesse nas
+imagens, fazem com que alguns objetos acabem oclusos, impedindo uma
+extração de características próxima do ideal, para aquele objeto
+individualmente.</p>
+<p>Contar peixes tem se tornado o foco de pesquisadores pelo mundo, pois
+obter a quantidade exata de peixes presentes em um criadouro auxilia na
+produção <span class="citation" data-cites="FAO">(FAO, 2016)</span>. A
+distribuição desigual dos peixes a serem contados demanda métodos de
+CNN’s que consigam distinguir cada objeto individualmente <span
+class="citation"
+data-cites="article Simonyan14c inproceedings 8451787">(Liu et al.,
+2019b; Ming Liu et al., 2018; Simonyan; Zisserman, 2014; Zhang et al.,
+2015)</span>. Nesse trabalho, é proposto uma técnica para contar
+objetos, tendo a ciência indireta das suas localizações em um instante
+anterior. Na seção a seguir são apresentados métodos para contagem de
+peixes.</p>
+<h2 id="contagem-de-peixes">Contagem de Peixes</h2>
+<p><span class="citation" data-cites="Junior2019UFMS">(Silva Oliveira
+Junior, 2019)</span> propôs a contagem e estimativa da massa de alevinos
+em imagens. O trabalho inclui também um comparativo entre redes
+convolucionais profundas e algoritmos rasos de regressão. O autor
+enfatiza que a iluminação presente nas imagens são fundamentais para uma
+extração relevante das formas de cada objeto. Uma limiarização é
+aplicada nas imagens de entrada para separar os pixels pertencentes aos
+peixes do fundo. O <em>SLIC Superpixels</em> <span class="citation"
+data-cites="SLIC">(Achanta et al., 2012)</span> é aplicado com o intuito
+de agrupar os pixels que possuem semelhanças, o filtro Kalman <span
+class="citation" data-cites="Kalman">(Bianco; Terra, 2009)</span> nas
+regiões de interesse e por fim a exclusão do fundo. Além disso é levado
+em consideração pelo método a quantidade de vezes que um objeto foi
+contado. O melhor resultado foi obtido após o estudo de diversos
+parâmetros empíricos (e.g., limiar da segmentação, distância entre
+objetos, etc), tendo uma média dos erros absolutos de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn><mo>,</mo><mn>99</mn></mrow><annotation encoding="application/x-tex">5,99</annotation></semantics></math>
+unidade de alevinos.</p>
+<p><span class="citation" data-cites="Junior2019UFMS">(Silva Oliveira
+Junior, 2019)</span> também comparou o uso dos seguintes algoritmos
+rasos de classificação: IBK, com
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">k = 3</annotation></semantics></math>,
+J48, e SMO. O algoritmo J48 obteve o melhor resultado, atingindo uma
+acurácia de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>58</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">58\%</annotation></semantics></math>,
+revocação
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>58</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">58\%</annotation></semantics></math>
+e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="italic">𝐹-𝑚𝑒𝑎𝑠𝑢𝑟𝑒</mtext><mo>=</mo><mn>58</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">\textit{F-measure} = 58\%</annotation></semantics></math>.
+O comparativo entre as redes convolucionais deu-se atraves da
+InceptionV3, ResNet50, VGG16, VGG19 e Xception. Tendo como destaque a
+ResNet50 <span class="citation" data-cites="ResNet50">(He et al.,
+2015)</span> que obteve
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>67</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">67\%</annotation></semantics></math>
+de acurácia no conjunto de testes. O autor destaca que a transferência
+de aprendizado pode acentuar os resultados, visto que foi realizado um
+comparativo entre a inicialização da ResNet com e sem os pesos
+pré-treinados da IMAGENET <span class="citation"
+data-cites="IMAGENET">(Deng et al., 2009)</span>. O trabalhdo de <span
+class="citation" data-cites="Junior2019UFMS">(Silva Oliveira Junior,
+2019)</span> mostra que as CNN’s se sobresaem quando comparadas a
+algoritmos rasos.</p>
+<p><span class="citation" data-cites="Erikson">(Morais et al.,
+2005)</span> propõe a contagem de peixes e a classificação de espécies.
+Bem como a avaliação da eficácia da escada de peixes (vide Seção <a
+href="#sec:Aplicação" data-reference-type="ref"
+data-reference="sec:Aplicação">1.2</a>), também é abordado pela
+dissertação de mestrado. O método alcançou
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>80</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">80\%</annotation></semantics></math>
+de acurácia na contagem utilizando o rastreador bayesiano de multiplos
+objetos (BraMBLe). A contagem dos peixes acontecem em uma sequência de
+imagens, através de um rastreamento realizado para cada objeto de
+interesse. Nesse contexto os objetos são detectados pela estimativa da
+trajetória realizada por ele na sequência de quadros. Assim quando um
+objeto sai de cena, e um outro começa a aparecer, uma nova trajetória é
+construída para este peixe. O esquema de estimar a trajetória do peixe
+em cena, fez com que o trabalho conseguisse distinguir, por exemplo,
+dois peixes, que no início do vídeo estão juntos, porém cada um toma um
+rumo distinto no decorrer do vídeo.</p>
+<p><span class="citation" data-cites="ICESJournal">(Tseng; Kuo,
+2020)</span> apresentou a combinação da ResNet101 <span class="citation"
+data-cites="ResNet50">(He et al., 2015)</span>, e a FPN (<em>feature
+pyramid network</em> <span class="citation" data-cites="FPN">(Lin et
+al., 2016)</span>) para contar e detectar peixes. O resultado obtido foi
+de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>77.3</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">77.3\%</annotation></semantics></math>
+de precisão e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>93.8</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">93.8\%</annotation></semantics></math>
+de revocação, na contagem de peixes. <span class="citation"
+data-cites="YOLOFish">(Sung; Yu; Girdhar, 2017)</span> aplicou a Rede
+Neural Convolucional YOLO (<em>You Only Look Once</em>) na detecção de
+peixes no fundo do mar. A YOLO alcançou
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>93</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">93\%</annotation></semantics></math>
+de acurácia, sendo que os autores afirmam que a CNN não obteve uma boa
+acurácia em lugares com pouca iluminação.</p>
+<p><span class="citation" data-cites="FingerLing">(Lainez; Gonzales,
+2019)</span> apresentou uma técnica com 4 passos principais para a
+contagem de alevinos: redimensionamento das imagens de entrada para
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>400</mn><mo>×</mo><mn>400</mn></mrow><annotation encoding="application/x-tex">400\times400</annotation></semantics></math>
+pixels, converter as imagens para escala de cinza, fatiar cada imagem em
+16 ou 36 segmentos, encontrar o valor de limiar e por fim detectar e
+contar alevinos, utilizando uma CNN. A CNN aplicada para detectar e
+contar os alevinos é uma proposta dos autores <span class="citation"
+data-cites="FingerLing">(Lainez; Gonzales, 2019)</span>, e a rede
+consiste basicamente em duas camadas convolucionais seguidas de
+<em>Pooling</em> e no fim uma camada totalmente conectada. A rede possui
+duas camadas convolucionais, seguidas de <em>Pooling</em> e por último
+uma camada totalmente conectada. A detecção e contagem obteve uma
+precisão de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>99.63</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">99.63\%</annotation></semantics></math>
+e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>99.17</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">99.17\%</annotation></semantics></math>.</p>
+<p>Os trabalhos citados comprovam a eficácia das CNN’s quando testadas
+em várias situações de contagem no mundo real. Os trabalhos que realizam
+a contagem em vídeos quase sempre utiliza informações de várias cenas
+para auxiliar na detecção. A técnica de utilizar cenas anteriores para
+melhorar os resultados, será avaliada neste trabalho, pois as
+localizações anteriores de cada objeto são levadas em consideração.</p>
+<h1 id="sec:MetodoPrincipal">Método Proposto</h1>
+<p>O método proposto recebe um quadro
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mi>t</mi></msub><annotation encoding="application/x-tex">I_{t}</annotation></semantics></math>
+no instante
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+e o quadro no instante anterior
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">I_{t-1}</annotation></semantics></math>.
+A saída gerada pela arquitetura consiste em um mapa de densidade 2D
+indicando a localização de cada alevino presente no quadro e a
+estimativa dos vetores de deslocamento para cada alevino.</p>
+<p>Vide as dificuldades das CNN’s em detectar objetos que se movem
+rapidamente em vídeos (Seção <a href="#sec:Motivacao"
+data-reference-type="ref" data-reference="sec:Motivacao">1.1</a>). Este
+método recebe informações das cenas anteriores a fim de passar para os
+ramos de estimativa, a localização e formato do objeto em diversas
+ocasiões.</p>
+<p>A ordenação metodológica pode ser descrita em quatro passos
+principais conforme a Figura <a href="#fig:model"
+data-reference-type="ref" data-reference="fig:model">3.1</a>.
+Inicialmente, as imagens passam por um pré-processamento (passo 1) para
+construção do volume de entrada (V). Após isso um mapa de
+características é obtido para
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>V</mi><annotation encoding="application/x-tex">V</annotation></semantics></math>
+usando uma CNN (e.g., VGG19<span class="citation"
+data-cites="VGG">(Simonyan; Zisserman, 2015)</span>) (passo 2). O mapa
+de características é dado como entrada para dois ramos que estimam o
+mapa de densidade (passo 3) e os vetores de deslocamento (passo 4). As
+seções abaixo descrevem as etapas em detalhes.</p>
+<figure id="fig:model" data-latex-placement="!hbt">
+<img src="image/model.png" style="width:106.0%" />
+<figcaption> Método proposto recebe o quadro atual
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mi>t</mi></msub><annotation encoding="application/x-tex">I_{t}</annotation></semantics></math>
+e o quadro no instante anterior
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">I_{t-1}</annotation></semantics></math>.
+O resultado da concatenação gera um volume de entrada para a VGG-19. A
+saída desta arquitetura consiste em um mapa de características inicial.
+Esse mapa alimenta dois ramos que são responsáveis por realizar as
+predições do mapa de densidade e de vetores de deslocamento. Cada ramo é
+composto por uma série de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>E</mi><annotation encoding="application/x-tex">E</annotation></semantics></math>
+estágios que refinam a suas predições. Ambos ramos compartilham as
+informações para auxiliar na estimação.</figcaption>
+</figure>
+<h2 id="sec:Images">Pré-Processamento das Imagens</h2>
+<p>Dada uma imagem
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mi>t</mi></msub><annotation encoding="application/x-tex">I_t</annotation></semantics></math>
+no instante
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+com
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mo>×</mo><mi>h</mi></mrow><annotation encoding="application/x-tex">w \times h</annotation></semantics></math>
+pixels, em que
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>w</mi><annotation encoding="application/x-tex">w</annotation></semantics></math>
+é a largura e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>h</mi><annotation encoding="application/x-tex">h</annotation></semantics></math>
+é a altura da imagem, o primeiro pré-processamento consiste em
+redimensionar todas as imagens para um tamanho fixo de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \times n</annotation></semantics></math>
+pixels.</p>
+<p>O método recebe um volume de entrada
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>V</mi><annotation encoding="application/x-tex">V</annotation></semantics></math>,
+resultante da concatenação de um quadro
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mi>t</mi></msub><annotation encoding="application/x-tex">I_{t}</annotation></semantics></math>
+no instante
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+e o quadro anterior
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">I_{t-1}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>I</mi><mi>t</mi></msub><mo>,</mo><msub><mi>I</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">V = (I_{t},I_{t-1})</annotation></semantics></math>,
+conforme a figura <a href="#fig:entrada" data-reference-type="ref"
+data-reference="fig:entrada">3.2</a>. Sendo
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mi>t</mi></msub><annotation encoding="application/x-tex">I_{t}</annotation></semantics></math>
+uma imagem RGB com
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>512</mn><mo>×</mo><mn>512</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">512\times512\times3</annotation></semantics></math>
+pixels e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">I_{t-1}</annotation></semantics></math>
+uma outra imagem do instante anterior com a mesma dimensão, temos que
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>V</mi><annotation encoding="application/x-tex">V</annotation></semantics></math>
+possui dimensão
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>512</mn><mo>×</mo><mn>512</mn><mo>×</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">512\times512\times6</annotation></semantics></math>.</p>
+<div class="center">
+<figure id="fig:entrada" data-latex-placement="!htb">
+<img src="image/VE.png" style="width:90.0%" />
+<figcaption>Ilustração do volume de entrada
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>V</mi><annotation encoding="application/x-tex">V</annotation></semantics></math>
+que consiste na concatenação de um quadro
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mi>t</mi></msub><annotation encoding="application/x-tex">I_{t}</annotation></semantics></math>
+e um quadro anterior
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">I_{t-1}</annotation></semantics></math>.</figcaption>
+</figure>
+</div>
+<h2 id="sec:VGG">Extração do Mapa de Características</h2>
+<p>Nessa etapa, o volume de entrada
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>I</mi><mi>t</mi></msub><mo>,</mo><msub><mi>I</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">V = (I_{t},I_{t-1})</annotation></semantics></math>
+é submetido a uma CNN VGGNet <span class="citation"
+data-cites="VGG">(Simonyan; Zisserman, 2015)</span> para obtenção de um
+mapa de características. Esse mapa tem como objetivo extrair informações
+relevantes da imagem de entrada. A VGGNet mostrou que a profundidade da
+CNN é um componente importante para o bom desempenho. Os autores da
+VGG19 apresentaram seis arquiteturas: duas com 11, uma com 13, duas com
+16, e uma com 19 camadas <span class="citation"
+data-cites="VGG">(Simonyan; Zisserman, 2015)</span>. A CNN de 19 camadas
+convolucionais e totalmente conectadas é uma das melhores arquiteturas
+dentre as propostas pelos autores, sendo uma arquitetura homogênea pois
+só executa convoluções com campo receptivo
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3 \times 3</annotation></semantics></math>
+e subamostragens
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2 \times 2</annotation></semantics></math>.
+A Figura <a href="#fig:model" data-reference-type="ref"
+data-reference="fig:model">3.1</a> ilustra as camadas da arquitetura
+VGG19 aplicadas no método proposto.</p>
+<p>A entrada da VGG19 consiste em duas imagens RGB com dimensão
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>512</mn><mo>×</mo><mn>512</mn><mo>×</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">512 \times 512 \times 6</annotation></semantics></math>,
+que passa por um pré-processamento inicial no qual é realizada a
+subtração da cor média de todos os pixels da imagem. Esse processo é
+repetido para todas as imagens que serão usadas para o treinamento da
+CNN. As imagens passam pelas camadas convolucionais que aplicam um
+filtro de tamanho
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3 \times 3</annotation></semantics></math>,
+por ser o menor tamanho capaz de aprender características das quatro
+direções e do centro durante o processo de convolução. O passo de
+deslocamento do filtro convolucional (<em>stride</em>) é de 1 pixel. O
+preenchimento com zeros ao redor da imagem é realizado de forma a
+preservar a dimensão da imagem após a convolução, ou seja, para os
+filtros de tamanho
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3 \times 3</annotation></semantics></math>
+é usado um preenchimento com zeros de tamanho 1. Além disso, a função de
+ativação não-linear ReLu é aplicada após cada camada convolucional.</p>
+<p>A amostragem descendente (<em>Pooling</em>) é feita através de duas
+camadas de subamostragens distribuídas no corpo da CNN. Assim, nem todas
+camadas convolucionais são seguidas de camadas de subamostragens. Os
+autores usam uma camada de subamostragem máxima com campo receptivo
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2 \times 2</annotation></semantics></math>
+e deslocamento de 2 pixels. Ao final da primeira etapa, o volume de
+entrada
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>V</mi><annotation encoding="application/x-tex">V</annotation></semantics></math>
+é representado por um mapa de características
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math>
+extraído pelas camadas da VGGNet. Na Figura <a href="#fig:carac"
+data-reference-type="ref" data-reference="fig:carac">3.3</a> temos a
+imagem original e o mapa de características obtido através da VGG19.</p>
+<figure id="fig:carac" data-latex-placement="!ht">
+<p><img src="image/caract.png" style="width:50.0%" alt="image" /> <img
+src="image/carac.png" style="width:37.0%" alt="image" /></p>
+<figcaption><span id="fig:carac" data-label="fig:carac"></span> Exemplo
+de um mapa de características predito pela VGG-19.</figcaption>
+</figure>
+<h2 id="sec:EstimativaDensidade">Estimativa do Mapa de Densidade</h2>
+<p>Dado o mapa de característica
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math>,
+o primeiro ramo do método proposto estima o mapa de densidade com o
+objetivo de detectar cada objeto. Essa predição é realizada por
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>E</mi><annotation encoding="application/x-tex">E</annotation></semantics></math>
+estágios. No primeiro estágio (Figura <a href="#fig:model"
+data-reference-type="ref" data-reference="fig:model">3.1</a> (c)), uma
+série de camadas convolucionais
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="normal">Ω</mi><annotation encoding="application/x-tex">\Omega</annotation></semantics></math>
+geram o mapa de densidade
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>C</mi><mo accent="true">̂</mo></mover><mn>1</mn></msup><mo>=</mo><mi mathvariant="normal">Ω</mi><mo stretchy="false" form="prefix">(</mo><mi>F</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\hat{C}^1 = \Omega (F)</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="normal">Ω</mi><annotation encoding="application/x-tex">\Omega</annotation></semantics></math>
+é uma sequência de cinco camadas convolucionais: três camadas com 128
+filtros de tamanho
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3 \times 3</annotation></semantics></math>,
+uma camada com 512 filtros de tamanho
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">1 \times 1</annotation></semantics></math>
+e uma camada com um único filtro que corresponde ao mapa de densidade. O
+segundo ramo responsável pela estimativa dos vetores de deslocamento
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mover><mi>D</mi><mo accent="true">̂</mo></mover><mn>1</mn></msup><annotation encoding="application/x-tex">\hat{D}^{1}</annotation></semantics></math>
+estão detalhadas na Seção <a href="#sec:EstimativaVetores"
+data-reference-type="ref"
+data-reference="sec:EstimativaVetores">3.4</a>. Por enquanto precisamos
+saber que as estimativas também são utilizados para servir de entrada
+dos estágios seguintes.</p>
+<p>Os estágios refinam as predições do mapa de densidade em etapas
+sucessivas por
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>E</mi><annotation encoding="application/x-tex">E</annotation></semantics></math>
+estágios, i.e.,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>e</mi><mo>∈</mo><mo stretchy="false" form="prefix">{</mo><mn>1</mn><mo>,</mo><mi>…</mi><mo>,</mo><mi>E</mi><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">e \in \{1, \dots, E\}</annotation></semantics></math>.
+Nos estágios subsequentes ao primeiro (Figura <a href="#fig:model"
+data-reference-type="ref" data-reference="fig:model">3.1</a>), o mapa de
+características
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math>,
+a estimativa de densidade do estágio anterior
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mover><mi>C</mi><mo accent="true">̂</mo></mover><mi>t</mi><mrow><mi>e</mi><mo>−</mo><mn>1</mn></mrow></msubsup><annotation encoding="application/x-tex">\hat{C}^{e-1}_t</annotation></semantics></math>
+e as estimativas dos vetores de deslocamento
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mover><mi>D</mi><mo accent="true">̂</mo></mover><mrow><mi>e</mi><mo>−</mo><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">\hat{D}^{e-1}</annotation></semantics></math>
+(Seção <a href="#sec:EstimativaVetores" data-reference-type="ref"
+data-reference="sec:EstimativaVetores">3.4</a>) são concatenados e
+usados para produzir um mapa de densidade refinado
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>C</mi><mo accent="true">̂</mo></mover><mi>e</mi></msup><mo>=</mo><mi mathvariant="normal">Ψ</mi><mo stretchy="false" form="prefix">(</mo><mi>F</mi><mo>,</mo><msup><mover><mi>C</mi><mo accent="true">̂</mo></mover><mrow><mi>e</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>,</mo><msup><mover><mi>D</mi><mo accent="true">̂</mo></mover><mrow><mi>e</mi><mo>−</mo><mn>1</mn></mrow></msup><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\hat{C}^e = \Psi(F, \hat{C}^{e-1}, \hat{D}^{e-1})</annotation></semantics></math>.
+A concatenação de diferentes informações auxilia no apendizado do método
+e espera-se que a informação de deslocamento ajude na detecção dos
+objetos no quadro atual. No refinamento,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="normal">Ψ</mi><annotation encoding="application/x-tex">\Psi</annotation></semantics></math>
+é uma sequência de sete camadas convolucionais: cinco camadas com 128
+filtros de tamanho
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>7</mn><mo>×</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">7 \times 7</annotation></semantics></math>,
+uma camada com 128 filtros de tamanho
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">1 \times 1</annotation></semantics></math>
+e uma camada com um único filtro que corresponde ao mapa de
+densidade.</p>
+<p>Para treinar os estágios, a função de perda (Equação <a
+href="#eq:loss" data-reference-type="ref"
+data-reference="eq:loss">[eq:loss]</a>) é aplicada no final de cada
+estágio comparando a predição do método
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mover><mi>C</mi><mo accent="true">̂</mo></mover><mi>e</mi></msup><annotation encoding="application/x-tex">\hat{C}^{e}</annotation></semantics></math>
+com as anotações realizadas por um especialista
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>.
+Esta supervisão intermediária aborda o problema do gradiente de
+desaparecimento, como mostrado em <span class="citation"
+data-cites="Cao2017">(Cao et al., 2017)</span>.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>f</mi><mi>e</mi></msup><mo>=</mo><munder><mo>∑</mo><mi>p</mi></munder><mo>∥</mo><mi>C</mi><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><msup><mover><mi>C</mi><mo accent="true">̂</mo></mover><mi>e</mi></msup><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><msubsup><mo>∥</mo><mn>2</mn><mn>2</mn></msubsup><mo>,</mo></mrow><annotation encoding="application/x-tex">\begin{equation}
+f^{e} = \sum_p \parallel C(p) - \hat{C}^{e}(p)\parallel^2_2,
+\label{eq:loss}
+\end{equation}</annotation></semantics></math> onde
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+é o <em>ground truth</em> do mapa de densidade do quadro
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+gerado de acordo com a Seção <a href="#sec:geracao_mapa"
+data-reference-type="ref" data-reference="sec:geracao_mapa">3.3.1</a>.
+Por fim, a função de perda global é dada pela soma de todos os
+estágios:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo>=</mo><munderover><mo>∑</mo><mrow><mi>e</mi><mo>=</mo><mn>1</mn></mrow><mi>E</mi></munderover><msup><mi>f</mi><mi>e</mi></msup></mrow><annotation encoding="application/x-tex">\begin{equation}
+f = \sum_{e=1}^{E} f^{e}
+\end{equation}</annotation></semantics></math></p>
+<h3 id="sec:geracao_mapa">Geração do <em>Ground Truth</em> do Mapa de
+Densidade</h3>
+<p>Dadas as posições
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo>=</mo><mo stretchy="false" form="prefix">[</mo><mo stretchy="false" form="prefix">{</mo><msup><mi>l</mi><mn>1</mn></msup><mo>,</mo><msup><mi>l</mi><mn>2</mn></msup><mo>,</mo><mi>…</mi><mo>,</mo><msup><mi>l</mi><mi>K</mi></msup><mo stretchy="false" form="postfix">}</mo><mo>∣</mo><mo>∀</mo><mspace width="0.222em"></mspace><msup><mi>l</mi><mi>k</mi></msup><mo>=</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>k</mi></msub><mo>,</mo><msub><mi>y</mi><mi>k</mi></msub><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">L = [\{l^1, l^2, \dots, l^K \} \mid \forall \: l^k = (x_k, y_k)]</annotation></semantics></math>
+de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>K</mi><annotation encoding="application/x-tex">K</annotation></semantics></math>
+objetos em um quadro
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mi>t</mi></msub><annotation encoding="application/x-tex">I_t</annotation></semantics></math>,
+o mapa de confiança (<em>ground truth</em>)
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+é obtido colocando-se um núcleo Gaussiano 2D em cada posição dos
+objetos. Para obter
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>,
+um mapa de confiança
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>C</mi><mi>k</mi></msup><annotation encoding="application/x-tex">C^k</annotation></semantics></math>
+é primeiro calculado para cada objeto
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>∈</mo><mo stretchy="false" form="prefix">[</mo><mn>1</mn><mo>,</mo><mi>K</mi><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">k \in [1, K]</annotation></semantics></math>.
+O valor de cada posição
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>∈</mo><msup><mi>ℜ</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">p \in \Re^2</annotation></semantics></math>
+em
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>C</mi><mi>k</mi></msup><annotation encoding="application/x-tex">C^k</annotation></semantics></math>
+é definido como:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>C</mi><mi>k</mi></msup><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mrow><mi mathvariant="normal">exp</mi><mo>&#8289;</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>−</mi><mfrac><mrow><mo stretchy="false" form="postfix">∥</mo><mi>p</mi><mo>−</mo><msup><mi>l</mi><mi>k</mi></msup><msubsup><mo stretchy="false" form="postfix">∥</mo><mn>2</mn><mn>2</mn></msubsup></mrow><msup><mi>σ</mi><mn>2</mn></msup></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">\begin{equation}
+C^k(p) = \exp \left(- \frac{\| p - l^k \|^2_2}{\sigma^2}\right),
+\end{equation}</annotation></semantics></math> onde
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>
+corresponde a largura dos picos que representa cada objeto.</p>
+<p>O mapa de confiança
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+é obtido pela agregação dos mapas individuais via operador máximo:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><munder><mi mathvariant="normal">max</mi><mrow><mn>1</mn><mo>&lt;</mo><mi>k</mi><mo>&lt;</mo><mi>K</mi></mrow></munder><msup><mi>C</mi><mi>k</mi></msup><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">\begin{equation}
+C(p) = \max_{1&lt;k&lt;K} C^k(p).
+\end{equation}</annotation></semantics></math></p>
+<p>A Figura <a href="#fig:sigma" data-reference-type="ref"
+data-reference="fig:sigma">3.4</a> ilustra o mapa de confiança para uma
+imagem e dois valores de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>.
+A primeira imagem mostra as posições dos objetos em pontos vermelhos que
+foram anotados pelo especialista. As próximas duas imagens apresentam os
+mapas de confiança para
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>1.5</mn></mrow><annotation encoding="application/x-tex">\sigma = 1.5</annotation></semantics></math>
+e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.5</mn><annotation encoding="application/x-tex">2.5</annotation></semantics></math>,
+respectivamente. Por fim, usamos o mapa de confiança <em>ground
+truth</em> para treinar a abordagem proposta.</p>
+<figure id="fig:sigma" data-latex-placement="!ht">
+<p><img src="image/sigmas/frame001018Ponto.png" style="width:30.0%"
+alt="image" /> <img src="image/sigmas/frame001018_label_1_5.png"
+style="width:30.0%" alt="image" /> <img
+src="image/sigmas/frame001018_label_2_5.png" style="width:30.0%"
+alt="image" /></p>
+<figcaption><span id="fig:sigma" data-label="fig:sigma"></span> Exemplo
+de uma cena e seu mapa de confiança correspondente para diferentes
+valores de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>.</figcaption>
+</figure>
+<h2 id="sec:EstimativaVetores">Estimativa dos Vetores de
+Deslocamento</h2>
+<p>O segundo ramo do método proposto (Figura <a href="#fig:model"
+data-reference-type="ref" data-reference="fig:model">3.1</a> (d)) possui
+camadas convolucionais com os mesmos parâmetros do primeiro ramo.
+Entretanto, a última camada de cada estágio produz a estimativa do
+deslocamento em x e y. O primeiro estágio possui uma série de camadas
+convolucionais
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="normal">Ω</mi><annotation encoding="application/x-tex">\Omega</annotation></semantics></math>
+que geram os vetores de deslocamento
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>D</mi><mo accent="true">̂</mo></mover><mn>1</mn></msup><mo>=</mo><mi mathvariant="normal">Ω</mi><mo stretchy="false" form="prefix">(</mo><mi>F</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\hat{D}^{1} = \Omega (F)</annotation></semantics></math>
+para o quadro
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>.</p>
+<p>Nos demais estágios, o mapa de características
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math>,
+o mapa de densidade
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mover><mi>C</mi><mo accent="true">̂</mo></mover><mrow><mi>e</mi><mo>−</mo><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">\hat{C}^{e-1}</annotation></semantics></math>
+(Seção <a href="#sec:EstimativaDensidade" data-reference-type="ref"
+data-reference="sec:EstimativaDensidade">3.3</a>) e a estimativa do
+estágio anterior
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mover><mi>D</mi><mo accent="true">̂</mo></mover><mrow><mi>e</mi><mo>−</mo><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">\hat{D}^{e-1}</annotation></semantics></math>,
+são concatenados e usados para produzir os vetores de deslocamento
+refinado
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>D</mi><mo accent="true">̂</mo></mover><mi>e</mi></msup><mo>=</mo><mi mathvariant="normal">Ψ</mi><mo stretchy="false" form="prefix">(</mo><mi>F</mi><mo>,</mo><msup><mover><mi>C</mi><mo accent="true">̂</mo></mover><mrow><mi>e</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>,</mo><msup><mover><mi>D</mi><mo accent="true">̂</mo></mover><mrow><mi>e</mi><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\hat{D}^{e} = \Psi(F,\hat{C}^{e-1}, \hat{D}^{e-1}</annotation></semantics></math>).
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="normal">Ψ</mi><annotation encoding="application/x-tex">\Psi</annotation></semantics></math>
+é uma sequência de sete camadas convolucionais conforme o primeiro
+ramo.</p>
+<p>Para treinar os estágios dos vetores de deslocamento, a função de
+perda (Equação <a href="#eq:loss2" data-reference-type="ref"
+data-reference="eq:loss2">[eq:loss2]</a>) é aplicada no final de cada
+estágio.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>f</mi><mi>e</mi></msup><mo>=</mo><munder><mo>∑</mo><mi>p</mi></munder><mo>∥</mo><mi>D</mi><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><msup><mover><mi>D</mi><mo accent="true">̂</mo></mover><mi>e</mi></msup><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><msubsup><mo>∥</mo><mn>2</mn><mn>2</mn></msubsup><mo>,</mo></mrow><annotation encoding="application/x-tex">\begin{equation}
+f^{e} = \sum_p \parallel D(p) - \hat{D}^{e}(p)\parallel^2_2,
+\label{eq:loss2}
+\end{equation}</annotation></semantics></math> onde
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>
+é o <em>ground truth</em> dos vetores de deslocamento do quadro
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+gerado de acordo com a Seção <a href="#sec:geracao_mapa2"
+data-reference-type="ref" data-reference="sec:geracao_mapa2">3.4.1</a>.
+Por fim, a função de perda global é dada por:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo>=</mo><munderover><mo>∑</mo><mrow><mi>e</mi><mo>=</mo><mn>1</mn></mrow><mi>E</mi></munderover><msup><mi>f</mi><mi>e</mi></msup></mrow><annotation encoding="application/x-tex">\begin{equation}
+f = \sum_{e=1}^{E} f^{e}
+\end{equation}</annotation></semantics></math></p>
+<h3 id="sec:geracao_mapa2">Geração do <em>Ground Truth</em> do Vetor de
+Deslocamento</h3>
+<p>Considere
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>l</mi><mi>t</mi><mi>k</mi></msubsup><annotation encoding="application/x-tex">l_t^k</annotation></semantics></math>
+como a posição de um objeto
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
+no quadro
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>l</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow><mi>k</mi></msubsup><annotation encoding="application/x-tex">l_{t-1}^k</annotation></semantics></math>
+sua posição no quadro anterior. O vetor de deslocamento do objeto
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
+é um vetor que aponta de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>l</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow><mi>k</mi></msubsup><annotation encoding="application/x-tex">l^k_{t-1}</annotation></semantics></math>
+até
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>l</mi><mi>t</mi><mi>k</mi></msubsup><annotation encoding="application/x-tex">l^k_{t}</annotation></semantics></math>,
+conforme a Figura <a href="#fig:vetor" data-reference-type="ref"
+data-reference="fig:vetor">3.5</a>. Para a construção dos vetores de
+deslocamento densos, isto é, para cada pixel da imagem, um conjunto de
+pixels
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math>
+ao redor do vetor de deslocamento principal é obtido. Todos os pixels
+cuja a distância para o vetor de deslocamento for menor ou igual a um é
+considerado nesse conjunto. Cada pixel
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>∈</mo><mi>ρ</mi></mrow><annotation encoding="application/x-tex">p \in \rho</annotation></semantics></math>
+armazena um vetor unitário
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>v</mi><annotation encoding="application/x-tex">v</annotation></semantics></math>
+com a mesma direção do deslocamento de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t-1</annotation></semantics></math>
+para
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+do objeto
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>,
+sendo
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><msubsup><mi>l</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow><mi>k</mi></msubsup><mo>−</mo><msubsup><mi>l</mi><mi>t</mi><mi>k</mi></msubsup><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mo stretchy="false" form="postfix">∥</mo><mo stretchy="false" form="prefix">(</mo><msubsup><mi>l</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow><mi>k</mi></msubsup><mo>−</mo><msubsup><mi>l</mi><mi>t</mi><mi>k</mi></msubsup><mo stretchy="false" form="postfix">)</mo><msub><mo stretchy="false" form="postfix">∥</mo><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">v = (l^k_{t-1} - l^k_{t})/\|(l^k_{t-1} - l^k_{t})\|_2</annotation></semantics></math>.
+Os pixels restantes recebe um vetor nulo. O mesmo procedimento é
+realizada para todos os objetos
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
+no quadro atual e um mapa denso de vetor de deslocamento
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>
+é obtido para treinamento do método proposto.</p>
+<figure id="fig:vetor" data-latex-placement="!htb">
+<img src="image/VD.png" />
+<figcaption><span id="fig:vetor" data-label="fig:vetor"></span>
+Ilustração de um vetor para um objeto em quadro.</figcaption>
+</figure>
+<p>A Figura <a href="#fig:vetores" data-reference-type="ref"
+data-reference="fig:vetores">3.6</a> mostra os alevinos na cor branca,
+os pontos na cor azul apontam a posição dos alevinos no quadro atual
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mi>t</mi></msub><annotation encoding="application/x-tex">I_t</annotation></semantics></math>
+e os pontos na cor vermelho mostram as localizações no quadro anterior
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">I_{t-1}</annotation></semantics></math>.
+Nas imagens da Figura <a href="#fig:vetores2" data-reference-type="ref"
+data-reference="fig:vetores2">3.7</a> temos a ilustração dos vetores
+estimados, sendo estimado um vetor para cada pixel que representa o
+objeto de interesse.</p>
+<figure id="fig:vetores" data-latex-placement="h">
+<p><img src="image/frame000089.png_tracking.png" style="width:30.0%"
+alt="image" /> <img src="image/frame000126.png_tracking.png"
+style="width:30.0%" alt="image" /> <img
+src="image/frame000176.png_tracking.png" style="width:30.0%"
+alt="image" /></p>
+<figcaption><span id="fig:vetores" data-label="fig:vetores"></span>
+Exemplos das localizações nos vetores</figcaption>
+</figure>
+<figure id="fig:vetores2" data-latex-placement="h">
+<p><img src="image/frame000089.pngquiver_t.png" style="width:30.0%"
+alt="image" /> <img src="image/frame000126.pngquiver_t.png"
+style="width:30.0%" alt="image" /> <img
+src="image/frame000176.pngquiver_t.png" style="width:30.0%"
+alt="image" /></p>
+<figcaption><span id="fig:vetores2" data-label="fig:vetores2"></span>
+Ilustração dos vetores estimados pelo segundo ramo apresentado, para
+cada pixel de cada objeto.</figcaption>
+</figure>
+<h2 id="localização-dos-objetos-pelo-mapa-de-densidade">Localização dos
+Objetos pelo Mapa de Densidade</h2>
+<p>A localização dos objetos é obtida dos picos (máximo local) do mapa
+de densidade predito do último estágio
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><msup><mi>C</mi><mi>E</mi></msup><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\hat{C^E}</annotation></semantics></math>.
+Um local
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>p</mi></msub><mo>,</mo><msub><mi>y</mi><mi>p</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">p=(x_p, y_p)</annotation></semantics></math>
+é um máximo local se
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><msup><mi>C</mi><mi>E</mi></msup><mo accent="true">̂</mo></mover><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><mo>&gt;</mo><mover><msup><mi>C</mi><mi>E</mi></msup><mo accent="true">̂</mo></mover><mo stretchy="false" form="prefix">(</mo><mi>v</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\hat{C^E}(p) &gt; \hat{C^E}(v)</annotation></semantics></math>
+para todos os vizinhos
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>v</mi><annotation encoding="application/x-tex">v</annotation></semantics></math>.
+Consideramos a vizinhança de 4 pixels para todos os locais
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>p</mi></msub><mo>,</mo><msub><mi>y</mi><mi>p</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">p = (x_p, y_p)</annotation></semantics></math>,
+ou seja,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>p</mi></msub><mo>±</mo><mn>1</mn><mo>,</mo><msub><mi>y</mi><mi>p</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">v = (x_p \pm 1, y_p)</annotation></semantics></math>
+ou
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>p</mi></msub><mo>,</mo><msub><mi>y</mi><mi>p</mi></msub><mo>±</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(x_p, y_p \pm 1)</annotation></semantics></math>.</p>
+<p>Para evitar ruído, os picos precisam ser separados por pelo menos
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>δ</mi><annotation encoding="application/x-tex">\delta</annotation></semantics></math>
+pixels. Isso impede que dois alevinos sejam detectados muito próximos
+uns dos outros. Além disso, um pico deve ter uma confiança maior que um
+limite
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>τ</mi><annotation encoding="application/x-tex">\tau</annotation></semantics></math>.
+Após experiências preliminares, usamos
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>δ</mi><mo>=</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">\delta = 10</annotation></semantics></math>
+e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>τ</mi><mo>=</mo><mn>0.2</mn></mrow><annotation encoding="application/x-tex">\tau = 0.2</annotation></semantics></math>.
+A Figura <a href="#fig:heatmap" data-reference-type="ref"
+data-reference="fig:heatmap">3.8</a> mostra um exemplo tridimensional do
+mapa de confiança, onde a largura e a altura são as dimensões da imagem
+e os picos azuis representam as regiões com máxima confiança local.</p>
+<figure id="fig:heatmap" data-latex-placement="h">
+<img src="image/heatmap2.png" />
+<figcaption>Exemplo do mapa de confiança em três dimensões.</figcaption>
+</figure>
+<p><span id="chap:ranking" data-label="chap:ranking"></span></p>
+<h1 id="chap:experimentos">Experimentos e Resultados</h1>
+<h2 id="chap:basedeimagens">Base de Imagens</h2>
+<p>Os vídeos aplicados nos experimentos foram obtidos a partir do banco
+FISHCV155V, desenvolvido pelo grupo INOVISÃO da UCDB, em parceria com o
+IFMS e a empresa Projeto Pacu <span class="citation"
+data-cites="Junior2019UFMS">(Silva Oliveira Junior, 2019)</span>. Os
+vídeos foram gravados entre os meses de julho e setembro de 2018 com uma
+câmera com resolução full hd
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1920</mn><mo>×</mo><mn>1080</mn></mrow><annotation encoding="application/x-tex">1920\times1080</annotation></semantics></math>
+pixels) e uma taxa de captura de 30 quadros por segundo. A câmera foi
+acoplada a uma estrutura criada pelos autores com uma inclinação
+aproximada de 12 graus, por onde os alevinos deslizam com o auxílio de
+água. A Figura <a href="#Estrutura" data-reference-type="ref"
+data-reference="Estrutura">4.1</a> mostra a estrutura construída para a
+obtenção dos vídeos.</p>
+<figure id="Estrutura">
+<img src="image/estruturaCaptura.png" style="width:50.0%" />
+<figcaption>Suporte para Captura das imagens proposta por <span
+class="citation" data-cites="Junior2019UFMS">(Silva Oliveira Junior,
+2019)</span></figcaption>
+</figure>
+<p>Dentre os vídeos do banco de dados FISHCV155V, foram selecionados
+aleatoriamente 15 para compor o banco de dados do experimentos. O
+conjunto de treinamento é composto por 7 vídeos, sendo que o menor
+(tempo) vídeo contém 180 quadros e o maior 750 quadros; O conjunto de
+testes possui 4 vídeos, entre 240 e 300 quadros. O conjunto de validação
+possui 4 vídeos, sendo o menor 210 quadros e o maior 390. Na Figura <a
+href="#Train" data-reference-type="ref" data-reference="Train">4.2</a>
+temos alguns exemplos das imagens utilizadas nos experimentos. Na Tabela
+<a href="#tab:separation" data-reference-type="ref"
+data-reference="tab:separation">4.1</a> a quantidade exata do conjunto é
+apresentado.</p>
+<table id="tab:separation">
+<caption>Separação dos vídeos e quadros para os Experimentos</caption>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Banco de Dados</strong></th>
+<th colspan="2"
+style="text-align: center;"><strong>Quantidades</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span>2-3</span></td>
+<td style="text-align: center;"><strong>Vídeos</strong></td>
+<td style="text-align: center;"><strong>Quadros</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">Treinamento</td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>7</mn><annotation encoding="application/x-tex">7</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2730</mn><annotation encoding="application/x-tex">2730</annotation></semantics></math></td>
+</tr>
+<tr>
+<td style="text-align: left;">Teste</td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>4</mn><annotation encoding="application/x-tex">4</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1080</mn><annotation encoding="application/x-tex">1080</annotation></semantics></math></td>
+</tr>
+<tr>
+<td style="text-align: left;">Validação</td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>4</mn><annotation encoding="application/x-tex">4</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1230</mn><annotation encoding="application/x-tex">1230</annotation></semantics></math></td>
+</tr>
+</tbody>
+</table>
+<p>.</p>
+<figure id="Train" data-latex-placement="htb">
+<img src="image/Train/VID15_frame000222.png" />
+<img src="image/Train/VID18_frame000244.png" />
+<img src="image/Train/VID19_frame000313.png" />
+<figcaption>Imagens retiradas do conjunto de Treinamento <span
+class="citation" data-cites="Junior2019UFMS">(Silva Oliveira Junior,
+2019)</span>.</figcaption>
+</figure>
+<h3 id="configuração-dos-experimentos">Configuração dos
+Experimentos</h3>
+<p>Para avaliar a abordagem proposta, as amostras foram divididas
+aleatoriamente em conjuntos de treinamento contendo 7 vídeos, validação
+4 vídeos e teste 4 vídeos. Para o treinamento, o otimizador Gradiente
+Descendente Estocástico foi usado com um momento de 0,9. O ajuste de
+hiper parâmetros na taxa de aprendizado e no número de épocas foi
+realizado usando o conjunto de validação para reduzir o risco de
+<em>overfitting</em>. Após experimentos preliminares para ajuste de
+hiper parâmetro, a taxa de aprendizado foi de 0,01 e o número de épocas
+foi de 100.</p>
+<p>Todos os experimentos foram executados na GPU (Unidade de
+Processamento Gráfico) NVIDIA GeForce GTX TITAN X (5120 Compute Unified
+Device Architecture - núcleos CUDA e memória gráfica de 12 GB ), sistema
+operacional Ubuntu 18.04. A implementação proposta faz o uso da API
+(Interface de Programação de Aplicativos) de alto nível denominada Keras
+<span class="citation" data-cites="chollet2015keras">(<span
+class="nocase">Chollet et al.</span>, 2015)</span>, escrita na linguagem
+de programação Python. As rotinas desta interface são executadas através
+da biblioteca de código aberto TensorFlow <span class="citation"
+data-cites="tensorflow2015-whitepaper">(Abadi et al., 2015)</span>.</p>
+<h4 id="transfer-learning">Transfer Learning</h4>
+<p>Em vez de treinar a abordagem proposta do zero, os pesos da primeira
+parte foram inicializados com pesos pré-treinados no ImageNet em um
+conceito conhecido como <em>transfer learning</em>. Esse método
+proporciona uma certa rapidez no treinamento de CNNs, evitando
+treinamentos do zero (aleatoriamente). Quanto maior e mais geral o
+conjunto de treinamento do modelo pré-treinado, maior será a eficiência
+da transferência de aprendizado (<span class="citation"
+data-cites="tensorflow2015-whitepaper c231stan">(Abadi et al., 2015; Li;
+Johnson; Yeung, Spring 2018)</span>). A ImageNet é um conjunto que
+contém 1,2 milhões de imagens com 1000 categorias <span class="citation"
+data-cites="DBLP:journals/corr/RussakovskyDSKSMHKKBBF14">(Russakovsky;
+Deng; Su, 2014)</span>. Por ser um conjunto extenso existem vários
+modelos treinados nas arquiteturas mais conhecidas da literatura.</p>
+<h4 id="métricas-de-classificação">Métricas de Classificação</h4>
+<p>Para avaliar o método foram utilizados as métricas de regressão que
+medem a concordância entre o número de objetos anotados e os preditos. A
+métrica de erro absoluto médio (<em>mean absolute error</em> - MAE) é
+calculada conforme a Equação <a href="#eq:MAE" data-reference-type="ref"
+data-reference="eq:MAE">[eq:MAE]</a>.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>A</mi><mi>E</mi><mo>=</mo><mfrac><mrow><munderover><mo>∑</mo><mrow><mi>t</mi><mo>=</mo><mn>1</mn></mrow><mi>T</mi></munderover><mrow><mo stretchy="false" form="prefix">|</mo><msub><mover><mi>x</mi><mo accent="true">̂</mo></mover><mi>t</mi></msub><mo>−</mo><msub><mi>x</mi><mi>t</mi></msub><mo stretchy="false" form="prefix">|</mo></mrow></mrow><mi>T</mi></mfrac></mrow><annotation encoding="application/x-tex">\begin{equation}
+\label{eq:MAE}
+    MAE = \frac{\sum^{T}_{t=1}{|\hat{x}_t-{x}_t|}}{T}
+\end{equation}</annotation></semantics></math> onde
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mover><mi>x</mi><mo accent="true">̂</mo></mover><mi>t</mi></msub><annotation encoding="application/x-tex">\hat{x}_t</annotation></semantics></math>
+representa o número de objetos preditos pelo método e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mi>t</mi></msub><annotation encoding="application/x-tex">{x_t}</annotation></semantics></math>
+o número de objetos anotados em um conjunto de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+quadros do conjunto de testes <span class="citation"
+data-cites="MAE">(Wang; Lu, 2018)</span>.</p>
+<p>Para avaliar a localização dos objetos preditos em uma imagem, nós
+usamos a precisão, revocação e métrica F1 ou medida-f. Para calcular
+essas métricas, é necessário determinar o número de verdadeiros
+positivos (VP), falsos positivos (FP) e falsos negativos (FN). Um
+verdadeiro positivo é obtido se um ponto predito pelo método proposto
+está dentro de um raio máximo
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+de um ponto rotulado (neste trabalho usamos raio máximo igual a 5
+pixels). Um falso positivo é obtido quando o método proposto prediz um
+objeto que não foi rotulado, isto é, nenhum ponto a uma distância
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>.
+Por fim, um falso negativo é obtido quando nenhum ponto é predito a uma
+distância
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+de um ponto rotulado.</p>
+<p>A Precisão é definida conforme a Equação <a href="#eq:precision"
+data-reference-type="ref"
+data-reference="eq:precision">[eq:precision]</a>, isto é, o número de
+verdadeiros positivos (VP) sobre o número de verdadeiros positivos mais
+o número de falsos positivos (FP).</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>=</mo><mfrac><mrow><mi>V</mi><mi>P</mi></mrow><mrow><mi>V</mi><mi>P</mi><mo>+</mo><mi>F</mi><mi>P</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\begin{equation}
+\label{eq:precision}
+    P = \frac{VP}{VP+FP}
+\end{equation}</annotation></semantics></math></p>
+<p>Revocação é definido com o número de verdadeiros positivos (VP) sobre
+o número de verdadeiros positivos mais o número de falsos negativos
+(FN), conforme a Equação <a href="#eq:recall" data-reference-type="ref"
+data-reference="eq:recall">[eq:recall]</a>.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo>=</mo><mfrac><mrow><mi>V</mi><mi>P</mi></mrow><mrow><mi>V</mi><mi>P</mi><mo>+</mo><mi>F</mi><mi>N</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\begin{equation}
+    \label{eq:recall}
+    R = \frac{VP}{VP+FN}
+\end{equation}</annotation></semantics></math></p>
+<p>Para obter uma exatidão dos acertos, usamos a F1 que produz uma média
+harmônica da precisão e da revocação. A revocação está focada nos pontos
+que deverão ser classificados como positivos, enquanto que a precisão
+calcula os pontos positivos que foram preditos como positivos pelo
+modelo. A função alcança seu melhor valor em 1 e pior em 0 <span
+class="citation" data-cites="f1">(<strong>f1?</strong>)</span>:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mn>1</mn><mo>=</mo><mn>2</mn><mo>⋅</mo><mfrac><mrow><mi>P</mi><mo>⋅</mo><mi>R</mi></mrow><mrow><mi>P</mi><mo>+</mo><mi>R</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\begin{equation}
+    F1 = 2 \cdot \frac{P\cdot R}{P + R}
+\end{equation}</annotation></semantics></math></p>
+<h2 id="sec:resultados">Resultados e Discussão</h2>
+<p>Nas subseções abaixo são demonstrados os resultados com detalhes
+condizente com os experimentos e as técnicas que geraram resultados
+relevantes.</p>
+<h3 id="subsec:ResultadosQ">Resultados Quantitativos</h3>
+<p>As Tabelas <a href="#tab:resultadosGeral" data-reference-type="ref"
+data-reference="tab:resultadosGeral">4.2</a>, <a
+href="#tab:resultadosEstagios" data-reference-type="ref"
+data-reference="tab:resultadosEstagios">4.3</a> e <a
+href="#tab:resultadosTemporal" data-reference-type="ref"
+data-reference="tab:resultadosTemporal">4.4</a> mostram os resultados
+obtidos nos experimentos do método proposto após treinamentos de 100
+épocas. As tabelas apresentam a comparação dos resultados obtidos para
+diferentes variações de sigmas, número de estágios e o uso dos vetores
+de deslocamento como informação auxiliar na detecção dos objetos. Para
+uma avaliação adequada em desafios com vários peixes em um único quadro,
+nós reportamos as métricas em diversos cenários apresentados em cada
+coluna nas tabelas. O primeiro considera o cálculo das métricas em todos
+os quadros do conjunto de teste (primeira coluna das tabelas). Os demais
+cenários consideram somente quadros que contenham uma quantidade
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>
+de peixes, e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mrow><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>8</mn><mo>,</mo><mn>10</mn></mrow></mrow><annotation encoding="application/x-tex">i \geq {1,2,4,6,8,10}</annotation></semantics></math>.
+Por exemplo, a coluna
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">i \geq 10</annotation></semantics></math>
+indica que somente foram considerados os quadros com 10 ou mais peixes
+no cálculo das métricas. Portanto, o desafio imposto nesse cenário é
+muito maior quando comparado com quadros com poucos peixes.</p>
+<p>Conforme descrito da Seção <a href="#sec:geracao_mapa"
+data-reference-type="ref" data-reference="sec:geracao_mapa">3.3.1</a>, a
+parâmetro
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>
+controla a largura dos picos que representa cada objeto no mapa de
+densidade. Isto posto, a Tabela <a href="#tab:resultadosGeral"
+data-reference-type="ref" data-reference="tab:resultadosGeral">4.2</a>
+apresenta os resultados dos experimentos realizados para uma variação do
+valor de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>.
+Dessa forma,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>0.7</mn></mrow><annotation encoding="application/x-tex">\sigma = 0.7</annotation></semantics></math>
+gera picos com um raio menor, enquanto
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>1.3</mn></mrow><annotation encoding="application/x-tex">\sigma = 1.3</annotation></semantics></math>
+gera picos com um raio maior. O número de estágio nesses experimentos
+foi fixado em
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">E = 4</annotation></semantics></math>.</p>
+<p>Analisando os resultados apresentados na Tabela <a
+href="#tab:resultadosGeral" data-reference-type="ref"
+data-reference="tab:resultadosGeral">4.2</a>, podemos notar que o melhor
+resultado foi obtido para
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>1.1</mn></mrow><annotation encoding="application/x-tex">\sigma = 1.1</annotation></semantics></math>,
+alcançando
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mn>1</mn><mo>=</mo><mn>98</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">F1 = 98\%</annotation></semantics></math>
+e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>A</mi><mi>E</mi><mo>=</mo><mn>0.11</mn></mrow><annotation encoding="application/x-tex">MAE = 0.11</annotation></semantics></math>
+de acertos e erros contabilizando todos os quadros. Esse resultado é
+extremamente relevante pois o método proposta erra em média apenas 0.11
+peixes por quadro. Como esperado, quando a quantidade de peixes
+considerados por quadro aumenta, os valores de acertos diminuem.
+Entretanto, mesmo quando somente quadros com 10 ou mais peixes são
+considerados, foram obtidos resultados relevantes com
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mn>1</mn><mo>=</mo><mn>90</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">F1 = 90\%</annotation></semantics></math>
+e MAE = 1.71. Para as variadas quantidade de peixes
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≥</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>8</mn><mo>,</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">\geq 1,2,4,6,8,10</annotation></semantics></math>
+o melhor
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>
+obteve uma média de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mn>1</mn><mo>=</mo><mn>93</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">F1 =  93\%</annotation></semantics></math>
+de acertos.</p>
+<table id="tab:resultadosGeral">
+<caption>Resultados experimentais para a detecção dos alevinos com o
+método proposto. Comparação entre a variação dos
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>
+e estágios
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">E = 4</annotation></semantics></math>.</caption>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Sigma</strong></th>
+<th colspan="2" style="text-align: center;"><strong>Todos</strong></th>
+<th colspan="2"
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">i \geq 1</annotation></semantics></math></th>
+<th colspan="2"
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">i \geq 2</annotation></semantics></math></th>
+<th colspan="2"
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">i \geq 4</annotation></semantics></math></th>
+<th colspan="2"
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">i \geq 6</annotation></semantics></math></th>
+<th colspan="2"
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">i \geq 8</annotation></semantics></math></th>
+<th colspan="2"
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">i \geq 10</annotation></semantics></math></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span>2-15</span></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+</tr>
+<tr>
+<td
+style="text-align: left;"><span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.7</mn><annotation encoding="application/x-tex">0.7</annotation></semantics></math></span></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.343</mn><annotation encoding="application/x-tex">0.343</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.933</mn><annotation encoding="application/x-tex">0.933</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.561</mn><annotation encoding="application/x-tex">0.561</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.893</mn><annotation encoding="application/x-tex">0.893</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.823</mn><annotation encoding="application/x-tex">0.823</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.877</mn><annotation encoding="application/x-tex">0.877</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.372</mn><annotation encoding="application/x-tex">1.372</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.849</mn><annotation encoding="application/x-tex">0.849</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.958</mn><annotation encoding="application/x-tex">2.958</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.765</mn><annotation encoding="application/x-tex">0.765</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3.133</mn><annotation encoding="application/x-tex">3.133</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.788</mn><annotation encoding="application/x-tex">0.788</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3.071</mn><annotation encoding="application/x-tex">3.071</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.816</mn><annotation encoding="application/x-tex">0.816</annotation></semantics></math></td>
+</tr>
+<tr>
+<td
+style="text-align: left;"><span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.8</mn><annotation encoding="application/x-tex">0.8</annotation></semantics></math></span></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.217</mn><annotation encoding="application/x-tex">0.217</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.960</mn><annotation encoding="application/x-tex">0.960</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.353</mn><annotation encoding="application/x-tex">0.353</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.938</mn><annotation encoding="application/x-tex">0.938</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.523</mn><annotation encoding="application/x-tex">0.523</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.926</mn><annotation encoding="application/x-tex">0.926</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.843</mn><annotation encoding="application/x-tex">0.843</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.915</mn><annotation encoding="application/x-tex">0.915</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.041</mn><annotation encoding="application/x-tex">2.041</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.852</mn><annotation encoding="application/x-tex">0.852</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.433</mn><annotation encoding="application/x-tex">2.433</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.842</mn><annotation encoding="application/x-tex">0.842</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.642</mn><annotation encoding="application/x-tex">2.642</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.843</mn><annotation encoding="application/x-tex">0.843</annotation></semantics></math></td>
+</tr>
+<tr>
+<td
+style="text-align: left;"><span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.9</mn><annotation encoding="application/x-tex">0.9</annotation></semantics></math></span></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.156</mn><annotation encoding="application/x-tex">0.156</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.975</mn><annotation encoding="application/x-tex">0.975</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.254</mn><annotation encoding="application/x-tex">0.254</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.960</mn><annotation encoding="application/x-tex">0.960</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.377</mn><annotation encoding="application/x-tex">0.377</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.952</mn><annotation encoding="application/x-tex">0.952</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.612</mn><annotation encoding="application/x-tex">0.612</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.945</mn><annotation encoding="application/x-tex">0.945</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.750</mn><annotation encoding="application/x-tex">1.750</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.878</mn><annotation encoding="application/x-tex">0.878</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.200</mn><annotation encoding="application/x-tex">2.200</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.858</mn><annotation encoding="application/x-tex">0.858</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.428</mn><annotation encoding="application/x-tex">2.428</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.857</mn><annotation encoding="application/x-tex">0.857</annotation></semantics></math></td>
+</tr>
+<tr>
+<td
+style="text-align: left;"><span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math></span></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.138</mn><annotation encoding="application/x-tex">0.138</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.978</mn><annotation encoding="application/x-tex">0.978</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.226</mn><annotation encoding="application/x-tex">0.226</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.965</mn><annotation encoding="application/x-tex">0.965</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.331</mn><annotation encoding="application/x-tex">0.331</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.959</mn><annotation encoding="application/x-tex">0.959</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.524</mn><annotation encoding="application/x-tex">0.524</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.954</mn><annotation encoding="application/x-tex">0.954</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.583</mn><annotation encoding="application/x-tex">1.583</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.891</mn><annotation encoding="application/x-tex">0.891</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.000</mn><annotation encoding="application/x-tex">2.000</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.872</mn><annotation encoding="application/x-tex">0.872</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.0</mn><annotation encoding="application/x-tex">2.0</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.885</mn><annotation encoding="application/x-tex">0.885</annotation></semantics></math></td>
+</tr>
+<tr>
+<td
+style="text-align: left;"><span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟏.𝟏</mtext><annotation encoding="application/x-tex">\textbf{1.1}</annotation></semantics></math></span></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟏𝟏𝟔</mtext><annotation encoding="application/x-tex">\textbf{0.116}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟖𝟏</mtext><annotation encoding="application/x-tex">\textbf{0.981}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟏𝟖𝟗</mtext><annotation encoding="application/x-tex">\textbf{0.189}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟕𝟏</mtext><annotation encoding="application/x-tex">\textbf{0.971}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟐𝟕𝟒</mtext><annotation encoding="application/x-tex">\textbf{0.274}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟔𝟕</mtext><annotation encoding="application/x-tex">\textbf{0.967}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟒𝟑𝟏</mtext><annotation encoding="application/x-tex">\textbf{0.431}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟔𝟑</mtext><annotation encoding="application/x-tex">\textbf{0.963}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟏.𝟑𝟓𝟒</mtext><annotation encoding="application/x-tex">\textbf{1.354}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟎𝟗</mtext><annotation encoding="application/x-tex">\textbf{0.909}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟏.𝟕𝟔𝟔</mtext><annotation encoding="application/x-tex">\textbf{1.766}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟖𝟖𝟖</mtext><annotation encoding="application/x-tex">\textbf{0.888}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟏.𝟕𝟏𝟒</mtext><annotation encoding="application/x-tex">\textbf{1.714}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟎𝟓</mtext><annotation encoding="application/x-tex">\textbf{0.905}</annotation></semantics></math></td>
+</tr>
+<tr>
+<td
+style="text-align: left;"><span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.2</mn><annotation encoding="application/x-tex">1.2</annotation></semantics></math></span></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.125</mn><annotation encoding="application/x-tex">0.125</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.980</mn><annotation encoding="application/x-tex">0.980</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.204</mn><annotation encoding="application/x-tex">0.204</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.969</mn><annotation encoding="application/x-tex">0.969</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.295</mn><annotation encoding="application/x-tex">0.295</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.965</mn><annotation encoding="application/x-tex">0.965</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.460</mn><annotation encoding="application/x-tex">0.460</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.961</mn><annotation encoding="application/x-tex">0.961</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.416</mn><annotation encoding="application/x-tex">1.416</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.904</mn><annotation encoding="application/x-tex">0.904</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.800</mn><annotation encoding="application/x-tex">1.800</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.886</mn><annotation encoding="application/x-tex">0.886</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.857</mn><annotation encoding="application/x-tex">1.857</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.895</mn><annotation encoding="application/x-tex">0.895</annotation></semantics></math></td>
+</tr>
+<tr>
+<td
+style="text-align: left;"><span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.3</mn><annotation encoding="application/x-tex">1.3</annotation></semantics></math></span></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.126</mn><annotation encoding="application/x-tex">0.126</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.982</mn><annotation encoding="application/x-tex">0.982</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.206</mn><annotation encoding="application/x-tex">0.206</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.972</mn><annotation encoding="application/x-tex">0.972</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.302</mn><annotation encoding="application/x-tex">0.302</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.965</mn><annotation encoding="application/x-tex">0.965</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.480</mn><annotation encoding="application/x-tex">0.480</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.959</mn><annotation encoding="application/x-tex">0.959</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.479</mn><annotation encoding="application/x-tex">1.479</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.900</mn><annotation encoding="application/x-tex">0.900</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.933</mn><annotation encoding="application/x-tex">1.933</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.877</mn><annotation encoding="application/x-tex">0.877</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.000</mn><annotation encoding="application/x-tex">2.000</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.886</mn><annotation encoding="application/x-tex">0.886</annotation></semantics></math></td>
+</tr>
+</tbody>
+</table>
+<p>.</p>
+<p>Outro parâmetro relevante do método proposto é a quantidade de
+estágios
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>E</mi><annotation encoding="application/x-tex">E</annotation></semantics></math>.
+Conforme a Seção <a href="#sec:MetodoPrincipal"
+data-reference-type="ref" data-reference="sec:MetodoPrincipal">3</a>, os
+estágios podem ser concatenados para refinar as predições do mapa de
+densidade. Na Tabela <a href="#tab:resultadosEstagios"
+data-reference-type="ref"
+data-reference="tab:resultadosEstagios">4.3</a> temos os resultados para
+uma variação de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>E</mi><annotation encoding="application/x-tex">E</annotation></semantics></math>
+em cada ramo da arquitetura proposta. Os valores mostram que ao utilizar
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">E = 4</annotation></semantics></math>
+estágios temos um resultado maior do que quando
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>E</mi><annotation encoding="application/x-tex">E</annotation></semantics></math>
+assume outros valores. As métricas para
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">E = 4</annotation></semantics></math>
+estágios alcançaram o melhor resultado dentre os apresentados, tendo
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>98</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">98\%</annotation></semantics></math>
+de acertos para a contabilização de todos os peixes. Os resultados
+também mostram que usando
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>&lt;</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">E &lt; 4</annotation></semantics></math>
+apresenta valores excelentes para a contagem de todos os peixes, mas
+quando a contagem acontece por meio da quantidade de peixes em cada
+quadro, o método mostrou uma queda na eficiência de contagem. Isso
+mostra que os estágios ajudam a refinar o mapa para a contagem dos
+objetos.</p>
+<table id="tab:resultadosEstagios">
+<caption>Resultados experimentais para a detecção dos alevinos com o
+método proposto. Comparação entre a variação na quantidade de estágios E
+usando
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>1.1</mn></mrow><annotation encoding="application/x-tex">\sigma = 1.1</annotation></semantics></math></caption>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Estágios</strong></th>
+<th colspan="2" style="text-align: center;"><strong>Todos</strong></th>
+<th colspan="2"
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">i \geq 1</annotation></semantics></math></th>
+<th colspan="2"
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">i \geq 2</annotation></semantics></math></th>
+<th colspan="2"
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">i \geq 4</annotation></semantics></math></th>
+<th colspan="2"
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">i \geq 6</annotation></semantics></math></th>
+<th colspan="2"
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">i \geq 8</annotation></semantics></math></th>
+<th colspan="2"
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">i \geq 10</annotation></semantics></math></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span>2-15</span></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+</tr>
+<tr>
+<td
+style="text-align: left;"><span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math></span></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.227</mn><annotation encoding="application/x-tex">0.227</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.955</mn><annotation encoding="application/x-tex">0.955</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.368</mn><annotation encoding="application/x-tex">0.368</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.931</mn><annotation encoding="application/x-tex">0.931</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.483</mn><annotation encoding="application/x-tex">0.483</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.928</mn><annotation encoding="application/x-tex">0.928</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.598</mn><annotation encoding="application/x-tex">0.598</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.939</mn><annotation encoding="application/x-tex">0.939</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.333</mn><annotation encoding="application/x-tex">1.333</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.902</mn><annotation encoding="application/x-tex">0.902</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.700</mn><annotation encoding="application/x-tex">1.700</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.880</mn><annotation encoding="application/x-tex">0.880</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.785</mn><annotation encoding="application/x-tex">1.785</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.899</mn><annotation encoding="application/x-tex">0.899</annotation></semantics></math></td>
+</tr>
+<tr>
+<td
+style="text-align: left;"><span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2</mn><annotation encoding="application/x-tex">2</annotation></semantics></math></span></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.140</mn><annotation encoding="application/x-tex">0.140</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.976</mn><annotation encoding="application/x-tex">0.976</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.227</mn><annotation encoding="application/x-tex">0.227</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.964</mn><annotation encoding="application/x-tex">0.964</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.333</mn><annotation encoding="application/x-tex">0.333</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.959</mn><annotation encoding="application/x-tex">0.959</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.524</mn><annotation encoding="application/x-tex">0.524</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.952</mn><annotation encoding="application/x-tex">0.952</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.520</mn><annotation encoding="application/x-tex">1.520</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.890</mn><annotation encoding="application/x-tex">0.890</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.900</mn><annotation encoding="application/x-tex">1.900</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.871</mn><annotation encoding="application/x-tex">0.871</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.071</mn><annotation encoding="application/x-tex">2.071</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.881</mn><annotation encoding="application/x-tex">0.881</annotation></semantics></math></td>
+</tr>
+<tr>
+<td
+style="text-align: left;"><span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟒</mtext><annotation encoding="application/x-tex">\textbf{4}</annotation></semantics></math></span></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟏𝟏𝟔</mtext><annotation encoding="application/x-tex">\textbf{0.116}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟖𝟏</mtext><annotation encoding="application/x-tex">\textbf{0.981}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟏𝟖𝟗</mtext><annotation encoding="application/x-tex">\textbf{0.189}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟕𝟏</mtext><annotation encoding="application/x-tex">\textbf{0.971}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟐𝟕𝟒</mtext><annotation encoding="application/x-tex">\textbf{0.274}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟔𝟕</mtext><annotation encoding="application/x-tex">\textbf{0.967}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟒𝟑𝟏</mtext><annotation encoding="application/x-tex">\textbf{0.431}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟔𝟑</mtext><annotation encoding="application/x-tex">\textbf{0.963}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟏.𝟑𝟓𝟒</mtext><annotation encoding="application/x-tex">\textbf{1.354}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟎𝟗</mtext><annotation encoding="application/x-tex">\textbf{0.909}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟏.𝟕𝟔𝟔</mtext><annotation encoding="application/x-tex">\textbf{1.766}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟖𝟖𝟖</mtext><annotation encoding="application/x-tex">\textbf{0.888}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟏.𝟕𝟏𝟒</mtext><annotation encoding="application/x-tex">\textbf{1.714}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟎𝟓</mtext><annotation encoding="application/x-tex">\textbf{0.905}</annotation></semantics></math></td>
+</tr>
+<tr>
+<td
+style="text-align: left;"><span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>6</mn><annotation encoding="application/x-tex">6</annotation></semantics></math></span></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.122</mn><annotation encoding="application/x-tex">0.122</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.980</mn><annotation encoding="application/x-tex">0.980</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.198</mn><annotation encoding="application/x-tex">0.198</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.969</mn><annotation encoding="application/x-tex">0.969</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.288</mn><annotation encoding="application/x-tex">0.288</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.965</mn><annotation encoding="application/x-tex">0.965</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.451</mn><annotation encoding="application/x-tex">0.451</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.961</mn><annotation encoding="application/x-tex">0.961</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.395</mn><annotation encoding="application/x-tex">1.395</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.905</mn><annotation encoding="application/x-tex">0.905</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.800</mn><annotation encoding="application/x-tex">1.800</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.886</mn><annotation encoding="application/x-tex">0.886</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.714</mn><annotation encoding="application/x-tex">1.714</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.904</mn><annotation encoding="application/x-tex">0.904</annotation></semantics></math></td>
+</tr>
+</tbody>
+</table>
+<p>.</p>
+<p>Após o modelo proposto apresentar o melhor resultado utilizando
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">E = 4</annotation></semantics></math>
+estágios e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>1.1</mn></mrow><annotation encoding="application/x-tex">\sigma = 1.1</annotation></semantics></math>,
+os resultados da Tabela <a href="#tab:resultadosTemporal"
+data-reference-type="ref"
+data-reference="tab:resultadosTemporal">4.4</a> mostra a comparação do
+uso ou não do ramo que estima os vetores de deslocamento temporal
+conforme a Seção <a href="#sec:Images" data-reference-type="ref"
+data-reference="sec:Images">3.1</a>. Apesar dos valores similares, o
+resultado se destaca quando o ramo que estima os vetores de deslocamento
+é utilizado. Isso corrobora que a inclusão de informação mesmo que
+indireta da localização do objeto anteriormente melhora os
+resultados.</p>
+<table id="tab:resultadosTemporal">
+<caption>Resultados experimentais para a detecção dos alevinos com o
+método proposto,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">E = 4</annotation></semantics></math>
+estágios, e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>1.1</mn></mrow><annotation encoding="application/x-tex">\sigma = 1.1</annotation></semantics></math>.
+Comparação do método com e sem os vetores de deslocamento dos peixes,
+denominado temporal</caption>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Temporal</strong></th>
+<th colspan="2" style="text-align: center;"><strong>Todos</strong></th>
+<th colspan="2"
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">i \geq 1</annotation></semantics></math></th>
+<th colspan="2"
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">i \geq 2</annotation></semantics></math></th>
+<th colspan="2"
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">i \geq 4</annotation></semantics></math></th>
+<th colspan="2"
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">i \geq 6</annotation></semantics></math></th>
+<th colspan="2"
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">i \geq 8</annotation></semantics></math></th>
+<th colspan="2"
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>≥</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">i \geq 10</annotation></semantics></math></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span>2-15</span></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+<td style="text-align: center;"><strong>MAE</strong></td>
+<td style="text-align: center;"><strong>F1</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><span><strong>Sim</strong></span></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟏𝟏𝟔</mtext><annotation encoding="application/x-tex">\textbf{0.116}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟖𝟏</mtext><annotation encoding="application/x-tex">\textbf{0.981}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟏𝟖𝟗</mtext><annotation encoding="application/x-tex">\textbf{0.189}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟕𝟏</mtext><annotation encoding="application/x-tex">\textbf{0.971}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟐𝟕𝟒</mtext><annotation encoding="application/x-tex">\textbf{0.274}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟔𝟕</mtext><annotation encoding="application/x-tex">\textbf{0.967}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟒𝟑𝟏</mtext><annotation encoding="application/x-tex">\textbf{0.431}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟔𝟑</mtext><annotation encoding="application/x-tex">\textbf{0.963}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟏.𝟑𝟓𝟒</mtext><annotation encoding="application/x-tex">\textbf{1.354}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟎𝟗</mtext><annotation encoding="application/x-tex">\textbf{0.909}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟏.𝟕𝟔𝟔</mtext><annotation encoding="application/x-tex">\textbf{1.766}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟖𝟖𝟖</mtext><annotation encoding="application/x-tex">\textbf{0.888}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟏.𝟕𝟏𝟒</mtext><annotation encoding="application/x-tex">\textbf{1.714}</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="bold">𝟎.𝟗𝟎𝟓</mtext><annotation encoding="application/x-tex">\textbf{0.905}</annotation></semantics></math></td>
+</tr>
+<tr>
+<td style="text-align: left;"><span>Não</span></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.138</mn><annotation encoding="application/x-tex">0.138</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.978</mn><annotation encoding="application/x-tex">0.978</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.227</mn><annotation encoding="application/x-tex">0.227</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.964</mn><annotation encoding="application/x-tex">0.964</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.328</mn><annotation encoding="application/x-tex">0.328</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.959</mn><annotation encoding="application/x-tex">0.959</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.534</mn><annotation encoding="application/x-tex">0.534</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.949</mn><annotation encoding="application/x-tex">0.949</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.500</mn><annotation encoding="application/x-tex">1.500</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.897</mn><annotation encoding="application/x-tex">0.897</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.866</mn><annotation encoding="application/x-tex">1.866</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.882</mn><annotation encoding="application/x-tex">0.882</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.928</mn><annotation encoding="application/x-tex">1.928</annotation></semantics></math></td>
+<td
+style="text-align: center;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.891</mn><annotation encoding="application/x-tex">0.891</annotation></semantics></math></td>
+</tr>
+</tbody>
+</table>
+<p>.</p>
+<h3 id="resultados-qualitativos">Resultados Qualitativos</h3>
+<p>A Figura <a href="#fig:resultadosQuali" data-reference-type="ref"
+data-reference="fig:resultadosQuali">4.4</a> ilustra como o mapa de
+densidade representa a presença de um alevino na imagem. Cada pico
+apontado no <em>Heatmap</em> consiste na presença de um alevino.</p>
+<figure id="heatmap" data-latex-placement="htb">
+<img src="image/VID06_frame000147.png" style="width:90.0%" />
+<figcaption>Ilustração do <em>Heatmap</em> obtido do <em>frame</em> 147
+do vídeo número 6, predito pelo modelo treinado por 100
+épocas.</figcaption>
+</figure>
+<p>Podemos observar nas imagens da Figura <a href="#fig:resultadosQuali"
+data-reference-type="ref" data-reference="fig:resultadosQuali">4.4</a> o
+quadro original, o mapa de densidade, as detecções e a avaliação da
+métrica <em>F1</em> e a estimativa dos vetores de deslocamento. Todos os
+peixes presente no quadro foram detectados e os vetores foram
+estimatidos para as posições anteriores. Neste caso em específico temos
+dois peixes próximos que foram detectados e contabilizados
+individualmente.</p>
+<p>Haja vista a Seção <a href="#subsec:ResultadosQ"
+data-reference-type="ref" data-reference="subsec:ResultadosQ">4.2.1</a>
+os quadros onde a quantidade de alevinos é
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≤</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">\leq 6</annotation></semantics></math>,
+os alevinos são facilmente detectados. Quando a presença de peixes é
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≥</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">\geq 6</annotation></semantics></math>
+a CNN detecta os alevinos em sua grande maioria, mas existe aqueles que
+por algum motivo tiveram uma deformação em sua forma na imagem. O
+movimento realizado pelo peixe diz muito sobre a sua forma.</p>
+<figure id="fig:resultadosQuali" data-latex-placement="!hbt">
+<p><img src="image/ResultadosQ/VID09_frame000039.png"
+style="width:40.0%" alt="image" /> <img
+src="image/ResultadosQ/VID09_frame000039_points_.png"
+style="width:40.0%" alt="image" /> <img
+src="image/ResultadosQ/VID09_frame000039_points.png" style="width:40.0%"
+alt="image" /> <img
+src="image/ResultadosQ/VID09_frame000039_vectors.png"
+style="width:40.0%" alt="image" /></p>
+<figcaption><span id="fig:resultadosQuali"
+data-label="fig:resultadosQuali"></span> Exemplos dos resultados visuais
+obtidos para o quadro 30 do vídeo 09. A Figura (a) mostra a imagem
+original, (b) o mapa de densidade, (c) as predições e (d) a estimação
+dos vetores. </figcaption>
+</figure>
+<p>Um dos problemas da abordagem proposta esta na detecção correta do
+alevino quando parte do seu corpo está oclusa na imagem. Isso acontece,
+pois uma das características da CNN é buscar identificar o alevino
+considerando uma distribuição de probabilidade de um alevino estar em um
+pixel. Dessa forma, para que a CNN consiga predizer um alevino, boa
+parte do formato dele deve aparecer na imagem, para que uma resposta
+alta a esse padrão seja encontrada.</p>
+<p>Nas imagens presentes na Figura <a href="#fig:resultadosJuntos"
+data-reference-type="ref" data-reference="fig:resultadosJuntos">4.5</a>
+temos um quadro onde existem três alevinos, porém os dois mais próximos,
+foram contabilizados apenas como um. Um alevino encontra-se extremamente
+próximo ao outro, impossibilitando de serem distinguidos a olho nu. Em
+alguns quadros na sequência temos que os dois peixes chegam a se
+separar, porém existem casos em que dois alevinos se movem
+uniformemente. Essa aproximação confundi a estimativa de vetores, que
+estima um número de vetores deslocamento diferente.</p>
+<figure id="fig:resultadosJuntos" data-latex-placement="!htb">
+<p><img src="image/ResultadosQ2/VID11_frame000217.png"
+style="width:35.0%" alt="image" /> <img
+src="image/ResultadosQ2/VID11_frame000217_points_gt_.png"
+style="width:35.0%" alt="image" /> <img
+src="image/ResultadosQ2/VID11_frame000217_points.png"
+style="width:35.0%" alt="image" /> <img
+src="image/ResultadosQ2/VID11_frame000217_vectors.png"
+style="width:35.0%" alt="image" /></p>
+<figcaption><span id="fig:resultadosJuntos"
+data-label="fig:resultadosJuntos"></span> Exemplos dos resultados
+visuais obtidos para o quadro 270 do vídeo 11. A Figura (a) nos mostra a
+imagem original, (b) o mapa de densidade, (c) as predições e (d) a
+estimação dos vetores. </figcaption>
+</figure>
+<p>Por outro lado, outro grande desafio é detectar corretamente o
+formato do alevino na imagem. Podemos observar que quase sempre por
+conta da colisão entre eles os alevinos formam um padrão disforme ao
+usual. Apesar desses desafios, o método proposto é capaz de detectar
+corretamente a grande maioria dos alevinos.</p>
+<h1 id="chap:conclusoes">Conclusões</h1>
+<p>Neste capítulo são apresentadas as conclusões deste trabalho. Na
+Seção <a href="#sec:c:resumo" data-reference-type="ref"
+data-reference="sec:c:resumo">5.1</a> é realizado um paralelo entre os
+objetivos desta tese e os resultados obtidos. Na Seção  <a
+href="#sec:c:limitacoes" data-reference-type="ref"
+data-reference="sec:c:limitacoes">5.2</a> são discutidas algumas
+limitações das soluções propostas e na Seção <a href="#sec:c:futuros"
+data-reference-type="ref" data-reference="sec:c:futuros">5.3</a> são
+apresentadas algumas direções de trabalhos futuros.</p>
+<h2 id="sec:c:resumo">Resumo dos Objetivos e Principais Resultados</h2>
+<p>O objetivo principal deste trabalho foi apresentar a capacidade de
+aplicar camadas convolucionais para contar objetos em vídeos,
+considerando as posições dos mesmos no quadro anterior. Assim são
+estimados um mapa de densidade e a estimativa de deslocamento de
+alevino.</p>
+<p>O melhor resultado obtido alcançou 98% de acertos avaliados pela
+métrica F1, o que nos mostra que a técnica proposta se ajusta
+positivamente ao conjunto de dados. A métrica de erro MAE afirma que os
+equívocos cometidos pela rede em camadas é próximos a 0. O objetivo de
+refinar o mapa de características utilizando os vetor de deslocamento
+foi alcançado visto que os melhores resultados se mostraram a partir do
+processamento das posições que precedem o quadro atual.</p>
+<h2 id="sec:c:limitacoes">Limitações</h2>
+<p>Os alevinos estão em constante movimento nos vídeos, porém existem
+alguns peixes, geralmente dois(ou até mais) que se juntam e mantém um
+certo movimento uniforme confundindo a CNN, fazendo-a detectar apenas um
+peixe naquela posição na imagem. Como o deslocamento dos dois são
+análogos nos quadros anteriores
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">I_{t-1}</annotation></semantics></math>,
+no quadro atual
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mi>t</mi></msub><annotation encoding="application/x-tex">I_{t}</annotation></semantics></math>
+processado não há possibilidade de se distinguir um do outro. O pico
+apontado pela CNN para estes peixes extremamente próximos é único e como
+a detecção é obtida através deles, a CNN detecta estes peixes como um.
+Na imagem <a href="#fig:PeixesPróximos" data-reference-type="ref"
+data-reference="fig:PeixesPróximos">5.1</a> temos um exemplo de dois
+peixes que se movimentam igualmente sem indicar uma desaproximação.</p>
+<figure id="fig:PeixesPróximos" data-latex-placement="!ht">
+<p><img src="image/187.png" style="width:46.0%" alt="image" /> <img
+src="image/188.png" style="width:46.0%" alt="image" /></p>
+<figcaption><span id="fig:PeixesPróximos"
+data-label="fig:PeixesPróximos"></span> Exemplos dos peixes extremamente
+próximos que se movem uniformemente. Imagens do vídeo 06, quadro 187 e
+188. </figcaption>
+</figure>
+<h2 id="sec:c:futuros">Trabalhos Futuros</h2>
+<p>O fato de ocorrer peixes muito próximos nos faz entender que a
+técnica deverá abordar este tipo de situação. No qual serão testados
+técnicas para distinguir tais alevinos de maneira com que cada um seja
+detectado e somado a contagem final.</p>
+<p>O método proposto será reavaliado em outro banco de imagens, para
+averiguar o potencial da técnica em detectar peixes em várias situações
+do mundo real. Nas imagens da Figura <a href="#fig:proxbanco"
+data-reference-type="ref" data-reference="fig:proxbanco">5.2</a> temos
+amostras do banco a ser utilizado em novos experimentos.</p>
+<figure id="fig:proxbanco" data-latex-placement="!ht">
+<p><img src="image/frame0004810.png" style="width:80.0%" alt="image" />
+<img src="image/frame0000247.png" style="width:80.0%" alt="image" /></p>
+<figcaption><span id="fig:proxbanco" data-label="fig:proxbanco"></span>
+Amostra do próximo banco de imagens a ser testado - vídeo 203.
+.</figcaption>
+</figure>
+<div id="refs" class="references csl-bib-body" data-entry-spacing="1"
+role="list">
+<div id="ref-tensorflow2015-whitepaper" class="csl-entry"
+role="listitem">
+ABADI, Martı́n <em>et al.</em> <strong><span>TensorFlow</span>:
+Large-Scale Machine Learning on Heterogeneous Systems</strong>., 2015.
+Disponível em: &lt;<a
+href="https://www.tensorflow.org/">https://www.tensorflow.org/</a>&gt;
+</div>
+<div id="ref-SLIC" class="csl-entry" role="listitem">
+ACHANTA, Radhakrishna <em>et al.</em> <a
+href="https://doi.org/10.1109/TPAMI.2012.120">SLIC Superpixels Compared
+to State-of-the-Art Superpixel Methods</a>. <strong>IEEE transactions on
+pattern analysis and machine intelligence</strong>, v. 34, maio 2012.
+</div>
+<div id="ref-Aich2018ImprovingOC" class="csl-entry" role="listitem">
+AICH, Shubhra; STAVNESS, Ian. <strong>Improving Object Counting with
+Heatmap Regulation</strong>., 2018. Disponível em: &lt;<a
+href="https://arxiv.org/abs/1803.05494">https://arxiv.org/abs/1803.05494</a>&gt;
+</div>
+<div id="ref-8437104" class="csl-entry" role="listitem">
+APARNA, P. <em>et al.</em> <a
+href="https://doi.org/10.1109/ICDI3C.2018.00036">CNN Based Technique for
+Automatic Tree Counting Using Very High Resolution Data</a>.
+<em>In</em>: 2018.
+</div>
+<div id="ref-5605630" class="csl-entry" role="listitem">
+AREL, I.; ROSE, D. C.; KARNOWSKI, T. P. <a
+href="https://doi.org/10.1109/MCI.2010.938364">Deep Machine Learning - A
+New Frontier in Artificial Intelligence Research [Research
+Frontier]</a>. <strong>IEEE Computational Intelligence
+Magazine</strong>, v. 5, n. 4, p. 13–18, nov. 2010.
+</div>
+<div id="ref-CarCount" class="csl-entry" role="listitem">
+AZIMI, Seyedmajid <em>et al.</em> <a
+href="https://doi.org/10.5194/isprs-archives-XLII-1-19-2018">SEGMENT-AND-COUNT:
+VEHICLE COUNTING IN AERIAL IMAGERY USING ATROUS CONVOLUTIONAL NEURAL
+NETWORKS</a>. <strong>ISPRS - International Archives of the
+Photogrammetry, Remote Sensing and Spatial Information
+Sciences</strong>, v. XLII-1, p. 19–23, set. 2018.
+</div>
+<div id="ref-Kalman" class="csl-entry" role="listitem">
+BIANCO, Aline Fernanda; TERRA, Marco Henrique. <strong>Filtros de Kalman
+robustos para sistemas dinâmicos singulares em tempo discreto</strong>.
+mathesis—<em>[S.l.]</em>: Universidade de São Paulo, 2009.
+</div>
+<div id="ref-DBLP:journals/corr/CaoSWS16" class="csl-entry"
+role="listitem">
+CAO, Zhe <em>et al.</em> <a
+href="http://arxiv.org/abs/1611.08050">Realtime Multi-Person 2D Pose
+Estimation using Part Affinity Fields</a>. <strong>CoRR</strong>, v.
+abs/1611.08050, 2016.
+</div>
+<div id="ref-Cao2017" class="csl-entry" role="listitem">
+CAO, Zhe <em>et al.</em> <a
+href="https://doi.org/10.1109/CVPR.2017.143">Realtime Multi-Person 2D
+Pose Estimation using Part Affinity Fields</a>. <em>In</em>: 2017.
+</div>
+<div id="ref-Cao2018" class="csl-entry" role="listitem">
+CAO, Zhe <em>et al.</em> <a
+href="http://arxiv.org/abs/1812.08008">OpenPose: Realtime Multi-Person
+2D Pose Estimation using Part Affinity Fields</a>.
+<strong>CoRR</strong>, v. abs/1812.08008, 2018.
+</div>
+<div id="ref-DBLP:journals/corr/CheangCT17a" class="csl-entry"
+role="listitem">
+CHEANG, Eu Koon; CHEANG, Teik Koon; TAY, Yong Haur. <a
+href="http://arxiv.org/abs/1701.06462">Using Convolutional Neural
+Networks to Count Palm Trees in Satellite Images</a>.
+<strong>CoRR</strong>, v. abs/1701.06462, 2017.
+</div>
+<div id="ref-chollet2015keras" class="csl-entry" role="listitem">
+<span class="nocase">CHOLLET, François <em>et al.</em></span>
+<strong>Keras</strong>. <a href="https://keras.io"
+class="uri">https://keras.io</a>, 2015.
+</div>
+<div id="ref-Danelljan_2015_ICCV_Workshops" class="csl-entry"
+role="listitem">
+DANELLJAN, Martin <em>et al.</em> Convolutional Features for Correlation
+Filter Based Visual Tracking. <em>In</em>: 2015.
+</div>
+<div id="ref-IMAGENET" class="csl-entry" role="listitem">
+DENG, J. <em>et al.</em> <span>ImageNet: A Large-Scale Hierarchical
+Image Database</span>. <em>In</em>: 2009.
+</div>
+<div id="ref-FAO" class="csl-entry" role="listitem">
+FAO (ORG.). <strong>FAO</strong>. Rome, Italy: FAO, 2016.
+</div>
+<div id="ref-7320116" class="csl-entry" role="listitem">
+FERRARI, A.; LOMBARDI, S.; SIGNORONI, A. <a
+href="https://doi.org/10.1109/EMBC.2015.7320116">Bacterial colony
+counting by Convolutional Neural Networks</a>. <em>In</em>: ago. 2015.
+</div>
+<div id="ref-DBLP:journals/corr/Girshick15" class="csl-entry"
+role="listitem">
+GIRSHICK, Ross B. <a href="http://arxiv.org/abs/1504.08083">Fast
+<span>R-CNN</span></a>. <strong>CoRR</strong>, v. abs/1504.08083, 2015.
+</div>
+<div id="ref-Goldman2019CVPR" class="csl-entry" role="listitem">
+GOLDMAN, Eran <em>et al.</em> Precise Detection in Densely Packed
+Scenes. <em>In</em>: 2019. Disponível em: &lt;<a
+href="https://arxiv.org/abs/1904.00853">https://arxiv.org/abs/1904.00853</a>&gt;
+</div>
+<div id="ref-ExtractHuman" class="csl-entry" role="listitem">
+GONÇALVES, Paulo <em>et al.</em> <a
+href="https://doi.org/10.3390/electronics9010159">Computer Vision
+Intelligent Approaches to Extract Human Pose and Its Activity from Image
+Sequences</a>. <strong>Electronics</strong>, v. 9, p. 159, jan. 2020.
+</div>
+<div id="ref-deeplearningbook" class="csl-entry" role="listitem">
+GOODFELLOW, Ian; BENGIO, Yoshua; COURVILLE, Aaron. <strong>Deep
+Learning</strong>. <em>[S.l.]</em>: MIT Press, 2016.
+</div>
+<div id="ref-ResNet50" class="csl-entry" role="listitem">
+HE, Kaiming <em>et al.</em> <a
+href="http://arxiv.org/abs/1512.03385">Deep Residual Learning for Image
+Recognition</a>. <strong>CoRR</strong>, v. abs/1512.03385, 2015.
+</div>
+<div id="ref-8898173" class="csl-entry" role="listitem">
+HOU, B. <em>et al.</em> <a
+href="https://doi.org/10.1109/IGARSS.2019.8898173">Object Detection and
+Trcacking Based on Convolutional Neural Networks for High-Resolution
+Optical Remote Sensing Video</a>. <em>In</em>: 2019.
+</div>
+<div id="ref-8237708" class="csl-entry" role="listitem">
+HSIEH, M.; LIN, Y.; HSU, W. H. <a
+href="https://doi.org/10.1109/ICCV.2017.446">Drone-Based Object Counting
+by Spatially Regularized Regional Proposal Network</a>. <em>In</em>:
+2017.
+</div>
+<div id="ref-DBLP:journals/corr/abs-1808-01050" class="csl-entry"
+role="listitem">
+IDREES, Haroon <em>et al.</em> <a
+href="http://arxiv.org/abs/1808.01050">Composition Loss for Counting,
+Density Map Estimation and Localization in Dense Crowds</a>.
+<strong>CoRR</strong>, v. abs/1808.01050, 2018.
+</div>
+<div id="ref-ANN" class="csl-entry" role="listitem">
+JAIN, A. K.; JIANCHANG MAO; MOHIUDDIN, K. M. <a
+href="https://doi.org/10.1109/2.485891">Artificial neural networks: a
+tutorial</a>. <strong>Computer</strong>, v. 29, n. 3, p. 31–44, 1996.
+</div>
+<div id="ref-880968" class="csl-entry" role="listitem">
+KAMIJO, S. <em>et al.</em> <a
+href="https://doi.org/10.1109/6979.880968">Traffic monitoring and
+accident detection at intersections</a>. <strong>IEEE Transactions on
+Intelligent Transportation Systems</strong>, v. 1, n. 2, p. 108–118,
+2000.
+</div>
+<div id="ref-8127090" class="csl-entry" role="listitem">
+KELLENBERGER, B.; VOLPI, M.; TUIA, D. <a
+href="https://doi.org/10.1109/IGARSS.2017.8127090">Fast animal detection
+in UAV images using convolutional neural networks</a>. <em>In</em>:
+2017.
+</div>
+<div id="ref-DBLP:journals/corr/abs-1904-00889" class="csl-entry"
+role="listitem">
+LAGUNA, Axel Barroso <em>et al.</em> <a
+href="http://arxiv.org/abs/1904.00889">Key.Net: Keypoint Detection by
+Handcrafted and Learned <span>CNN</span> Filters</a>.
+<strong>CoRR</strong>, v. abs/1904.00889, 2019.
+</div>
+<div id="ref-FingerLing" class="csl-entry" role="listitem">
+LAINEZ, S. M. D.; GONZALES, D. B. <a
+href="https://doi.org/10.1109/CCOMS.2019.8821746">Automated Fingerlings
+Counting Using Convolutional Neural Network</a>. <em>In</em>: fev. 2019.
+</div>
+<div id="ref-c231stan" class="csl-entry" role="listitem">
+LI, FeiFei; JOHNSON, Justin; YEUNG, Serena. <strong>CS231n:
+Convolutional Neural Networks for Visual Recognition</strong>. <a
+href="http://cs231n.github.io/assets/cnn/depthcol"
+class="uri">http://cs231n.github.io/assets/cnn/depthcol</a>, Spring
+2018.
+</div>
+<div id="ref-rs11010011" class="csl-entry" role="listitem">
+LI, Weijia <em>et al.</em> <a
+href="https://doi.org/10.3390/rs11010011">Large-Scale Oil Palm Tree
+Detection from High-Resolution Satellite Images Using Two-Stage
+Convolutional Neural Networks</a>. <strong>Remote Sensing</strong>, v.
+11, n. 1, 2018.
+</div>
+<div id="ref-FPN" class="csl-entry" role="listitem">
+LIN, Tsung-Yi <em>et al.</em> <a
+href="http://arxiv.org/abs/1612.03144">Feature Pyramid Networks for
+Object Detection</a>. <strong>CoRR</strong>, v. abs/1612.03144, 2016.
+</div>
+<div id="ref-DBLP:journals/corr/abs-1708-02002" class="csl-entry"
+role="listitem">
+LIN, Tsung-Yi <em>et al.</em> <a
+href="http://arxiv.org/abs/1708.02002">Focal Loss for Dense Object
+Detection</a>. <strong>CoRR</strong>, v. abs/1708.02002, 2017.
+</div>
+<div id="ref-DBLP:journals/corr/abs-1804-00307" class="csl-entry"
+role="listitem">
+LIU, Xu <em>et al.</em> <a href="http://arxiv.org/abs/1804.00307">Robust
+Fruit Counting: Combining Deep Learning, Tracking, and Structure from
+Motion</a>. <strong>CoRR</strong>, v. abs/1804.00307, 2018.
+</div>
+<div id="ref-DBLP:peri/corr/abs-1904-01333" class="csl-entry"
+role="listitem">
+LIU, Yuting <em>et al.</em> <a
+href="http://arxiv.org/abs/1904.01333">Point in, Box out: Beyond
+Counting Persons in Crowds</a>. <strong>CoRR</strong>, v.
+abs/1904.01333, a2019.
+</div>
+<div id="ref-article" class="csl-entry" role="listitem">
+LIU, Zhi <em>et al.</em> <a
+href="https://doi.org/10.1109/ACCESS.2019.2926881">Crowd Counting Method
+Based on Convolutional Neural Network with Global Density Feature</a>.
+<strong>IEEE Access</strong>, v. PP, p. 1–1, jul. b2019.
+</div>
+<div id="ref-articleLuiz" class="csl-entry" role="listitem">
+LUIZ ANTONIO MACARINI, Antonio C. Sobieranski1. Using Convolutional
+Neural Network to Detect and Count Individuals on Eucalyptus Plantation.
+<strong>X Computer on the Beach</strong>, p. 1–1, mar. 2019.
+</div>
+<div id="ref-Ma_2015_ICCV" class="csl-entry" role="listitem">
+MA, Chao <em>et al.</em> Hierarchical Convolutional Features for Visual
+Tracking. <em>In</em>: 2015.
+</div>
+<div id="ref-8451787" class="csl-entry" role="listitem">
+MING LIU <em>et al.</em> <a
+href="https://doi.org/10.1109/ICIP.2018.8451787">Crowd Counting with
+Fully Convolutional Neural Network</a>. <em>In</em>: out. 2018.
+</div>
+<div id="ref-Erikson" class="csl-entry" role="listitem">
+MORAIS, Erikson F. <em>et al.</em> Rastreamento e contagem de peixes
+utilizando filtro preditivo. <em>In</em>: <a
+href="http://hdl.handle.net/1843/RVMR-6EAGC9
+" class="uri">http://hdl.handle.net/1843/RVMR-6EAGC9
+</a>, abr. 2005.
+</div>
+<div id="ref-Nam_2016_CVPR" class="csl-entry" role="listitem">
+NAM, Hyeonseob; HAN, Bohyung. Learning Multi-Domain Convolutional Neural
+Networks for Visual Tracking. <em>In</em>: 2016.
+</div>
+<div id="ref-OECD" class="csl-entry" role="listitem">
+OECD; FOOD; UNITED NATIONS, Agriculture Organization of the. <a
+href="https://doi.org/https://doi.org/10.1787/d4bae583-en">ECD-FAO
+Agricultural Outlook (Edition 2018)</a>. 2018.
+</div>
+<div id="ref-s17040905" class="csl-entry" role="listitem">
+RAHNEMOONFAR, Maryam; SHEPPARD, Clay. <a
+href="https://doi.org/10.3390/s17040905">Deep Count: Fruit Counting
+Based on Deep Simulated Learning</a>. <strong>Sensors</strong>, v. 17,
+n. 4, 2017.
+</div>
+<div id="ref-DBLP:journals/corr/abs-1804-02767" class="csl-entry"
+role="listitem">
+REDMON, Joseph; FARHADI, Ali. <a
+href="http://arxiv.org/abs/1804.02767">YOLOv3: An Incremental
+Improvement</a>. <strong>CoRR</strong>, v. abs/1804.02767, 2018.
+</div>
+<div id="ref-DBLP:journals/corr/RussakovskyDSKSMHKKBBF14"
+class="csl-entry" role="listitem">
+RUSSAKOVSKY, Olga; DENG, Jia; SU, Hao. <a
+href="https://arxiv.org/abs/1409.0575">ImageNet Large Scale Visual
+Recognition Challenge</a>. <strong>CoRR</strong>, v. abs/1409.0575,
+2014.
+</div>
+<div id="ref-8489369" class="csl-entry" role="listitem">
+S. ARRUDA, Mauro d. <em>et al.</em> <a
+href="https://doi.org/10.1109/IJCNN.2018.8489369">Recognition of
+Endangered Pantanal Animal Species using Deep Learning Methods</a>.
+<em>In</em>: 2018.
+</div>
+<div id="ref-8639306" class="csl-entry" role="listitem">
+SARWAR, F. <em>et al.</em> <a
+href="https://doi.org/10.1109/AVSS.2018.8639306">Detecting and Counting
+Sheep with a Convolutional Neural Network</a>. <em>In</em>: nov. 2018.
+</div>
+<div id="ref-Junior2019UFMS" class="csl-entry" role="listitem">
+SILVA OLIVEIRA JUNIOR, Adair. <strong>Contagem e Estimativa da Massa de
+Alevinos de Pintado Real Utilizando Técnicas de Visão Computacional e
+Aprendizagem de Máquina</strong>. mathesis—Campo Grande: Universidade
+Federal de Mato Grosso do Sul, 2019.
+</div>
+<div id="ref-VGG" class="csl-entry" role="listitem">
+SIMONYAN, Karen; ZISSERMAN, Andrew. <a
+href="https://arxiv.org/abs/1409.1556">Very Deep Convolutional Networks
+for Large-Scale Image Recognition</a>. <strong>CoRR</strong>, 2015.
+</div>
+<div id="ref-Simonyan14c" class="csl-entry" role="listitem">
+SIMONYAN, K.; ZISSERMAN, A. Very Deep CNN for Large-Scale Image
+Recognition. <strong>CoRR</strong>, v. abs/1409.1556, 2014.
+</div>
+<div id="ref-YOLOFish" class="csl-entry" role="listitem">
+SUNG, M.; YU, S.; GIRDHAR, Y. <a
+href="https://doi.org/10.1109/OCEANSE.2017.8084889">Vision based
+real-time fish detection using convolutional neural network</a>.
+<em>In</em>: 2017.
+</div>
+<div id="ref-8186148" class="csl-entry" role="listitem">
+TAYARA, H.; GIL SOO, K.; CHONG, K. T. <a
+href="https://doi.org/10.1109/ACCESS.2017.2782260">Vehicle Detection and
+Counting in High-Resolution Aerial Images Using Convolutional Regression
+Neural Network</a>. <strong>IEEE Access</strong>, v. 6, p. 2220–2230,
+2018.
+</div>
+<div id="ref-ICESJournal" class="csl-entry" role="listitem">
+TSENG, Chi-Hsuan; KUO, Yan-Fu. <a
+href="https://doi.org/10.1093/icesjms/fsaa076"><span>Detecting and
+counting harvested fish and identifying fish types in electronic
+monitoring system videos using deep convolutional neural
+networks</span></a>. <strong>ICES Journal of Marine Science</strong>, v.
+77, n. 4, p. 1367–1378, maio 2020.
+</div>
+<div id="ref-UHE" class="csl-entry" role="listitem">
+<strong><span>UHE Igarapava</span>Consórcio da Usina Hidrelétrica de
+Igarapava</strong>. <a
+href="http://www.uhe-igarapava.com.br/zpublisher/secoes/home.asp"
+class="uri">http://www.uhe-igarapava.com.br/zpublisher/secoes/home.asp</a>,
+2020.
+</div>
+<div id="ref-MAE" class="csl-entry" role="listitem">
+WANG, Weijie; LU, Yanmin. <a
+href="https://doi.org/10.1088/1757-899X/324/1/012049">Analysis of the
+Mean Absolute Error (MAE) and the Root Mean Square Error (RMSE) in
+Assessing Rounding Model</a>. <strong>IOP Conference Series: Materials
+Science and Engineering</strong>, v. 324, p. 012049, mar. 2018.
+</div>
+<div id="ref-WANG201962" class="csl-entry" role="listitem">
+WANG, Yong <em>et al.</em> <a
+href="https://doi.org/10.1016/j.knosys.2019.03.012">Detection based
+visual tracking with convolutional neural network</a>.
+<strong>Knowledge-Based Systems</strong>, v. 175, p. 62–71, 2019.
+</div>
+<div id="ref-inproceedings" class="csl-entry" role="listitem">
+ZHANG, Cong <em>et al.</em> <a
+href="https://doi.org/10.1109/CVPR.2015.7298684">Cross-scene crowd
+counting via deep convolutional neural networks</a>. <em>In</em>: jun.
+2015.
+</div>
+<div id="ref-DBLP:journals/corr/abs-1711-04433" class="csl-entry"
+role="listitem">
+ZHANG, Lu; SHI, Miaojing; CHEN, Qiaobo. <a
+href="http://arxiv.org/abs/1711.04433">Crowd counting via scale-adaptive
+convolutional neural network</a>. <strong>CoRR</strong>, v.
+abs/1711.04433, 2017.
+</div>
+<div id="ref-Zhao2017CVPR" class="csl-entry" role="listitem">
+ZHAO, Hengshuang <em>et al.</em> Pyramid Scene Parsing Network.
+<em>In</em>: 2017.
+</div>
+</div>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>FACOM-UFMS<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>

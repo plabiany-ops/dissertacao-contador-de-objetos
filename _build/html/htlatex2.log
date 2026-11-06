@@ -1,0 +1,934 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=latex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2024-11-01> patch level 2
+L3 programming layer <2025-01-18>
+(./tese.tex (/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2024/06/29 v1.4n Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/bk12.clo))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/tex4ht.sty)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/usepackage.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/tikz-hooks.4ht
+*****************************
+TeX4ht info: Using dvisvgm4ht TikZ driver. Put \def \pgfsysdriver {driver-name}
+ to your document before use of TikZ if you want to another driver. Use tikz+ o
+ption if your TikZ pictures use patterns.
+) (/usr/share/texlive/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/pgf-hooks.4ht)
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/pgf.revision.tex)))
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/graphics-hooks.4ht)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/dvips.def)))
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeyslibraryfiltered
+.code.tex)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-dvisvgm4ht.de
+f (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-dvips.def
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-common-postsc
+ript.def))))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.
+tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.
+tex)) (/usr/share/texlive/texmf-dist/tex/generic/tex4ht/xcolor-hooks.4ht)
+(/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/mathcolor.ltx))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code
+.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigonomet
+ric.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.random.cod
+e.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.comparison
+.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.code.
+tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round.code
+.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.code.
+tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerari
+thmetics.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfint.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.te
+x)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.
+code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code
+.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.te
+x)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.c
+ode.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformation
+s.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.code.t
+ex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathprocessing
+.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.te
+x)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.code.
+tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.code.te
+x)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransparency.c
+ode.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepatterns.code.
+tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorerdf.code.tex))
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.tex
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex
+)
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65
+.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18
+.sty)) (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgffor.sty
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex))
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/math/pgfmath.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers
+.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibrarytopaths.code.tex))) (./algorithm2e.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/xspace.sty)
+********************************************************
+Package `algorithm2e' Release 3.9 -- october 04 2005 --
+- algorithm2e-announce@lirmm.fr mailing list for announcement about releases
+- algorithm2e-discussion@lirmm.fr mailing list for discussion about package
+subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
+- Author: Christophe Fiorio (fiorio@lirmm.fr)
+********************************************************
+) (./subfloat.sty Package `subfloat', Version 1.03 of 1999/10/08.)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/babel-sty-hooks.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
+(/usr/share/texlive/texmf-dist/tex/generic/babel/txtbabel.def)
+(/usr/share/texlive/texmf-dist/tex/generic/babel-portuges/brazilian.ldf))
+(/usr/share/texlive/texmf-dist/tex/generic/babel/locale/pt/babel-brazilian.tex)
+ (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/latexsym.sty) (./breakcites.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/setspace/setspace.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/colortbl-hooks.4ht)
+(/usr/share/texlive/texmf-dist/tex/latex/colortbl/colortbl.sty
+(/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty)) (./acronym.sty
+(./suffix.sty)) (/usr/share/texlive/texmf-dist/tex/latex/tools/varioref.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/indentfirst.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/subfig/subfig.sty
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/caption-hooks.4ht)
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty)))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/titlesec-hooks.4ht)
+(./titlesec.sty) (./multirow.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/fancybox/fancybox.sty
+Style option: `fancybox' v1.4 <2010/05/15> (tvz)
+) (/usr/share/texlive/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/ifvtex.sty
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty)))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/hyperref-hooks.4ht)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty)
+(/usr/share/texlive/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty)
+(/usr/share/texlive/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+(/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty)
+(/usr/share/texlive/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+(/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty)))
+(/usr/share/texlive/texmf-dist/tex/latex/hycolor/hycolor.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty)
+(/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
+(/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty)))
+(/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty)
+(/usr/share/texlive/texmf-dist/tex/generic/stringenc/stringenc.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/share/texlive/texmf-dist/tex/generic/intcalc/intcalc.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/puenc.def)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/backref.sty
+(/usr/share/texlive/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/atveryend-ltx.sty)
+(/usr/share/texlive/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+(/usr/share/texlive/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty))))
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty)
+(/usr/share/texlive/texmf-dist/tex/generic/bitset/bitset.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/atbegshi-ltx.sty)
+
+Package hyperref Message: Stopped early.
+
+) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/htex4ht.def)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/bookman.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pbk.fd))
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty))
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/pgf-hooks.4ht)
+(./baseboxes.sty) (./basecolor.sty)
+
+LaTeX Warning: \include should only be used after \begin{document} on input lin
+e 180.
+
+(./macros.tex) (/usr/share/texlive/texmf-dist/tex/generic/tex4ht/tex4ht.4ht
+::::::::::::::::::::::::::::::::::::::::::
+ TeX4ht info is available in the log file 
+::::::::::::::::::::::::::::::::::::::::::
+) (/usr/share/texlive/texmf-dist/tex/generic/tex4ht/tex4ht.sty
+l.875 --- TeX4ht warning --- nonprimitive \everypar ---
+--- needs --- tex4ht tese ---
+(./tese.tmp)
+l.1501 --- TeX4ht warning --- No file tese.xref ---
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht) (tese.4tc)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/latex.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/fontmath.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/array.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/color.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/colortbl.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/xcolor-hooks.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/book.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/pgf.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/graphicx.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/graphics.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/dvips.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/xcolor.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/color.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/ifthen.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/babel.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/inputenc.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/amssymb.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/amsfonts.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/varioref.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/caption.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/titlesec.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/multirow.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/fancybox.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/fancyvrb.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/geometry.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/hyperref.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/nameref.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/pd1enc.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/backref.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/url.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/amsmath.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/amstext.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/amsbsy.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/amsopn.4ht
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4.4ht)
+(/usr/share/texlive/texmf-dist/tex/generic/tex4ht/html4-math.4ht))
+(/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-dvips.def)
+No file tese.aux.
+*geometry* driver: auto-detecting
+*geometry* detected driver: dvips
+(./capa.tex
+[1]
+[2]
+[3] (/usr/share/texlive/texmf-dist/tex/latex/base/ulasy.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd)
+[1]
+[2] (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pag.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1pbk.fd)
+[3]
+[4]
+[5]) (./agradecimentos.tex
+[6]
+[7] (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd)) (./resumo.tex
+[8]
+[9])
+[10]
+No file tese.4tc
+
+[11]
+[12]
+[13]
+No file tese.4tc
+
+[14]
+[15]
+No file tese.4tc
+
+[16]
+[1] (./1_introducao.tex
+[2]
+Cap\'{\i }tulo 1.
+
+LaTeX Warning: Citation `Simonyan14c' on page 3 undefined on input line 10.
+
+
+LaTeX Warning: Citation `ANN' on page 3 undefined on input line 10.
+
+
+LaTeX Warning: Citation `DBLP:journals/corr/abs-1904-00889' on page 3 undefined
+ on input line 10.
+
+
+LaTeX Warning: Citation `8437104' on page 3 undefined on input line 10.
+
+
+LaTeX Warning: Citation `8489369' on page 3 undefined on input line 10.
+
+
+LaTeX Warning: Citation `rs11010011' on page 3 undefined on input line 10.
+
+
+LaTeX Warning: Citation `8186148' on page 3 undefined on input line 10.
+
+
+LaTeX Warning: Citation `Zhao2017CVPR' on page 3 undefined on input line 10.
+
+
+LaTeX Warning: Citation `DBLP:journals/corr/CaoSWS16' on page 3 undefined on in
+put line 10.
+
+
+LaTeX Warning: Citation `8186148' on page 3 undefined on input line 10.
+
+
+LaTeX Warning: Citation `DBLP:journals/corr/CaoSWS16' on page 3 undefined on in
+put line 10.
+
+
+LaTeX Warning: Citation `articleLuiz' on page 3 undefined on input line 10.
+
+
+LaTeX Warning: Citation `ExtractHuman' on page 3 undefined on input line 13.
+
+
+LaTeX Warning: Citation `CarCount' on page 3 undefined on input line 13.
+
+
+LaTeX Warning: Citation `8639306' on page 3 undefined on input line 13.
+
+
+LaTeX Warning: Citation `7320116' on page 3 undefined on input line 13.
+
+
+LaTeX Warning: Citation `DBLP:journals/corr/Girshick15' on page 3 undefined on 
+input line 14.
+
+
+LaTeX Warning: Citation `DBLP:journals/corr/abs-1708-02002' on page 3 undefined
+ on input line 14.
+
+
+LaTeX Warning: Citation `DBLP:journals/corr/abs-1804-02767' on page 3 undefined
+ on input line 14.
+
+
+LaTeX Warning: Citation `Goldman2019CVPR' on page 3 undefined on input line 20.
+
+
+
+LaTeX Warning: Citation `8237708' on page 3 undefined on input line 21.
+
+
+LaTeX Warning: Citation `DBLP:journals/corr/abs-1808-01050' on page 3 undefined
+ on input line 25.
+
+
+LaTeX Warning: Citation `880968' on page 3 undefined on input line 25.
+
+
+LaTeX Warning: Citation `Cao2017' on page 3 undefined on input line 25.
+
+
+LaTeX Warning: Citation `inproceedings' on page 3 undefined on input line 27.
+
+
+LaTeX Warning: Citation `DBLP:journals/corr/abs-1711-04433' on page 3 undefined
+ on input line 27.
+
+
+LaTeX Warning: Citation `8237708' on page 3 undefined on input line 31.
+
+
+LaTeX Warning: Citation `DBLP:peri/corr/abs-1904-01333' on page 3 undefined on 
+input line 32.
+
+
+LaTeX Warning: Citation `Aich2018ImprovingOC' on page 3 undefined on input line
+ 34.
+
+
+[3]
+
+LaTeX Warning: Citation `Ma_2015_ICCV' on page 4 undefined on input line 38.
+
+
+LaTeX Warning: Citation `Nam_2016_CVPR' on page 4 undefined on input line 38.
+
+
+LaTeX Warning: Citation `Danelljan_2015_ICCV_Workshops' on page 4 undefined on 
+input line 38.
+
+
+LaTeX Warning: Citation `WANG201962' on page 4 undefined on input line 38.
+
+
+LaTeX Warning: Citation `8898173' on page 4 undefined on input line 38.
+
+
+LaTeX Warning: Citation `ExtractHuman' on page 4 undefined on input line 38.
+
+
+LaTeX Warning: Citation `Erikson' on page 4 undefined on input line 81.
+
+
+LaTeX Warning: Citation `OECD' on page 4 undefined on input line 81.
+
+
+LaTeX Warning: Citation `FAO' on page 4 undefined on input line 81.
+
+
+[4]
+
+LaTeX Warning: Reference `fig:escadadepeixes' on page 5 undefined on input line
+ 85.
+
+
+LaTeX Warning: Citation `UHE' on page 5 undefined on input line 85.
+
+
+LaTeX Warning: Reference `fig:escadadepeixes' on page 5 undefined on input line
+ 85.
+
+
+[5]
+[6]
+l.91 --- TeX4ht warning --- File `"image/escadadepeixes.xbb"' not found ---
+l.91 --- TeX4ht warning --- Cannot determine size of graphic in "image/escadade
+peixes.xbb" (no BoundingBox) ---
+l.92 --- TeX4ht warning --- File `"image/saladaagua.xbb"' not found ---
+l.92 --- TeX4ht warning --- Cannot determine size of graphic in "image/saladaag
+ua.xbb" (no BoundingBox) ---
+
+LaTeX Warning: Citation `UHE' on page 7 undefined on input line 93.
+
+
+LaTeX Warning: Citation `Erikson' on page 7 undefined on input line 93.
+
+
+LaTeX Warning: Citation `UHE' on page 7 undefined on input line 93.
+
+
+LaTeX Warning: Citation `Erikson' on page 7 undefined on input line 93.
+
+
+[7]
+[8])
+[9]
+[10]
+[11] (./2_am.tex
+[12]
+Cap\'{\i }tulo 2.
+
+LaTeX Warning: Citation `deeplearningbook' on page 13 undefined on input line 1
+3.
+
+
+LaTeX Warning: Citation `5605630' on page 13 undefined on input line 13.
+
+
+LaTeX Warning: Reference `sec:Motivacao' on page 13 undefined on input line 26.
+
+
+
+LaTeX Warning: Citation `DBLP:journals/corr/abs-1904-00889' on page 13 undefine
+d on input line 27.
+
+
+LaTeX Warning: Citation `8437104' on page 13 undefined on input line 27.
+
+
+LaTeX Warning: Citation `8489369' on page 13 undefined on input line 27.
+
+
+LaTeX Warning: Citation `rs11010011' on page 13 undefined on input line 27.
+
+
+LaTeX Warning: Citation `8186148' on page 13 undefined on input line 27.
+
+
+LaTeX Warning: Citation `Zhao2017CVPR' on page 13 undefined on input line 27.
+
+
+LaTeX Warning: Citation `DBLP:journals/corr/CaoSWS16' on page 13 undefined on i
+nput line 27.
+
+
+LaTeX Warning: Citation `8186148' on page 13 undefined on input line 27.
+
+
+LaTeX Warning: Citation `DBLP:journals/corr/CaoSWS16' on page 13 undefined on i
+nput line 27.
+
+
+LaTeX Warning: Citation `articleLuiz' on page 13 undefined on input line 27.
+
+
+LaTeX Warning: Citation `article' on page 13 undefined on input line 35.
+
+
+LaTeX Warning: Citation `8451787' on page 13 undefined on input line 35.
+
+
+LaTeX Warning: Citation `inproceedings' on page 13 undefined on input line 35.
+
+
+LaTeX Warning: Citation `DBLP:journals/corr/abs-1711-04433' on page 13 undefine
+d on input line 35.
+
+
+LaTeX Warning: Citation `8489369' on page 13 undefined on input line 35.
+
+
+LaTeX Warning: Citation `8127090' on page 13 undefined on input line 35.
+
+
+LaTeX Warning: Citation `s17040905' on page 13 undefined on input line 35.
+
+
+LaTeX Warning: Citation `DBLP:journals/corr/abs-1804-00307' on page 13 undefine
+d on input line 35.
+
+
+LaTeX Warning: Citation `articleLuiz' on page 13 undefined on input line 35.
+
+
+LaTeX Warning: Citation `DBLP:journals/corr/CheangCT17a' on page 13 undefined o
+n input line 35.
+
+
+LaTeX Warning: Citation `Cao2017' on page 13 undefined on input line 37.
+
+
+LaTeX Warning: Citation `Cao2017' on page 13 undefined on input line 38.
+
+
+LaTeX Warning: Citation `Cao2017' on page 13 undefined on input line 38.
+
+
+LaTeX Warning: Citation `Cao2017' on page 13 undefined on input line 39.
+
+
+LaTeX Warning: Citation `Cao2017' on page 13 undefined on input line 42.
+
+
+LaTeX Warning: Citation `Cao2018' on page 13 undefined on input line 44.
+
+
+LaTeX Warning: Citation `Cao2017' on page 13 undefined on input line 44.
+
+
+[13]
+
+LaTeX Warning: Citation `FAO' on page 14 undefined on input line 57.
+
+
+LaTeX Warning: Citation `article' on page 14 undefined on input line 57.
+
+
+LaTeX Warning: Citation `Simonyan14c' on page 14 undefined on input line 57.
+
+
+LaTeX Warning: Citation `inproceedings' on page 14 undefined on input line 57.
+
+
+LaTeX Warning: Citation `8451787' on page 14 undefined on input line 57.
+
+
+LaTeX Warning: Citation `Junior2019UFMS' on page 14 undefined on input line 111
+.
+
+
+LaTeX Warning: Citation `SLIC' on page 14 undefined on input line 115.
+
+
+LaTeX Warning: Citation `Kalman' on page 14 undefined on input line 115.
+
+
+[14]
+
+LaTeX Warning: Citation `Junior2019UFMS' on page 15 undefined on input line 120
+.
+
+
+LaTeX Warning: Citation `ResNet50' on page 15 undefined on input line 121.
+
+
+LaTeX Warning: Citation `IMAGENET' on page 15 undefined on input line 122.
+
+
+LaTeX Warning: Citation `Junior2019UFMS' on page 15 undefined on input line 122
+.
+
+
+LaTeX Warning: Citation `Erikson' on page 15 undefined on input line 125.
+
+
+LaTeX Warning: Reference `sec:Aplicação' on page 15 undefined on input line 1
+26.
+
+
+LaTeX Warning: Citation `ICESJournal' on page 15 undefined on input line 130.
+
+
+LaTeX Warning: Citation `ResNet50' on page 15 undefined on input line 130.
+
+
+LaTeX Warning: Citation `FPN' on page 15 undefined on input line 130.
+
+
+LaTeX Warning: Citation `YOLOFish' on page 15 undefined on input line 130.
+
+
+LaTeX Warning: Citation `FingerLing' on page 15 undefined on input line 133.
+
+
+LaTeX Warning: Citation `FingerLing' on page 15 undefined on input line 133.
+
+
+[15])
+[16]
+[17]
+[18] (./3_ranking.tex
+[19]
+Cap\'{\i }tulo 3.
+
+LaTeX Warning: Reference `sec:Motivacao' on page 20 undefined on input line 8.
+
+
+LaTeX Warning: Reference `fig:model' on page 20 undefined on input line 10.
+
+
+LaTeX Warning: Citation `VGG' on page 20 undefined on input line 10.
+
+
+[20]
+[21]
+l.14 --- TeX4ht warning --- File `"image/model.xbb"' not found ---
+l.14 --- TeX4ht warning --- Cannot determine size of graphic in "image/model.xb
+b" (no BoundingBox) ---
+
+[22]
+[23]
+
+LaTeX Warning: Reference `fig:entrada' on page 24 undefined on input line 43.
+
+l.54 --- TeX4ht warning --- File `"image/VE.xbb"' not found ---
+l.54 --- TeX4ht warning --- Cannot determine size of graphic in "image/VE.xbb" 
+(no BoundingBox) ---
+
+LaTeX Warning: Citation `VGG' on page 24 undefined on input line 65.
+
+
+LaTeX Warning: Citation `VGG' on page 24 undefined on input line 67.
+
+
+LaTeX Warning: Reference `fig:model' on page 24 undefined on input line 67.
+
+
+[24]
+
+LaTeX Warning: Reference `fig:carac' on page 25 undefined on input line 77.
+
+
+[25]
+[26]
+l.81 --- TeX4ht warning --- File `"image/caract.xbb"' not found ---
+l.81 --- TeX4ht warning --- Cannot determine size of graphic in "image/caract.x
+bb" (no BoundingBox) ---
+l.82 --- TeX4ht warning --- File `"image/carac.xbb"' not found ---
+l.82 --- TeX4ht warning --- Cannot determine size of graphic in "image/carac.xb
+b" (no BoundingBox) ---
+
+[27]
+
+LaTeX Warning: Reference `fig:model' on page 28 undefined on input line 91.
+
+
+LaTeX Warning: Reference `sec:EstimativaVetores' on page 28 undefined on input 
+line 93.
+
+
+LaTeX Warning: Reference `fig:model' on page 28 undefined on input line 96.
+
+
+LaTeX Warning: Reference `sec:EstimativaVetores' on page 28 undefined on input 
+line 96.
+
+
+LaTeX Warning: Reference `eq:loss' on page 28 undefined on input line 108.
+
+
+LaTeX Warning: Citation `Cao2017' on page 28 undefined on input line 109.
+
+
+[28]
+
+LaTeX Warning: Reference `sec:geracao_mapa' on page 29 undefined on input line 
+116.
+
+
+[29]
+
+LaTeX Warning: Reference `fig:sigma' on page 30 undefined on input line 150.
+
+
+[30]
+[31]
+l.157 --- TeX4ht warning --- File `"image/sigmas/frame001018Ponto.xbb"' not fou
+nd ---
+l.157 --- TeX4ht warning --- Cannot determine size of graphic in "image/sigmas/
+frame001018Ponto.xbb" (no BoundingBox) ---
+l.158 --- TeX4ht warning --- File `"image/sigmas/frame001018_label_1_5.xbb"' no
+t found ---
+l.158 --- TeX4ht warning --- Cannot determine size of graphic in "image/sigmas/
+frame001018_label_1_5.xbb" (no BoundingBox) ---
+l.159 --- TeX4ht warning --- File `"image/sigmas/frame001018_label_2_5.xbb"' no
+t found ---
+l.159 --- TeX4ht warning --- Cannot determine size of graphic in "image/sigmas/
+frame001018_label_2_5.xbb" (no BoundingBox) ---
+
+[32]
+
+LaTeX Warning: Reference `fig:model' on page 33 undefined on input line 167.
+
+
+LaTeX Warning: Reference `sec:EstimativaDensidade' on page 33 undefined on inpu
+t line 172.
+
+
+LaTeX Warning: Reference `eq:loss2' on page 33 undefined on input line 175.
+
+
+LaTeX Warning: Reference `sec:geracao_mapa2' on page 33 undefined on input line
+ 181.
+
+
+[33]
+
+LaTeX Warning: Reference `fig:vetor' on page 34 undefined on input line 194.
+
+
+[34]
+[35]
+l.205 --- TeX4ht warning --- File `"image/VD.xbb"' not found ---
+l.205 --- TeX4ht warning --- Cannot determine size of graphic in "image/VD.xbb"
+ (no BoundingBox) ---
+
+[36]
+
+LaTeX Warning: Reference `fig:vetores' on page 37 undefined on input line 210.
+
+
+LaTeX Warning: Reference `fig:vetores2' on page 37 undefined on input line 210.
+
+
+
+[37]
+[38]
+l.215 --- TeX4ht warning --- File `"image/frame000089.png_tracking.xbb"' not fo
+und ---
+l.215 --- TeX4ht warning --- Cannot determine size of graphic in "image/frame00
+0089.png_tracking.xbb" (no BoundingBox) ---
+l.216 --- TeX4ht warning --- File `"image/frame000126.png_tracking.xbb"' not fo
+und ---
+l.216 --- TeX4ht warning --- Cannot determine size of graphic in "image/frame00
+0126.png_tracking.xbb" (no BoundingBox) ---
+l.217 --- TeX4ht warning --- File `"image/frame000176.png_tracking.xbb"' not fo
+und ---
+l.217 --- TeX4ht warning --- Cannot determine size of graphic in "image/frame00
+0176.png_tracking.xbb" (no BoundingBox) ---
+
+[39]
+[40]
+[41]
+l.223 --- TeX4ht warning --- File `"image/frame000089.pngquiver_t.xbb"' not fou
+nd ---
+l.223 --- TeX4ht warning --- Cannot determine size of graphic in "image/frame00
+0089.pngquiver_t.xbb" (no BoundingBox) ---
+l.224 --- TeX4ht warning --- File `"image/frame000126.pngquiver_t.xbb"' not fou
+nd ---
+l.224 --- TeX4ht warning --- Cannot determine size of graphic in "image/frame00
+0126.pngquiver_t.xbb" (no BoundingBox) ---
+l.225 --- TeX4ht warning --- File `"image/frame000176.pngquiver_t.xbb"' not fou
+nd ---
+l.225 --- TeX4ht warning --- Cannot determine size of graphic in "image/frame00
+0176.pngquiver_t.xbb" (no BoundingBox) ---
+
+[42]
+[43]
+
+LaTeX Warning: Reference `fig:heatmap' on page 44 undefined on input line 240.
+
+
+[44]
+[45]
+l.244 --- TeX4ht warning --- File `"image/heatmap2.xbb"' not found ---
+l.244 --- TeX4ht warning --- Cannot determine size of graphic in "image/heatmap
+2.xbb" (no BoundingBox) ---
+
+[46])
+[47]
+[48]
+[49] (./4_roc.tex
+[50]
+Cap\'{\i }tulo 4.
+
+LaTeX Warning: Citation `Junior2019UFMS' on page 51 undefined on input line 6.
+
+
+LaTeX Warning: Reference `Estrutura' on page 51 undefined on input line 6.
+
+
+[51]
+[52]
+l.10 --- TeX4ht warning --- File `"image/estruturaCaptura.xbb"' not found ---
+l.10 --- TeX4ht warning --- Cannot determine size of graphic in "image/estrutur
+aCaptura.xbb" (no BoundingBox) ---
+
+LaTeX Warning: Citation `Junior2019UFMS' on page 53 undefined on input line 11.
+
+
+
+LaTeX Warning: Citation `Junior2019UFMS' on page 53 undefined on input line 11.
+
+
+
+[53]
+
+LaTeX Warning: Reference `Train' on page 54 undefined on input line 17.
+
+
+LaTeX Warning: Reference `tab:separation' on page 54 undefined on input line 18
+.
+
+
+[54]
+[55]
+! Use of \@xmultirow doesn't match its definition.
+\reserved@c ->\@xmultirow {
+                           2}[0]{\linewidth }[0pt]
+l.24 		\multirow{2}{\linewidth}{
+                                \centering \textbf{Banco de Dados}} & \multi...
+
+? 
+! Emergency stop.
+\reserved@c ->\@xmultirow {
+                           2}[0]{\linewidth }[0pt]
+l.24 		\multirow{2}{\linewidth}{
+                                \centering \textbf{Banco de Dados}} & \multi...
+
+Output written on tese.dvi (74 pages, 124296 bytes).
+Transcript written on tese.log.

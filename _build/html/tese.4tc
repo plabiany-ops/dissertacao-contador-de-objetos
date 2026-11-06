@@ -1,0 +1,38 @@
+\expandafter\ifx\csname doTocEntry\endcsname\relax \expandafter\endinput\fi
+\doTocEntry\toclikechapter{}{\csname a:TocLink\endcsname{1}{x1-1000}{QQ2-1-1}{Agradecimentos}}{8}\relax 
+\doTocEntry\toclikechapter{}{\csname a:TocLink\endcsname{1}{x1-2000}{QQ2-1-2}{Abstract}}{9}\relax 
+\doTocEntry\toclikechapter{}{\csname a:TocLink\endcsname{1}{x1-3000}{QQ2-1-3}{Resumo}}{10}\relax 
+\doTocEntry\toclikechapter{}{\csname a:TocLink\endcsname{1}{x1-4000}{QQ2-1-4}{Sum\'ario}}{11}\relax 
+\doTocEntry\tocsection{}{\csname a:TocLink\endcsname{1}{Q1-1-5}{}{Sumário}}{xi}\relax 
+\doTocEntry\toclikechapter{}{\csname a:TocLink\endcsname{1}{x1-5000}{QQ2-1-6}{Lista de Figuras}}{14}\relax 
+\doTocEntry\tocsection{}{\csname a:TocLink\endcsname{1}{Q1-1-7}{}{Lista de Figuras}}{xiv}\relax 
+\doTocEntry\toclikechapter{}{\csname a:TocLink\endcsname{1}{x1-6000}{QQ2-1-8}{Lista de Tabelas}}{16}\relax 
+\doTocEntry\tocsection{}{\csname a:TocLink\endcsname{1}{Q1-1-9}{}{Lista de Tabelas}}{xvi}\relax 
+\doTocEntry\tocchapter{1}{\csname a:TocLink\endcsname{1}{x1-70001}{QQ2-1-10}{Introdução}}{3}\relax 
+\doTocEntry\tocsection{1.1}{\csname a:TocLink\endcsname{1}{x1-80001.1}{QQ2-1-11}{Motivação e Lacuna}}{3}\relax 
+\doTocEntry\tocsection{1.2}{\csname a:TocLink\endcsname{1}{x1-90001.2}{QQ2-1-12}{Aplicação em Contagem de Peixes}}{4}\relax 
+\doTocEntry\toclof{1.1}{\csname a:TocLink\endcsname{1}{x1-9006r1}{}{\ignorespaces (a) Ilustração da Escada de peixes - \cite  {UHE}, (b) sala abaixo do nível d'água \cite  {Erikson}.}}{figure}\relax 
+\doTocEntry\tocsection{1.3}{\csname a:TocLink\endcsname{1}{x1-100001.3}{QQ2-1-14}{Objetivos}}{8}\relax 
+\doTocEntry\tocsection{1.4}{\csname a:TocLink\endcsname{1}{x1-110001.4}{QQ2-1-15}{Objetivo Geral}}{8}\relax 
+\doTocEntry\tocsection{1.5}{\csname a:TocLink\endcsname{1}{x1-120001.5}{QQ2-1-16}{Objetivos Específicos}}{8}\relax 
+\doTocEntry\tocchapter{2}{\csname a:TocLink\endcsname{1}{x1-130002}{QQ2-1-17}{Revis{\~{a}}o Bibliogr{\'{a}}fica}}{13}\relax 
+\doTocEntry\tocsection{2.1}{\csname a:TocLink\endcsname{1}{x1-140002.1}{QQ2-1-18}{Contagem de Peixes}}{14}\relax 
+\doTocEntry\tocchapter{3}{\csname a:TocLink\endcsname{1}{x1-150003}{QQ2-1-19}{Método Proposto}}{20}\relax 
+\doTocEntry\toclof{3.1}{\csname a:TocLink\endcsname{1}{x1-15002r1}{}{\ignorespaces  Método proposto recebe o quadro atual $I_{t}$ e o quadro no instante anterior $I_{t-1}$. O resultado da concatenação gera um volume de entrada para a VGG-19. A saída desta arquitetura consiste em um mapa de características inicial. Esse mapa alimenta dois ramos que são responsáveis por realizar as predições do mapa de densidade e de vetores de deslocamento. Cada ramo é composto por uma série de $E$ estágios que refinam a suas predições. Ambos ramos compartilham as informações para auxiliar na estimação.}}{figure}\relax 
+\doTocEntry\tocsection{3.1}{\csname a:TocLink\endcsname{1}{x1-160003.1}{QQ2-1-21}{Pré-Processamento das Imagens}}{24}\relax 
+\doTocEntry\toclof{3.2}{\csname a:TocLink\endcsname{1}{x1-16001r2}{}{\ignorespaces Ilustração do volume de entrada $V$ que consiste na concatenação de um quadro $I_{t}$ e um quadro anterior $I_{t-1}$.}}{figure}\relax 
+\doTocEntry\tocsection{3.2}{\csname a:TocLink\endcsname{1}{x1-170003.2}{QQ2-1-23}{Extração do Mapa de Características}}{24}\relax 
+\doTocEntry\toclof{3.3}{\csname a:TocLink\endcsname{1}{x1-17004r3}{}{\ignorespaces  Exemplo de um mapa de características predito pela VGG-19.}}{figure}\relax 
+\doTocEntry\tocsection{3.3}{\csname a:TocLink\endcsname{1}{x1-180003.3}{QQ2-1-25}{Estimativa do Mapa de Densidade}}{28}\relax 
+\doTocEntry\tocsubsection{3.3.1}{\csname a:TocLink\endcsname{1}{x1-190003.3.1}{QQ2-1-26}{Geração do \textit  {Ground Truth} do Mapa de Densidade}}{29}\relax 
+\doTocEntry\toclof{3.4}{\csname a:TocLink\endcsname{1}{x1-19006r4}{}{\ignorespaces  Exemplo de uma cena e seu mapa de confiança correspondente para diferentes valores de $\sigma $.}}{figure}\relax 
+\doTocEntry\tocsection{3.4}{\csname a:TocLink\endcsname{1}{x1-200003.4}{QQ2-1-28}{Estimativa dos Vetores de Deslocamento}}{33}\relax 
+\doTocEntry\tocsubsection{3.4.1}{\csname a:TocLink\endcsname{1}{x1-210003.4.1}{QQ2-1-29}{Geração do \textit  {Ground Truth} do Vetor de Deslocamento}}{34}\relax 
+\doTocEntry\toclof{3.5}{\csname a:TocLink\endcsname{1}{x1-21001r5}{}{\ignorespaces  Ilustração de um vetor para um objeto em quadro.}}{figure}\relax 
+\doTocEntry\toclof{3.6}{\csname a:TocLink\endcsname{1}{x1-21005r6}{}{\ignorespaces  Exemplos das localizações nos vetores}}{figure}\relax 
+\doTocEntry\toclof{3.7}{\csname a:TocLink\endcsname{1}{x1-21009r7}{}{\ignorespaces  Ilustração dos vetores estimados pelo segundo ramo apresentado, para cada pixel de cada objeto.}}{figure}\relax 
+\doTocEntry\tocsection{3.5}{\csname a:TocLink\endcsname{1}{x1-220003.5}{QQ2-1-33}{Localiza\c {c}\~{a}o dos Objetos pelo Mapa de Densidade}}{44}\relax 
+\doTocEntry\toclof{3.8}{\csname a:TocLink\endcsname{1}{x1-22001r8}{}{\ignorespaces Exemplo do mapa de confiança em três dimensões.}}{figure}\relax 
+\doTocEntry\tocchapter{4}{\csname a:TocLink\endcsname{1}{x1-230004}{QQ2-1-35}{Experimentos e Resultados}}{51}\relax 
+\doTocEntry\tocsection{4.1}{\csname a:TocLink\endcsname{1}{x1-240004.1}{QQ2-1-36}{Base de Imagens}}{51}\relax 
+\doTocEntry\toclof{4.1}{\csname a:TocLink\endcsname{1}{x1-24002r1}{}{\ignorespaces Suporte para Captura das imagens proposta por \cite  {Junior2019UFMS}}}{figure}\relax 

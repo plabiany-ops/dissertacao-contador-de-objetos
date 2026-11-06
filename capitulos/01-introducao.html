@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Capítulo 1 — Introdução</title>
+<meta name="description" content="Dissertação de mestrado de Plabiany Rodrigo Acosta: contador de objetos em vídeos usando redes neurais convolucionais.">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-inner">
+    <a class="brand" href="../index.html">
+      <strong>Contador de objetos em vídeos</strong>
+      <span>Dissertação · Plabiany R. Acosta</span>
+    </a>
+    <nav class="toc" aria-label="Sumário">
+      <a class="toc-chapter" href="../index.html">Capa</a>
+      <a class="toc-chapter" href="../preliminares.html">Preliminares</a>
+      <div class="toc-sep"></div>
+      <a class="toc-chapter active" href="01-introducao.html"><span class="toc-num">1.</span> Introdução</a>
+      <a class="toc-sub" href="01-introducao.html#sec:Motivacao"><span class="toc-num">1.1</span> Motivação e Lacuna</a>
+      <a class="toc-sub" href="01-introducao.html#sec:Aplicação"><span class="toc-num">1.2</span> Aplicação em Contagem de Peixes</a>
+      <a class="toc-sub" href="01-introducao.html#sec:objetivos"><span class="toc-num">1.3</span> Objetivos</a>
+      <a class="toc-sub" href="01-introducao.html#objetivo-geral"><span class="toc-num">1.4</span> Objetivo Geral</a>
+      <a class="toc-sub" href="01-introducao.html#objetivos-específicos"><span class="toc-num">1.5</span> Objetivos Específicos</a>
+      <a class="toc-chapter" href="02-revisao-bibliografica.html"><span class="toc-num">2.</span> Revisão Bibliográfica</a>
+      <a class="toc-chapter" href="03-metodo-proposto.html"><span class="toc-num">3.</span> Método Proposto</a>
+      <a class="toc-chapter" href="04-experimentos-e-resultados.html"><span class="toc-num">4.</span> Experimentos e Resultados</a>
+      <a class="toc-chapter" href="05-conclusoes.html"><span class="toc-num">5.</span> Conclusões</a>
+      <div class="toc-sep"></div>
+      <a class="toc-chapter" href="../figuras.html">Figuras</a>
+      <a class="toc-chapter" href="referencias.html">Referências</a>
+      <a class="pdf-link" href="../assets/dissertacao.pdf">Baixar PDF</a>
+    </nav>
+  </div>
+</aside>
+<button class="menu-toggle" type="button" aria-label="Abrir sumário" aria-controls="sidebar">☰</button>
+<div class="overlay" aria-hidden="true"></div>
+<main class="page">
+<article class="sheet">
+<header class="chapter-header"><p class="chapter-kicker">Capítulo 1</p><h1 class="chapter-title" id="introdução">Introdução</h1></header>
+<h2 class="section-title" id="sec:Motivacao"><span class="sec-num">1.1</span> Motivação e Lacuna</h2>
+<p>A aprendizagem profunda (<em>Deep Learning</em>) tem se destacado no
+cenário de Visão Computacional e as Redes Neurais Convolucionais (CNN)
+<span class="citation" data-cites="Simonyan14c">(Simonyan; Zisserman,
+2014)</span> tem dominado o estado da arte <span class="citation" data-cites="ANN">(Jain; Jianchang Mao; Mohiuddin, 1996)</span>. Estudos
+podem ser encontrados para detecção de objetos <span class="citation" data-cites="DBLP:journals/corr/abs-1904-00889 8437104 8489369 rs11010011 8186148">(Aparna
+et al., 2018; Laguna et al., 2019; Li et al., 2018; S. Arruda et al.,
+2018; Tayara; Gil Soo; Chong, 2018)</span>, segmentação de imagens <span class="citation" data-cites="Zhao2017CVPR DBLP:journals/corr/CaoSWS16">(Cao et al., 2016;
+Zhao et al., 2017)</span>, contagem de objetos <span class="citation" data-cites="8186148 DBLP:journals/corr/CaoSWS16 articleLuiz">(Cao et
+al., 2016; Luiz Antonio Macarini, 2019; Tayara; Gil Soo; Chong,
+2018)</span>, entre outros.</p>
+<p>Entre as diversas aplicações da Visão Computacional, os métodos de
+contagem e localização de objetos consistem em detectar e obter a
+posição de cada objeto individualmente na imagem. Esses métodos tem
+auxiliado no controle e contagem de pessoas <span class="citation" data-cites="ExtractHuman">(Gonçalves et al., 2020)</span>, carros <span class="citation" data-cites="CarCount">(Azimi et al., 2018)</span>,
+animais <span class="citation" data-cites="8639306">(Sarwar et al.,
+2018)</span>, e até mesmo bactérias <span class="citation" data-cites="7320116">(Ferrari; Lombardi; Signoroni, 2015)</span>. A
+maioria dos métodos de contagem são baseados nos mais conhecidos métodos
+de detecção de objetos (Faster-RCNN <span class="citation" data-cites="DBLP:journals/corr/Girshick15">(Girshick, 2015)</span>,
+RetinaNet <span class="citation" data-cites="DBLP:journals/corr/abs-1708-02002">(Lin et al.,
+2017)</span>, YoloV3 <span class="citation" data-cites="DBLP:journals/corr/abs-1804-02767">(Redmon; Farhadi,
+2018)</span>). Esses métodos consideram um retângulo envolvente para
+cada objeto e podem fornecer tanto a posição (centro do retângulo
+envolvente) como a contagem (número de retângulos envolventes).</p>
+<p>Embora os métodos recentes tenham obtido resultados promissores, três
+desafios ainda se mantêm. O primeiro desafio é a alta densidade com
+objetos sobrepostos. Em geral, os métodos de detecção de objetos não são
+adequados para cenários densos de objetos <span class="citation" data-cites="Goldman2019CVPR">(Goldman et al., 2019)</span>. Neste caso,
+a grande sobreposição dos retângulos envolventes devido a oclusão
+dificulta o aprendizado dos métodos. Layout Proposal Networks (LPNs)
+<span class="citation" data-cites="8237708">(Hsieh; Lin; Hsu,
+2017)</span> é um método recente que tem seguido a proposta de detecção
+de objetos para contagem de carros utilizando camadas da VGG-16. Seu
+maior problema na contagem está na sobreposição dos retângulos quando
+carros estão lado a lado na imagem, como em um estacionamento.</p>
+<p>Por outro lado, estimar um mapa de densidade para obter a quantidade
+de objetos tem apresentado resultados promissores <span class="citation" data-cites="DBLP:journals/corr/abs-1808-01050 880968 Cao2017">(Cao et
+al., 2017; Idrees et al., 2018; Kamijo et al., 2000)</span> e feito com
+que estudos tenham esta direção. Um mapa de densidade consiste em
+estimar a probabilidade de um objeto ocorrer em cada pixel da imagem.
+Porém a diversidade encontrada nos cenários das imagens (e.g., escala,
+rotação, etc) dificulta a detecção e contagem por um mapa de densidade.
+Assim alguns trabalhos buscam encontrar um método eficaz que faça com
+que o objeto de interesse tenha um destaque nas probabilidades estimadas
+<span class="citation" data-cites="inproceedings">(Zhang et al.,
+2015)</span> <span class="citation" data-cites="DBLP:journals/corr/abs-1711-04433">(Zhang; Shi; Chen,
+2017)</span>.</p>
+<p>O segundo desafio é a necessidade da rotulação detalhada das imagens,
+o que é difícil de obter em grandes quantidades. A rotulação de um
+retângulo envolvente para cada objeto na imagem torna-se inviável para
+cenas muito densas em grandes quantidades de imagens. Por outro lado, a
+utilização de um único ponto para rotular cada objeto <span class="citation" data-cites="8237708">(Hsieh; Lin; Hsu, 2017)</span> tem
+sido grande alvo de estudos. Por exemplo, <span class="citation" data-cites="DBLP:peri/corr/abs-1904-01333">(Liu et al., 2019a)</span>
+propõem o método de detecção e contagem de multidões usando pontos na
+cabeça das pessoas. Os métodos baseados apenas em pontos consideram a
+informação de contexto ao redor do ponto, pois os objetos compartilham
+cores, textura e forma. Dessa forma, os métodos tendem a reconhecer
+mesmo que os limites dos objetos não estejam delimitados durante o
+aprendizado <span class="citation" data-cites="Aich2018ImprovingOC">(Aich; Stavness, 2018)</span>.</p>
+<p>O terceiro desafio consiste em contar e localizar objetos em uma
+sequência de imagens. A análise do movimento que objetos realizam nos
+vídeos podem fornecer informações valiosas que nem sempre são
+consideradas na contagem de objetos em uma imagem. Nesse contexto,
+alguns pesquisadores demonstram em seus estudos que rastrear o movimento
+pode auxiliar na detecção e reconhecimento, assim como distingui-los do
+fundo (<span class="citation" data-cites="Ma_2015_ICCV Nam_2016_CVPR Danelljan_2015_ICCV_Workshops WANG201962 8898173 ExtractHuman">(Danelljan
+et al., 2015; Gonçalves et al., 2020; Hou et al., 2019; Ma et al., 2015;
+Nam; Han, 2016; Wang et al., 2019)</span>). Diferente do rastreamento de
+objetos, o objetivo deste trabalho é considerar as informações do
+passado para contar e localizar os objetos em um quadro atual.</p>
+<p>Para contornar os desafios citados acima, este trabalho propõe um
+método para localizar e contar objetos em vídeos usando redes neurais
+convolucionais. Dado um quadro de um video e o quadro anterior, o método
+proposto estima uma mapa de densidade com a probabilidade de ocorrência
+de um objeto em cada pixel. Dessa forma, a rotulação apenas de pontos é
+suficiente para o treinamento do método e cenas densas podem ser melhor
+modeladas. Além disso, o método proposto também estima um mapa de
+vetores de deslocamento, isto é, vetores que indicam a direção do
+movimento de cada pixel da imagem. Essa estimativa dos vetores de
+deslocamento também é usada para predizer o mapa de densidade de um
+quadro atual. Todas essa informações são concatenadas para estimar a
+localização e contagem de objetos do quadro atual. Resultados
+experimentais mostram que a concatenação dessas informações é capaz de
+melhorar a contagem e localização dos objetos.</p>
+<h2 class="section-title" id="sec:Aplicação"><span class="sec-num">1.2</span> Aplicação em Contagem de Peixes</h2>
+<p>O método proposto será aplicado na contagem de peixes e alevinos. Na
+maioria dos casos, a contagem é um trabalho árduo e requer mão de obra
+humana atenta, além de ser suscetível a erros. Por serem sensíveis, os
+peixes requerem uma afabilidade no manuseio durante a contagem. Em
+geral, a contagem acontece por técnicas de barragens <span class="citation" data-cites="Erikson">(Morais et al., 2005)</span>,
+alguns cultivadores realizam a peneiragem para extrair os peixes da água
+e, dessa maneira, obtêm-se uma estimativa da quantidade de peixes que
+residem em uma determinada região <span class="citation" data-cites="OECD FAO">(FAO, 2016; OECD; Food; United Nations,
+2018)</span>.</p>
+<p>A escada de peixes é uma das maneiras utilizadas na contagem. Assim
+os peixes passam por barragens conforme a Figura <a data-reference="fig:escadadepeixes" data-reference-type="ref" href="#fig:escadadepeixes">1.1</a> (a). Na usina hidrelétrica
+de Igarapava do rio Grande <span class="citation" data-cites="UHE">(<span>“<span>UHE Igarapava</span>Consórcio da Usina
+Hidrelétrica de Igarapava”</span>, 2020)</span>, pesquisadores
+construíram salas (Figura <a data-reference="fig:escadadepeixes" data-reference-type="ref" href="#fig:escadadepeixes">1.1</a>
+(b)) abaixo do nível d’água, sendo possível enxergar os peixes conforme
+eles atravessam. Especialistas na área buscam encontrar técnicas para
+automatizar a contagem dos peixes que transitam a hidrelétrica.</p>
+<figure class="figura" data-latex-placement="!ht" id="fig:escadadepeixes"><div class="subfigs"><div class="subfig" style="flex:0 1 40%;max-width:40%"><img alt="image" class="figimg" loading="lazy" src="../assets/figuras/escadadepeixes.jpg" style="width:40.0%"/></div><div class="subfig" style="flex:0 1 55%;max-width:55%"><img alt="image" class="figimg" loading="lazy" src="../assets/figuras/saladaagua.png" style="width:55.0%"/></div></div><figcaption><span class="fig-num">Figura 1.1.</span> (a) Ilustração da Escada de peixes - <span class="citation" data-cites="UHE">(<span>“<span>UHE Igarapava</span>Consórcio da Usina
+Hidrelétrica de Igarapava”</span>, 2020)</span>, (b) sala abaixo do
+nível d’água <span class="citation" data-cites="Erikson">(Morais et al.,
+2005)</span>.</figcaption></figure>
+<p>Os cultivadores precisam ter o controle da quantidade de peixes vivos
+presentes em seus cativeiros, para que a alimentação seja devidamente
+proporcional para todos, e se há necessidade do cultivo de novos peixes,
+ou até mesmo alterações no meio. É notória a necessidade de uma exatidão
+da quantidade que residem uma região.</p>
+<h2 class="section-title" id="sec:objetivos"><span class="sec-num">1.3</span> Objetivos</h2>
+<h2 class="section-title" id="objetivo-geral"><span class="sec-num">1.4</span> Objetivo Geral</h2>
+<p>O objetivo deste trabalho é propor um método para contagem de objetos
+em vídeos utilizando redes neurais convolucionais. Um dos intentos
+principais está em detectar tais objetos nas imagens levando em
+consideração a posição espacial no quadro anterior. Assim com a ciência
+das localizações anteriormente, uma estimativa mais refinada da posição
+atual pode ser obtida.</p>
+<h2 class="section-title" id="objetivos-específicos"><span class="sec-num">1.5</span> Objetivos Específicos</h2>
+<p>Tendo o objetivo geral imposto, os seguintes objetivos específicos
+foram definidos:</p>
+<ol>
+<li><p>Estimar a contagem por meio de um mapa de densidade obtido por
+uma rede neural convolucional;</p></li>
+<li><p>Avaliar a inclusão do quadro anterior na estimativa do quadro
+atual;</p></li>
+<li><p>Incluir vetores de deslocamento na predição do mapa de
+densidade;</p></li>
+<li><p>Aplicar o método na contagem de alevinos.</p></li>
+</ol>
+
+<nav class="pager" aria-label="Navegação entre páginas">
+<a class="prev" href="../preliminares.html"><span class="label">Anterior</span>Preliminares</a>
+<a class="next" href="02-revisao-bibliografica.html"><span class="label">Próximo</span>Capítulo 2 — Revisão Bibliográfica</a>
+</nav>
+<footer class="site-footer">
+  <p>Plabiany Rodrigo Acosta · Dissertação de Mestrado · FACOM/UFMS · 2021</p>
+  <p><a href="../assets/dissertacao.pdf">Versão em PDF</a></p>
+</footer>
+</article>
+</main>
+<script src="../assets/js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Figuras</title>
+<meta name="description" content="Dissertação de mestrado de Plabiany Rodrigo Acosta: contador de objetos em vídeos usando redes neurais convolucionais.">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-inner">
+    <a class="brand" href="index.html">
+      <strong>Contador de objetos em vídeos</strong>
+      <span>Dissertação · Plabiany R. Acosta</span>
+    </a>
+    <nav class="toc" aria-label="Sumário">
+      <a class="toc-chapter" href="index.html">Capa</a>
+      <a class="toc-chapter" href="preliminares.html">Preliminares</a>
+      <div class="toc-sep"></div>
+      <a class="toc-chapter" href="capitulos/01-introducao.html"><span class="toc-num">1.</span> Introdução</a>
+      <a class="toc-chapter" href="capitulos/02-revisao-bibliografica.html"><span class="toc-num">2.</span> Revisão Bibliográfica</a>
+      <a class="toc-chapter" href="capitulos/03-metodo-proposto.html"><span class="toc-num">3.</span> Método Proposto</a>
+      <a class="toc-chapter" href="capitulos/04-experimentos-e-resultados.html"><span class="toc-num">4.</span> Experimentos e Resultados</a>
+      <a class="toc-chapter" href="capitulos/05-conclusoes.html"><span class="toc-num">5.</span> Conclusões</a>
+      <div class="toc-sep"></div>
+      <a class="toc-chapter active" href="figuras.html">Figuras</a>
+      <a class="toc-chapter" href="capitulos/referencias.html">Referências</a>
+      <a class="pdf-link" href="assets/dissertacao.pdf">Baixar PDF</a>
+    </nav>
+  </div>
+</aside>
+<button class="menu-toggle" type="button" aria-label="Abrir sumário" aria-controls="sidebar">☰</button>
+<div class="overlay" aria-hidden="true"></div>
+<main class="page">
+<article class="sheet">
+<h1 class="chapter-title">Figuras</h1><p>Todas as figuras da dissertação, organizadas por capítulo.</p><section class="gallery-chapter"><h2 class="section-title">Capítulo 1 — Introdução</h2><div class="gallery-grid"><article class="gallery-item" id="galeria-fig:escadadepeixes"><div class="subfigs gallery-media"><div class="subfig" style="flex:0 1 40%;max-width:40%"><img alt="" class="figimg" loading="lazy" src="assets/figuras/escadadepeixes.jpg"/></div><div class="subfig" style="flex:0 1 55%;max-width:55%"><img alt="" class="figimg" loading="lazy" src="assets/figuras/saladaagua.png"/></div></div><div class="gallery-caption"><p><span class="fig-num">Figura 1.1.</span> (a) Ilustração da Escada de peixes - <span class="citation" data-cites="UHE">(<span>“<span>UHE Igarapava</span>Consórcio da Usina
+Hidrelétrica de Igarapava”</span>, 2020)</span>, (b) sala abaixo do
+nível d’água <span class="citation" data-cites="Erikson">(Morais et al.,
+2005)</span>.</p><a href="capitulos/01-introducao.html#fig:escadadepeixes">Ver no capítulo →</a></div></article></div></section><section class="gallery-chapter"><h2 class="section-title">Capítulo 3 — Método Proposto</h2><div class="gallery-grid"><article class="gallery-item" id="galeria-fig:model"><div class="subfigs gallery-media"><div class="subfig" style="flex:0 1 100%;max-width:100%"><img alt="" class="figimg" loading="lazy" src="assets/figuras/model.png"/></div></div><div class="gallery-caption"><p><span class="fig-num">Figura 3.1.</span>  Método proposto recebe o quadro atual
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mi>t</mi></msub><annotation encoding="application/x-tex">I_{t}</annotation></semantics></math>
+e o quadro no instante anterior
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">I_{t-1}</annotation></semantics></math>.
+O resultado da concatenação gera um volume de entrada para a VGG-19. A
+saída desta arquitetura consiste em um mapa de características inicial.
+Esse mapa alimenta dois ramos que são responsáveis por realizar as
+predições do mapa de densidade e de vetores de deslocamento. Cada ramo é
+composto por uma série de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>E</mi><annotation encoding="application/x-tex">E</annotation></semantics></math>
+estágios que refinam a suas predições. Ambos ramos compartilham as
+informações para auxiliar na estimação.</p><a href="capitulos/03-metodo-proposto.html#fig:model">Ver no capítulo →</a></div></article><article class="gallery-item" id="galeria-fig:carac"><div class="subfigs gallery-media"><div class="subfig" style="flex:0 1 50%;max-width:50%"><img alt="Imagem Original" class="figimg" loading="lazy" src="assets/figuras/caract.png"/><span class="subcap">Imagem Original</span></div><div class="subfig" style="flex:0 1 37%;max-width:37%"><img alt="mapa de características" class="figimg" loading="lazy" src="assets/figuras/carac.png"/><span class="subcap">mapa de características</span></div></div><div class="gallery-caption"><p><span class="fig-num">Figura 3.3.</span> <span data-label="fig:carac" id="fig:carac"></span> Exemplo
+de um mapa de características predito pela VGG-19.</p><a href="capitulos/03-metodo-proposto.html#fig:carac">Ver no capítulo →</a></div></article><article class="gallery-item" id="galeria-fig:sigma"><div class="subfigs gallery-media"><div class="subfig" style="flex:0 1 30%;max-width:30%"><img alt="Imagem Original" class="figimg" loading="lazy" src="assets/figuras/sigmas/frame001018Ponto.png"/><span class="subcap">Imagem Original</span></div><div class="subfig" style="flex:0 1 30%;max-width:30%"><img alt="σ = 1.5" class="figimg" loading="lazy" src="assets/figuras/sigmas/frame001018_label_1_5.png"/><span class="subcap">σ = 1.5</span></div><div class="subfig" style="flex:0 1 30%;max-width:30%"><img alt="σ = 2.5" class="figimg" loading="lazy" src="assets/figuras/sigmas/frame001018_label_2_5.png"/><span class="subcap">σ = 2.5</span></div></div><div class="gallery-caption"><p><span class="fig-num">Figura 3.4.</span> <span data-label="fig:sigma" id="fig:sigma"></span> Exemplo
+de uma cena e seu mapa de confiança correspondente para diferentes
+valores de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>.</p><a href="capitulos/03-metodo-proposto.html#fig:sigma">Ver no capítulo →</a></div></article><article class="gallery-item" id="galeria-fig:vetor"><div class="subfigs gallery-media"><div class="subfig" style="flex:0 1 90%;max-width:90%"><img alt="" class="figimg" loading="lazy" src="assets/figuras/VD.png"/></div></div><div class="gallery-caption"><p><span class="fig-num">Figura 3.5.</span> <span data-label="fig:vetor" id="fig:vetor"></span>
+Ilustração de um vetor para um objeto em quadro.</p><a href="capitulos/03-metodo-proposto.html#fig:vetor">Ver no capítulo →</a></div></article><article class="gallery-item" id="galeria-fig:vetores"><div class="subfigs gallery-media"><div class="subfig" style="flex:0 1 30%;max-width:30%"><img alt="" class="figimg" loading="lazy" src="assets/figuras/frame000089.png_tracking.png"/></div><div class="subfig" style="flex:0 1 30%;max-width:30%"><img alt="" class="figimg" loading="lazy" src="assets/figuras/frame000126.png_tracking.png"/></div><div class="subfig" style="flex:0 1 30%;max-width:30%"><img alt="" class="figimg" loading="lazy" src="assets/figuras/frame000176.png_tracking.png"/></div></div><div class="gallery-caption"><p><span class="fig-num">Figura 3.6.</span> <span data-label="fig:vetores" id="fig:vetores"></span>
+Exemplos das localizações nos vetores</p><a href="capitulos/03-metodo-proposto.html#fig:vetores">Ver no capítulo →</a></div></article><article class="gallery-item" id="galeria-fig:vetores2"><div class="subfigs gallery-media"><div class="subfig" style="flex:0 1 30%;max-width:30%"><img alt="" class="figimg" loading="lazy" src="assets/figuras/frame000089.pngquiver_t.png"/></div><div class="subfig" style="flex:0 1 30%;max-width:30%"><img alt="" class="figimg" loading="lazy" src="assets/figuras/frame000126.pngquiver_t.png"/></div><div class="subfig" style="flex:0 1 30%;max-width:30%"><img alt="" class="figimg" loading="lazy" src="assets/figuras/frame000176.pngquiver_t.png"/></div></div><div class="gallery-caption"><p><span class="fig-num">Figura 3.7.</span> <span data-label="fig:vetores2" id="fig:vetores2"></span>
+Ilustração dos vetores estimados pelo segundo ramo apresentado, para
+cada pixel de cada objeto.</p><a href="capitulos/03-metodo-proposto.html#fig:vetores2">Ver no capítulo →</a></div></article><article class="gallery-item" id="galeria-fig:heatmap"><div class="subfigs gallery-media"><div class="subfig" style="flex:0 1 60%;max-width:60%"><img alt="" class="figimg" loading="lazy" src="assets/figuras/heatmap2.png"/></div></div><div class="gallery-caption"><p><span class="fig-num">Figura 3.8.</span> Exemplo do mapa de confiança em três dimensões.</p><a href="capitulos/03-metodo-proposto.html#fig:heatmap">Ver no capítulo →</a></div></article></div></section><section class="gallery-chapter"><h2 class="section-title">Capítulo 4 — Experimentos e Resultados</h2><div class="gallery-grid"><article class="gallery-item" id="galeria-Estrutura"><div class="subfigs gallery-media"><div class="subfig" style="flex:0 1 50%;max-width:50%"><img alt="" class="figimg" loading="lazy" src="assets/figuras/estruturaCaptura.png"/></div></div><div class="gallery-caption"><p><span class="fig-num">Figura 4.1.</span> Suporte para Captura das imagens proposta por <span class="citation" data-cites="Junior2019UFMS">(Silva Oliveira Junior,
+2019)</span></p><a href="capitulos/04-experimentos-e-resultados.html#Estrutura">Ver no capítulo →</a></div></article><article class="gallery-item" id="galeria-Train"><div class="subfigs gallery-media"><div class="subfig" style="flex:0 1 32%;max-width:32%"><img alt="" class="figimg" loading="lazy" src="assets/figuras/Train/VID15_frame000222.png"/></div><div class="subfig" style="flex:0 1 32%;max-width:32%"><img alt="" class="figimg" loading="lazy" src="assets/figuras/Train/VID18_frame000244.png"/></div><div class="subfig" style="flex:0 1 32%;max-width:32%"><img alt="" class="figimg" loading="lazy" src="assets/figuras/Train/VID19_frame000313.png"/></div></div><div class="gallery-caption"><p><span class="fig-num">Figura 4.2.</span> Imagens retiradas do conjunto de Treinamento <span class="citation" data-cites="Junior2019UFMS">(Silva Oliveira Junior,
+2019)</span>.</p><a href="capitulos/04-experimentos-e-resultados.html#Train">Ver no capítulo →</a></div></article><article class="gallery-item" id="galeria-heatmap"><div class="subfigs gallery-media"><div class="subfig" style="flex:0 1 90%;max-width:90%"><img alt="" class="figimg" loading="lazy" src="assets/figuras/VID06_frame000147.png"/></div></div><div class="gallery-caption"><p><span class="fig-num">Figura 4.3.</span> Ilustração do <em>Heatmap</em> obtido do <em>frame</em> 147
+do vídeo número 6, predito pelo modelo treinado por 100
+épocas.</p><a href="capitulos/04-experimentos-e-resultados.html#heatmap">Ver no capítulo →</a></div></article><article class="gallery-item" id="galeria-fig:resultadosQuali"><div class="subfigs gallery-media"><div class="subfig" style="flex:0 1 40%;max-width:40%"><img alt="Imagem Original" class="figimg" loading="lazy" src="assets/figuras/ResultadosQ/VID09_frame000039.png"/><span class="subcap">Imagem Original</span></div><div class="subfig" style="flex:0 1 40%;max-width:40%"><img alt="Mapa de densidade" class="figimg" loading="lazy" src="assets/figuras/ResultadosQ/VID09_frame000039_points_.png"/><span class="subcap">Mapa de densidade</span></div><div class="subfig" style="flex:0 1 40%;max-width:40%"><img alt="Predições" class="figimg" loading="lazy" src="assets/figuras/ResultadosQ/VID09_frame000039_points.png"/><span class="subcap">Predições</span></div><div class="subfig" style="flex:0 1 40%;max-width:40%"><img alt="Estimativa dos Vetores de Deslocamento" class="figimg" loading="lazy" src="assets/figuras/ResultadosQ/VID09_frame000039_vectors.png"/><span class="subcap">Estimativa dos Vetores de Deslocamento</span></div></div><div class="gallery-caption"><p><span class="fig-num">Figura 4.4.</span> <span data-label="fig:resultadosQuali" id="fig:resultadosQuali"></span> Exemplos dos resultados visuais
+obtidos para o quadro 30 do vídeo 09. A Figura (a) mostra a imagem
+original, (b) o mapa de densidade, (c) as predições e (d) a estimação
+dos vetores. </p><a href="capitulos/04-experimentos-e-resultados.html#fig:resultadosQuali">Ver no capítulo →</a></div></article><article class="gallery-item" id="galeria-fig:resultadosJuntos"><div class="subfigs gallery-media"><div class="subfig" style="flex:0 1 35%;max-width:35%"><img alt="Imagem Original" class="figimg" loading="lazy" src="assets/figuras/ResultadosQ2/VID11_frame000217.png"/><span class="subcap">Imagem Original</span></div><div class="subfig" style="flex:0 1 35%;max-width:35%"><img alt="Ground Truth" class="figimg" loading="lazy" src="assets/figuras/ResultadosQ2/VID11_frame000217_points_gt_.png"/><span class="subcap"><em>Ground Truth</em></span></div><div class="subfig" style="flex:0 1 35%;max-width:35%"><img alt="Predições" class="figimg" loading="lazy" src="assets/figuras/ResultadosQ2/VID11_frame000217_points.png"/><span class="subcap">Predições</span></div><div class="subfig" style="flex:0 1 35%;max-width:35%"><img alt="Estimativa dos Vetores de Deslocamento" class="figimg" loading="lazy" src="assets/figuras/ResultadosQ2/VID11_frame000217_vectors.png"/><span class="subcap">Estimativa dos Vetores de Deslocamento</span></div></div><div class="gallery-caption"><p><span class="fig-num">Figura 4.5.</span> <span data-label="fig:resultadosJuntos" id="fig:resultadosJuntos"></span> Exemplos dos resultados
+visuais obtidos para o quadro 270 do vídeo 11. A Figura (a) nos mostra a
+imagem original, (b) o mapa de densidade, (c) as predições e (d) a
+estimação dos vetores. </p><a href="capitulos/04-experimentos-e-resultados.html#fig:resultadosJuntos">Ver no capítulo →</a></div></article></div></section><section class="gallery-chapter"><h2 class="section-title">Capítulo 5 — Conclusões</h2><div class="gallery-grid"><article class="gallery-item" id="galeria-fig:PeixesPróximos"><div class="subfigs gallery-media"><div class="subfig" style="flex:0 1 46%;max-width:46%"><img alt="quadro 187" class="figimg" loading="lazy" src="assets/figuras/187.png"/><span class="subcap">quadro 187</span></div><div class="subfig" style="flex:0 1 46%;max-width:46%"><img alt="quadro 188" class="figimg" loading="lazy" src="assets/figuras/188.png"/><span class="subcap">quadro 188</span></div></div><div class="gallery-caption"><p><span class="fig-num">Figura 5.1.</span> <span data-label="fig:PeixesPróximos" id="fig:PeixesPróximos"></span> Exemplos dos peixes extremamente
+próximos que se movem uniformemente. Imagens do vídeo 06, quadro 187 e
+188. </p><a href="capitulos/05-conclusoes.html#fig:PeixesPróximos">Ver no capítulo →</a></div></article><article class="gallery-item" id="galeria-fig:proxbanco"><div class="subfigs gallery-media"><div class="subfig" style="flex:0 1 80%;max-width:80%"><img alt="quadro 4810" class="figimg" loading="lazy" src="assets/figuras/frame0004810.png"/><span class="subcap">quadro 4810</span></div><div class="subfig" style="flex:0 1 80%;max-width:80%"><img alt="quadro 6253" class="figimg" loading="lazy" src="assets/figuras/frame0000247.png"/><span class="subcap">quadro 6253</span></div></div><div class="gallery-caption"><p><span class="fig-num">Figura 5.2.</span> <span data-label="fig:proxbanco" id="fig:proxbanco"></span>
+Amostra do próximo banco de imagens a ser testado - vídeo 203.
+.</p><a href="capitulos/05-conclusoes.html#fig:proxbanco">Ver no capítulo →</a></div></article></div></section>
+<nav class="pager" aria-label="Navegação entre páginas">
+<a class="prev" href="capitulos/referencias.html"><span class="label">Anterior</span>Referências</a>
+<span></span>
+</nav>
+<footer class="site-footer">
+  <p>Plabiany Rodrigo Acosta · Dissertação de Mestrado · FACOM/UFMS · 2021</p>
+  <p><a href="assets/dissertacao.pdf">Versão em PDF</a></p>
+</footer>
+</article>
+</main>
+<script src="assets/js/site.js"></script>
+</body>
+</html>
